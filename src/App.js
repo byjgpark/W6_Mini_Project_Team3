@@ -1,5 +1,4 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
 import Add from "./pages/add/Add";
 import Detail from "./pages/detail/Detail";
 import ListPage from "./pages/list/ListPage";
@@ -14,7 +13,7 @@ function App() {
       <Route path="/detail" element={<Detail />}></Route>
       <Route path="/listPage" element={<ListPage />}></Route>
       <Route path="/loginPage" element={<LoginPage />} />
-      <Route path="/mainPage" element={<MainPage />} />
+      <Route path="/" element={<MainPage />} />
       <Route path="/signUp" element={<SignUp />} />
     </Routes>
   );
