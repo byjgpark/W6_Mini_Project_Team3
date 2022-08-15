@@ -1,25 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom'
-// import { Stcard } from '/StCard'
+import { useNavigate, useParams } from 'react-router-dom'
+import { FaStar } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 const Card = (post) => {
-
-  console.log(post.image)
   const navigate = useNavigate()
+  const star = useSelector(state => state.list.postList)
+  console.log(star)
+  console.log(post.star)
+  // const numStar = parseInt(post.star)
+  // console.log(numStar)
+  
   return (
     <Stcard>
       <StCardBox>
         <StImg src={`${post.image}`} alt="등록된 이미지가 없습니다." />
         <StLine />
         <StTextContainer>
-          <Sttext fontSize='20px'>{post.title}</Sttext>
+          <Sttext fontSize='20px' fontWeight='700'>{post.title}</Sttext>
+          <Sttext fontSize='14px'>{`#${post.place}`}</Sttext>
           <Sttext fontSize='14px'>{post.body}</Sttext>
-          <Sttext fontSize='16px'>{post.star}점</Sttext>
+          <Sttext fontSize='20px'>
+            <div>
+              {[...Array(parseInt(post.star))].map(star => {
+                return (
+                  <FaStar style={{ color:'#fcbe32' }}/>
+                );
+              })}
+            </div>
+          </Sttext>
         </StTextContainer>
       </StCardBox>
       <>
-        <button onClick={() => navigate('/Detail')}>상세보기</button>
+        <StButton onClick={() => navigate(`/Detail/${post.id}`)}>상세보기</StButton>
       </>
     </Stcard>
   );
@@ -33,7 +47,7 @@ const Stcard = styled.div`
   justify-content:center;
   align-items:center;
 
-  gap:20px;
+  gap:15px;
 
   width: 320px;
   height: 400px;
@@ -42,11 +56,13 @@ const Stcard = styled.div`
 `;
 const StImg = styled.img`
   width:95%;
+  max-height:180px;
+  min-height:160px;
 
-  object-fit:scale-down;
+  object-fit:cover;
 `;
 const StLine = styled.div`
-  background: #00c473;
+  background: #fcbe32;
 
   width:100%;
   height:3px;
@@ -66,9 +82,32 @@ const StTextContainer = styled.div`
   flex-direction:column;
   gap: 10px;
 
-  width:95%;
+  width:100%;
+
+  margin-left:5%;
 `;
 const Sttext = styled.span`
   font-size: ${props => props.fontSize};
+  font-weight:  ${props => props.fontWeight};
   color: ${props => props.color};
+
+  width:100%;
+  
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 `;
+const StButton = styled.button`
+  width:100px;
+  height:30px;
+
+  color:#e1eef6;
+  background-color:#ff5f2e;
+
+  font-weight:700;
+
+  border:none;
+  border-radius:7px;
+
+  margin-left:55%;
+  `

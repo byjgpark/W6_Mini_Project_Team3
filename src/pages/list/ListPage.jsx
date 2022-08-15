@@ -30,9 +30,11 @@ const ListPage = () => {
               return (
                 <Card
                   key={post.id}
-                  image={post.image}
+                  id={post.id}
+                  image={post.imgUrl}
                   title={post.title}
-                  body={post.body}
+                  place={post.place}
+                  body={post.content}
                   star={post.star}
                 />
               )
