@@ -1,3 +1,4 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Add from "./pages/add/Add";
 import Detail from "./pages/detail/Detail";
@@ -10,8 +11,8 @@ function App() {
   return (
     <Routes>
       <Route path="/add" element={<Add />} />
-      <Route path="/detail" element={<Detail />}></Route>
-      <Route path="/listPage" element={<ListPage />}></Route>
+      <Route path="/detail" element={<Detail />} />
+      <Route path="/listPage" element={<ListPage />} />
       <Route path="/loginPage" element={<LoginPage />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/signUp" element={<SignUp />} />
