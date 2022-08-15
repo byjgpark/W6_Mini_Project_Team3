@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import BackButton from '../../component/backButton/BackButton';
 import Card from '../../component/card/Card'
 import TitleButton from '../../component/titleButton/TitleButton';
-import { _getPost } from '../../redux/modules/post';
+import { _getPost } from '../../redux/modules/list';
 
 const ListPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const postList = useSelector(state => state.post.postList)
+  const postList = useSelector(state => state.list.postList)
   console.log(postList)
 
   useEffect(()=>{
