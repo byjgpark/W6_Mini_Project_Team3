@@ -19,7 +19,7 @@ const Card = (post) => {
         </StTextContainer>
       </StCardBox>
       <>
-        <button onClick={() => navigate('Detail')}>상세보기</button>
+        <button onClick={() => navigate('/Detail')}>상세보기</button>
       </>
     </Stcard>
   );

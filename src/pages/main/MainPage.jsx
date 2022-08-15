@@ -20,9 +20,9 @@ const MainPage = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent:'space-around'}} >
             <button>로그인/회원가입</button>
-            <button onClick={() => navigate('ListPage')}>메뉴1</button>
-            <button onClick={() => navigate('ListPage')}>메뉴2</button>
-            <button onClick={() => navigate('ListPage')}>메뉴3</button>
+            <button onClick={() => navigate('List')}>메뉴1</button>
+            <button onClick={() => navigate('List')}>메뉴2</button>
+            <button onClick={() => navigate('List')}>메뉴3</button>
           </div>
         </div>
       </div>
