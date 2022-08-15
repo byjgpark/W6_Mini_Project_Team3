@@ -9,6 +9,7 @@ import {
   getDetailThunk,
 } from "../../redux/modules/targetPostSlice";
 import DetailPageComment from "../../component/comment/DetailPageComment";
+import { _getPost } from "../../redux/modules/list";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -17,23 +18,29 @@ const Detail = () => {
   const [modalOn, setModalOn] = useState(false);
   console.log(id);
 
-  useEffect(() => {
-    dispatch(getDetailThunk(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getDetailThunk(id));
+  // }, [dispatch, id]);
 
-  const list = useSelector((state) => state.post.posting);
+  useEffect(()=>{
+    dispatch(_getPost());
+  },[]);
+
+  const list = useSelector(state => state.list.postList);
   console.log(list);
   // .posts.postings
   return (
     <div>
       <DetailWrap>
         <DetailContainer>
-          <ImgDetailBox></ImgDetailBox>
+          <ImgDetailBox>
+            <img src={`${list[id].image}`} alt="이미지를 표시할 수 없습니다." style={{ width:'100%', margin:'30px 0',objectFit:'contain' }}/>
+          </ImgDetailBox>
           <DetaiListlBox>
-            <h2>{list.title}</h2>
-            <h3>{list.place}</h3>
-            <h3>{list.star}</h3>
-            <p>{list.content}</p>
+            <h2>{list[id].title}</h2>
+            <h3>{list[id].place}</h3>
+            <h3>{list[id].star}</h3>
+            <p>{list[id].body}</p>
             <DetailButton>
               <button onClick={() => setModalOn(true)}>수정</button>
               <button

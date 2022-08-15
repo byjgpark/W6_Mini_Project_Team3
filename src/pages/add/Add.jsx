@@ -40,7 +40,7 @@ const Add = () => {
       dispatch(addDetailThunk(posting));
       setPosting(initialState);
       alert("정상적으로 등록 되었습니다");
-      navigate("/");
+      navigate('/cards');
     }
   };
 
@@ -68,13 +68,13 @@ const Add = () => {
               onChange={onChangeHandler}
             />
             <StarBox>
-              <StarRating />
+              <StarRating onChangeHandler={onChangeHandler} />
             </StarBox>
             <textarea
               type="text"
               placeholder="내용을 입력해주세요"
-              name="content"
-              value={posting.content}
+              name="body"
+              value={posting.body}
               onChange={onChangeHandler}
             />
             <button onClick={onSumbitHandler}>게시물 등록하기</button>
