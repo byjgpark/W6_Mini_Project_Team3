@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { __addUser } from "../../redux/modules/user"
 import img from "../../img/SignUp.jpg"
-import "./SignUp.css"
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
