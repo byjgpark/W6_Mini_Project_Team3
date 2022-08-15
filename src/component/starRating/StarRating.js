@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import "./StarRating.css";
 
-const StarRating = () => {
+const StarRating = ({ onChangeHandler }) => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
 
@@ -15,13 +15,14 @@ const StarRating = () => {
             <input
               className="rating"
               type="radio"
-              name="rating"
+              name="star"
               value={ratingValue}
+              onChange={(e) => onChangeHandler(e)}
               onClick={() => setRating(ratingValue)}
             />
             <FaStar
               className="star"
-              color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+              color={ratingValue <= (hover || rating) ? "#fcbe32" : "#e4e5e9"}
               size={40}
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
