@@ -20,4 +20,6 @@ const StButton = styled.button`
   background:transparent;
 
   border:none;
+
+  cursor: pointer;
 `

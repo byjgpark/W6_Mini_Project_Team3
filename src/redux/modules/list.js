@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -7,6 +8,30 @@ export const _getPost = createAsyncThunk("post/getPost", async (payload) => {
   console.log(response.data.data);
   return response.data.data;
 });
+=======
+import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import instance from "./instans";
+
+const ageParams = ['10', '20', '30']
+export const _getPost = createAsyncThunk(
+  "post/getPost",
+  async () => {
+    try{
+    // console.log(param)
+
+    // const pram = await useParams()
+    const response = await instance.get('/api/cards')
+    const data = response.data.data
+    console.log(data)
+    // console.log(params)
+
+     return data
+   }catch(error){
+    console.log(error)
+   }
+  }
+)
+>>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
 
 const initialState = {
   postList: [
@@ -37,10 +62,18 @@ const postList = createSlice({
   },
   extraReducers: {
     [_getPost.fulfilled]: (state, action) => {
+<<<<<<< HEAD
       state.postList = action.payload;
     },
   },
 });
+=======
+      state.postList = action.payload
+      console.log(action)
+    }
+  }
+})
+>>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
 
 export const { getPost } = postList.actions;
 

@@ -7,8 +7,8 @@ const TitleButton = () => {
 
   return (
     <div>
-      {/* <StImg src={logo} onClick={() => navigate('/')}/> */}
-      <StAaa onClick={() => navigate('/')} >YOLO GO</StAaa>
+      <StImg src={logo} onClick={() => navigate('/')}/>
+      {/* <StAaa onClick={() => navigate('/')} >YOLO GO</StAaa> */}
     </div>
   );
 };
@@ -16,11 +16,13 @@ const TitleButton = () => {
 export default TitleButton;
 
 const StImg = styled.img`
-  width:80px;
-  height:80px;
+  width:100px;
+  height:100px;
   margin-left:62px;
 
-  margin:20px auto;
+  margin:0 30px;
+
+  cursor:pointer;
 `;
 const StAaa = styled.div`
   background: linear-gradient(to right, #ffa3a1, #a62efd);
@@ -36,4 +38,6 @@ const StAaa = styled.div`
   padding:15px 30px;
 
   font-family: 'Lobster', cursive;
+  
+  cursor:pointer;
   `;

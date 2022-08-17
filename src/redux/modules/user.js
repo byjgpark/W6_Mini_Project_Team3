@@ -19,7 +19,7 @@ export const __addUser = createAsyncThunk(
     try {
       console.log("Hello this is arg " + JSON.stringify(arg))
       const { data } = await axios.post(process.env.REACT_APP_API_KEY + "users", arg);
-      console.log("Hello data " + JSON.stringify(data));
+      console.log("Hello data " + JSON.stringify(data)) ;
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -52,6 +52,7 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 
+
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
   async (arg, thunkAPI) => {
@@ -64,6 +65,20 @@ export const __updateComment = createAsyncThunk(
     }
   }
 );
+
+export const __loginUser = createAsyncThunk(
+  "LOGIN_USER",
+  async (arg, thunkAPI) => {
+    console.log(JSON.stringify(arg));
+    try {
+      axios.update('http://13.124.123.173/users/login', arg);
+      return thunkAPI.fulfillWithValue(arg);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 
 const initialState = {
   users: {
@@ -104,7 +119,7 @@ export const user = createSlice({
     [__addUser.fulfilled]: (state, action) => {
       state.users.isLoading = false;
       console.log("hello " + JSON.stringify(action.payload))
-      state.users.user.push(action.payload)
+      // console.log(state.users.user.push(action.payload))
     },
     [__addUser.rejected]: (state, action) => {
       state.users.isLoading = false;
@@ -155,6 +170,17 @@ export const user = createSlice({
       state.commentsByTodoId.data.splice(target, 1, action.payload);
     },
     [__updateComment.rejected]: () => {},
+
+
+    // 댓글 수정
+    [__loginUser.pending]: (state) => {},
+    [__loginUser.fulfilled]: (state, action) => {
+      const target = state.commentsByTodoId.data.findIndex(
+        (comment) => comment.id === action.payload.id
+      );
+      state.commentsByTodoId.data.splice(target, 1, action.payload);
+    },
+    [__loginUser.rejected]: () => {},
     
   },
 });
