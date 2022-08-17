@@ -4,12 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import DetailPageModal from "../../component/detailPage/DetailPageModal";
-import {
-  deleteDetailThunk,
-  getDetailThunk,
-} from "../../redux/modules/targetPostSlice";
+import { getDetailThunk } from "../../redux/modules/targetPostSlice";
+import { deleteDetailThunk } from "../../redux/modules/postSlice";
 import DetailPageComment from "../../component/comment/DetailPageComment";
-import { _getPost } from "../../redux/modules/list";
+// import { _getPost } from "../../redux/modules/list";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -18,34 +16,37 @@ const Detail = () => {
   const [modalOn, setModalOn] = useState(false);
   console.log(id);
 
+  useEffect(() => {
+    dispatch(getDetailThunk(id));
+  }, [dispatch, id]);
+
   // useEffect(() => {
-  //   dispatch(getDetailThunk(id));
-  // }, [dispatch, id]);
+  //   dispatch(_getPost());
+  // }, []);
 
-  useEffect(()=>{
-    dispatch(_getPost());
-  },[]);
-
-  const list = useSelector(state => state.list.postList);
+  const list = useSelector((state) => state.post.post);
   console.log(list);
-  // .posts.postings
   return (
     <div>
       <DetailWrap>
         <DetailContainer>
           <ImgDetailBox>
-            <img src={`${list[id].image}`} alt="이미지를 표시할 수 없습니다." style={{ width:'100%', margin:'30px 0',objectFit:'contain' }}/>
+            <img
+              src={`${list[id]?.imgUrl}`}
+              alt="이미지를 표시할 수 없습니다."
+              style={{ width: "100%", margin: "30px 0", objectFit: "contain" }}
+            />
           </ImgDetailBox>
           <DetaiListlBox>
-            <h2>{list[id].title}</h2>
-            <h3>{list[id].place}</h3>
-            <h3>{list[id].star}</h3>
-            <p>{list[id].body}</p>
+            <h2>{list[0]?.title}</h2>
+            <h3># {list[0]?.place}</h3>
+            <h3>{list[0]?.star}</h3>
+            <p>{list[0]?.content}</p>
             <DetailButton>
               <button onClick={() => setModalOn(true)}>수정</button>
               <button
                 onClick={() => {
-                  dispatch(deleteDetailThunk(list.id));
+                  dispatch(deleteDetailThunk(id));
                   navigate("/");
                 }}
               >
@@ -85,51 +86,59 @@ const DetailWrap = styled.div`
 `;
 const DetailContainer = styled.div`
   margin: 10px auto;
-  border: 1px red solid;
+  border: 3px #004e66 solid;
   border-radius: 10px;
   width: 100%;
   padding: 40px;
 `;
 const CommentContainer = styled.div`
   margin: 10px auto;
-  border: 1px red solid;
+  border: 3px #004e66 solid;
   border-radius: 10px;
   width: 100%;
   padding: 40px;
 `;
 const ImgDetailBox = styled.div`
-  border: 1px red solid;
+  /* border: 1px red solid; */
   width: 100%;
-  height: 400px;
+  height: 390px;
 `;
 const DetaiListlBox = styled.div`
-  border: 1px red solid;
+  /* border: 1px red solid; */
   width: 100%;
-  height: 60px;
+  height: 50px;
+
   h2 {
-    color: red;
+    padding-left: 10px;
   }
   h3 {
-    color: blue;
+    padding-left: 10px;
   }
   h3 {
-    color: blue;
+    padding-left: 10px;
   }
   p {
-    color: blue;
-    border: 1px red solid;
+    /* border: 1px red solid; */
     width: 100%;
-    height: 100px;
+    height: 90px;
+    padding-left: 10px;
+    padding-top: 10px;
   }
 `;
 const DetailButton = styled.div`
-  border: 1px solid green;
   display: flex;
-  gap: 10px;
-  margin-top: 24px;
+  gap: 20px;
+  padding-bottom: 20px;
+  /* margin-top: 5px; */
+  margin-left: 150px;
   button {
-    border: 1px solid blue;
+    background-color: #ff5f2e;
+    border: none;
     cursor: pointer;
-    width: 50%;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    color: #e1eef6;
+    font-size: medium;
   }
 `;

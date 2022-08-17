@@ -21,7 +21,7 @@ const DetailPageModal = ({ show, onHide, setShow, id }) => {
   };
 
   const onSubmitHandler = (event) => {
-    if (editDetail.title === "" || editDetail.content === "") {
+    if (editDetail.content === "") {
       event.preventDefault();
       alert("내용을 모두 채워주세요");
     } else {
@@ -79,17 +79,26 @@ const ModalBox = styled.div`
   margin: 15% auto;
   width: 500px;
   height: 300px;
-  border: 1px red solid;
+  border: 3px #004e66 solid;
   border-radius: 5px;
   background: white;
   padding: 20px;
   textarea[type="text"] {
-    border: 1px blue solid;
+    border: 3px #fcbe32 solid;
+    border-radius: 5px;
     width: 450px;
     height: 150px;
     margin: auto;
+    font-size: large;
+    padding-left: 10px;
+    padding-top: 10px;
   }
   button {
+    background-color: #ff5f2e;
+    border: none;
+    border-radius: 10px;
+    color: #e1eef6;
+    font-size: small;
     width: 70px;
     height: 50px;
     cursor: pointer;

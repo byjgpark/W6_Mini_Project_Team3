@@ -15,15 +15,15 @@ const DetailPageComment = () => {
   const { id } = useParams;
   const initialState = {
     id: 0,
-    postId: "",
-    commentid: "",
+    nickname: "",
     content: "",
     isEditMode: false,
   };
 
   const [addComment, setAddComment] = useState(initialState);
   const put_comment = useSelector((state) => state.comments.comments);
-  const [newComment, setNewComment] = useState({ id: 0, content: "" });
+  console.log(put_comment);
+  const [newComment, setNewComment] = useState(initialState);
 
   let inputHandler = (e) => {
     const { name, value } = e.target;
@@ -59,9 +59,9 @@ const DetailPageComment = () => {
         <InputId>
           <input
             type="text"
-            placeholder="ID"
-            name="postId"
-            value={addComment.postId}
+            placeholder="Nickname"
+            name="nickname"
+            value={addComment.nickname}
             onChange={inputHandler}
           />
         </InputId>
@@ -76,21 +76,21 @@ const DetailPageComment = () => {
         </InputBody>
         <button onClick={onAddSubmitHandler}>댓글등록</button>
       </InputContainer>
-      <hr color="red" />
+      <hr color="#fcbe32" />
       <>
         {put_comment.length == 0
           ? ""
           : put_comment.map((item, index) => {
               if (item.movieid == id) {
                 return (
-                  <CommentContainer>
-                    <div key={index}>
-                      <CommentBox>
+                  <div>
+                    <CommentBox key={index}>
+                      <TextBox>
                         <IdBox>{item.postId}</IdBox>
                         <BodyBox>{item.content}</BodyBox>
-                      </CommentBox>
+                      </TextBox>
                       {item.isEditMode ? (
-                        <EditBox>
+                        <TextBox>
                           <input
                             type="text"
                             name="content"
@@ -104,33 +104,31 @@ const DetailPageComment = () => {
                               });
                             }}
                           />
-                        </EditBox>
+                        </TextBox>
                       ) : (
                         <p>{put_comment?.content}</p>
                       )}
-                      <SmallBtn>
+                      <div>
                         {item.isEditMode ? (
-                          <Btn onClick={onClickSaveButton}>저장</Btn>
+                          <button onClick={onClickSaveButton}>저장</button>
                         ) : (
-                          <Btn
-                            className="btn"
-                            onClick={() => dispatch(checkCommentThunk(item))}
+                          <button
+                            onClick={() => dispatch(checkCommentThunk(item.id))}
                           >
                             수정
-                          </Btn>
+                          </button>
                         )}
 
-                        <Btn
-                          className="btn"
+                        <button
                           onClick={() => {
-                            dispatch(delCommentThunk(item.id));
+                            dispatch(delCommentThunk(item));
                           }}
                         >
                           삭제
-                        </Btn>
-                      </SmallBtn>
-                    </div>
-                  </CommentContainer>
+                        </button>
+                      </div>
+                    </CommentBox>
+                  </div>
                 );
               }
             })}
@@ -142,13 +140,17 @@ const DetailPageComment = () => {
 export default DetailPageComment;
 
 const InputContainer = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   height: 60px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 30px;
+  margin-bottom: 20px;
   button {
-    border: 1px solid blue;
+    border: none;
+    background-color: #ff5f2e;
+    border-radius: 10px;
+    color: #e1eef6;
+    font-size: medium;
     width: 80px;
     height: 100%;
     cursor: pointer;
@@ -156,39 +158,49 @@ const InputContainer = styled.div`
 `;
 const InputId = styled.div`
   input[type="text"] {
-    border: 1px solid blue;
-    width: 90px;
+    border: 1px solid #004e66;
+    width: 80px;
     height: 100%;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
   }
 `;
 const InputBody = styled.div`
   input[type="text"] {
-    border: 1px solid green;
-    width: 330px;
+    border: 1px solid #004e66;
+    width: 300px;
     height: 100%;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
   }
 `;
-const CommentContainer = styled.div`
+const CommentBox = styled.div`
   display: flex;
   height: 60px;
   flex-direction: row;
   margin-left: 10px;
   margin-top: 20px;
   border: 1px solid red;
+  justify-content: space-between;
+  button {
+    background-color: #ff5f2e;
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    height: 45px;
+    border-radius: 10px;
+    color: #e1eef6;
+    font-size: medium;
+    margin-left: 5px;
+    margin-top: 5px;
+  }
 `;
-const CommentBox = styled.div`
-  height: 50px;
+const TextBox = styled.div`
+  height: 200px;
   margin-left: 10px;
   margin-top: 10px;
-`;
-
-const IdBox = styled.div`
-  font-size: medium;
-`;
-const BodyBox = styled.div`
-  font-size: x-large;
-`;
-const EditBox = styled.div`
   input[type="text"] {
     border: blue 1px solid;
     border-radius: 5px;
@@ -197,6 +209,29 @@ const EditBox = styled.div`
     margin-top: 10px;
   }
 `;
+
+const IdBox = styled.div`
+  font-size: medium;
+`;
+const BodyBox = styled.div`
+  font-size: large;
+  /* input[type="text"] {
+    border: blue 1px solid;
+    border-radius: 5px;
+    height: 50px;
+    margin-left: 10px;
+    margin-top: 10px;
+  } */
+`;
+// const BodyBox = styled.div`
+//   input[type="text"] {
+//     border: blue 1px solid;
+//     border-radius: 5px;
+//     height: 50px;
+//     margin-left: 10px;
+//     margin-top: 10px;
+//   }
+// `;
 const SmallBtn = styled.div`
   margin-left: auto;
   // border: 1px solid yellow;
