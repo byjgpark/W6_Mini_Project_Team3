@@ -15,15 +15,15 @@ const DetailPageComment = () => {
   const { id } = useParams;
   const initialState = {
     id: 0,
-    postId: "",
-    commentid: "",
+    nickname: "",
     content: "",
     isEditMode: false,
   };
 
   const [addComment, setAddComment] = useState(initialState);
   const put_comment = useSelector((state) => state.comments.comments);
-  const [newComment, setNewComment] = useState({ id: 0, content: "" });
+  console.log(put_comment);
+  const [newComment, setNewComment] = useState(initialState);
 
   let inputHandler = (e) => {
     const { name, value } = e.target;
@@ -59,9 +59,9 @@ const DetailPageComment = () => {
         <InputId>
           <input
             type="text"
-            placeholder="ID"
-            name="postId"
-            value={addComment.postId}
+            placeholder="Nickname"
+            name="nickname"
+            value={addComment.nickname}
             onChange={inputHandler}
           />
         </InputId>
@@ -113,7 +113,7 @@ const DetailPageComment = () => {
                           <button onClick={onClickSaveButton}>저장</button>
                         ) : (
                           <button
-                            onClick={() => dispatch(checkCommentThunk(item))}
+                            onClick={() => dispatch(checkCommentThunk(item.id))}
                           >
                             수정
                           </button>
@@ -121,7 +121,7 @@ const DetailPageComment = () => {
 
                         <button
                           onClick={() => {
-                            dispatch(delCommentThunk(item.id));
+                            dispatch(delCommentThunk(item));
                           }}
                         >
                           삭제

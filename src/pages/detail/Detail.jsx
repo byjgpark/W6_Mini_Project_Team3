@@ -4,12 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import DetailPageModal from "../../component/detailPage/DetailPageModal";
-import {
-  deleteDetailThunk,
-  getDetailThunk,
-} from "../../redux/modules/targetPostSlice";
+import { getDetailThunk } from "../../redux/modules/targetPostSlice";
+import { deleteDetailThunk } from "../../redux/modules/postSlice";
 import DetailPageComment from "../../component/comment/DetailPageComment";
-import { _getPost } from "../../redux/modules/list";
+// import { _getPost } from "../../redux/modules/list";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -18,17 +16,16 @@ const Detail = () => {
   const [modalOn, setModalOn] = useState(false);
   console.log(id);
 
-  // useEffect(() => {
-  //   dispatch(getDetailThunk(id));
-  // }, [dispatch, id]);
-
   useEffect(() => {
-    dispatch(_getPost());
-  }, []);
+    dispatch(getDetailThunk(id));
+  }, [dispatch, id]);
 
-  const list = useSelector((state) => state.list.postList);
+  // useEffect(() => {
+  //   dispatch(_getPost());
+  // }, []);
+
+  const list = useSelector((state) => state.post.posting);
   console.log(list);
-  // .posts.postings
   return (
     <div>
       <DetailWrap>
@@ -41,15 +38,15 @@ const Detail = () => {
             />
           </ImgDetailBox>
           <DetaiListlBox>
-            <h2>{list[id].title}</h2>
-            <h3>{list[id].place}</h3>
-            <h3>{list[id].star}</h3>
-            <p>{list[id].body}</p>
+            <h2>{list[0]?.title}</h2>
+            <h3># {list[0]?.place}</h3>
+            <h3>{list[0]?.star}</h3>
+            <p>{list[0]?.content}</p>
             <DetailButton>
               <button onClick={() => setModalOn(true)}>수정</button>
               <button
                 onClick={() => {
-                  dispatch(deleteDetailThunk(list.id));
+                  dispatch(deleteDetailThunk(id));
                   navigate("/");
                 }}
               >

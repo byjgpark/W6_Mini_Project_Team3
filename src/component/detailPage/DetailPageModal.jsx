@@ -21,7 +21,7 @@ const DetailPageModal = ({ show, onHide, setShow, id }) => {
   };
 
   const onSubmitHandler = (event) => {
-    if (editDetail.title === "" || editDetail.content === "") {
+    if (editDetail.content === "") {
       event.preventDefault();
       alert("내용을 모두 채워주세요");
     } else {

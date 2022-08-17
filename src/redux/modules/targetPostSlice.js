@@ -1,41 +1,41 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import instance from "./instance";
 
 const initialState = {
   posting: {
     id: "",
     title: "",
+    place: "",
+    star: "",
     content: "",
   },
 };
+//게시물 상세조회 /api/cards/{id}
 export const getDetailThunk = createAsyncThunk(
   "getPost",
   async (payload, api) => {
     try {
-      const data = await axios.get(`http://localhost:3001/postings/${payload}`);
+      console.log(payload);
+      const { data } = await instance.get(`api/cards/${payload}`);
+      console.log(data);
       return api.fulfillWithValue(data.data);
     } catch (e) {
       return api.rejectWithValue(e);
     }
   }
 );
-export const deleteDetailThunk = createAsyncThunk(
-  "deleteDetail",
-  async (payload, api) => {
-    console.log(payload);
-    try {
-      axios.delete(`http://localhost:3001/postings/${payload}`);
-      return api.fulfillWithValue(payload);
-    } catch (e) {
-      return api.rejectWithValue(e);
-    }
-  }
-);
+//게시물 수정 /api/auth/cards/{id}
 export const editDetailThunk = createAsyncThunk(
   "editDetail",
   async (payload, api) => {
+    console.log(payload);
     try {
-      axios.patch(`http://localhost:3001/postings/${payload.id}`, payload);
+      const { data } = await instance.put(
+        `api/auth/cards/${payload.id}`,
+        payload
+      );
+      console.log(data);
       return api.fulfillWithValue(payload);
     } catch (error) {
       return api.rejectWithValue(error);
@@ -55,15 +55,8 @@ export const targetPostSlice = createSlice({
       console.log(state);
       state.error = action.payload;
     },
-    [deleteDetailThunk.fulfilled]: (state, action) => {
-      state.posting = state.filter((list) => list.id !== action.payload);
-    },
-    [deleteDetailThunk.rejected]: (state, action) => {
-      console.log(state);
-      state.posting = action.payload;
-    },
     [editDetailThunk.fulfilled]: (state, action) => {
-      state.posting.content = action.payload.content;
+      state.posting = action.payload;
     },
     [editDetailThunk.rejected]: (state, action) => {
       state.error = action.payload;

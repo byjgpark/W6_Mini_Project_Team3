@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { addDetailThunk } from "../../redux/modules/postSlice";
 import StarRating from "../../component/starRating/StarRating";
+new Blob([JSON.stringify()], { type: "application/json" });
 
 const Add = () => {
   const dispatch = useDispatch();
@@ -13,31 +14,52 @@ const Add = () => {
     id: 0,
     title: "",
     place: "",
-    star: "",
-    body: "",
+    star: 0,
+    content: "",
     imgUrl: "url",
   };
 
   const [posting, setPosting] = useState(initialState);
-  console.log(posting);
+  const [files, setFiles] = useState("");
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setPosting({ ...posting, [name]: value });
   };
 
-  const onSumbitHandler = (event) => {
+  const onSumbitHandler = async (event) => {
     event.preventDefault();
     if (posting.title === "" || posting.place === "" || posting.body === "") {
       event.preventDefault();
       alert("내용을 모두 채워주세요");
     } else {
       event.preventDefault();
+      let frm = new FormData();
+      let postimg = document.getElementById("img_file");
+
+      frm.append(
+        "data",
+        new Blob([JSON.stringify(posting)], { type: "application.json" })
+      );
+      frm.append("image", postimg.files[0]);
+      try {
+        const response = await dispatch(addDetailThunk(frm)).unwrap();
+        if (response) {
+          navigate(`/detail/${response.id}`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
       dispatch(addDetailThunk(posting));
       setPosting(initialState);
       alert("정상적으로 등록 되었습니다");
       navigate("/");
     }
+  };
+  // 선택된 파일 읽기
+  const onLoadFile = (e) => {
+    setFiles(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -45,9 +67,24 @@ const Add = () => {
       <AddContainer>
         <InputBox>
           <ImgContainer>
-            <ImgInput></ImgInput>
-            <input type="file" accept="image/*" />
+            {files === "" ? (
+              <Postingimg></Postingimg>
+            ) : (
+              <Postingimg src={files}></Postingimg>
+            )}
+            {/* <ImgBtn> */}
+            <label htmlFor="img_file"></label>
+            {/* <form>{" "} */}
+            <input
+              type="file"
+              id="img_file"
+              accept="image/*"
+              onChange={onLoadFile}
+            />
+            {/* </form> */}
+            {/* </ImgBtn> */}
           </ImgContainer>
+
           <FormBox>
             <input
               type="text"
@@ -69,11 +106,13 @@ const Add = () => {
             <textarea
               type="text"
               placeholder="내용을 입력해주세요"
-              name="body"
-              value={posting.body}
+              name="content"
+              value={posting.content}
               onChange={onChangeHandler}
             />
-            <button onClick={onSumbitHandler}>게시물 등록하기</button>
+            <button onClick={onSumbitHandler} encType="multipart/form-data">
+              게시물 등록
+            </button>
           </FormBox>
         </InputBox>
       </AddContainer>
@@ -110,26 +149,54 @@ const InputBox = styled.div`
 `;
 const ImgContainer = styled.div`
   width: 60%;
-  height: 100%;
-  input[type="file"] {
+  height: 90%;
+  /* input[type="file"] {
     border: 1px #004e66 solid;
     width: 200px;
     height: 100px;
+  } */
+`;
+const Postingimg = styled.div`
+  width: 95%;
+  height: 77.5%;
+  border-radius: 10px;
+  border: 1px solid #004e66;
+`;
+
+const ImgBtn = styled.div`
+  border: none;
+  border-radius: 10px;
+  width: 200px;
+  height: 50px;
+  background-color: #ff5f2e;
+  color: #e1eef6;
+  font-size: medium;
+  margin-top: 20px;
+  margin-left: 180px;
+
+  label {
+    display: inline-block;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+  }
+  input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 `;
-const ImgInput = styled.div`
-  border: 2px #fcbe32 dashed;
-  width: 500px;
-  height: 480px;
-`;
-// const ImgButton = styled.input`
-//   border: 1px red solid;
-//   width: 100px;
-//   height: 100px;
-// `;
-
 const FormBox = styled.div`
-  /* border: none; */
   width: 60%;
   height: 100%;
 
@@ -162,6 +229,7 @@ const FormBox = styled.div`
     font-size: medium;
     margin-top: 20px;
     margin-left: 200px;
+    cursor: pointer;
   }
 `;
 const StarBox = styled.div`
@@ -172,8 +240,3 @@ const StarBox = styled.div`
   align-items: center;
   float: left;
 `;
-// const AddButton = styled.button`
-//   border: 1px solid black;
-//   width: 200px;
-//   height: 50px;
-// `;
