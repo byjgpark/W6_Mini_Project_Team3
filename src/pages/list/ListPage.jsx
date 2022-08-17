@@ -20,6 +20,8 @@ const ListPage = () => {
     dispatch(_getPost());
   },[]);
 
+  console.log("this is local storage" + window.localStorage.getItem('SavedToken'))
+
   return (
     <>
     <StListContainer>

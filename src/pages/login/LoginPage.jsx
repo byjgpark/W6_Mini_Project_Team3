@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState} from "react";
+
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../img/LoginIn.jpg"
@@ -7,24 +8,26 @@ import axios from "axios";
 
 // redux
 import { useSelector, useDispatch } from 'react-redux';
+import { getAllByPlaceholderText } from "@testing-library/react";
 
 const LoginPage = () => {
 
-  console.log("hello " + process.env.REACT_APP_API_KEY)
 
+  console.log("checking env file" + process.env.REACT_APP_API_KEY)
+  
   //Redux
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user)
   // if(users.users.user.length !== 0) {
-  // console.log("checking user " + JSON.stringify(users.users.user))
+
+  //   console.log("checking user " + JSON.stringify(users.users.user))
   // }
   // useEffect(() => {
-  // dispatch(__getUsers());
+  //   dispatch(__getUsers());
   // }, [dispatch]);
 
-
   //Router
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   //Hook
@@ -34,39 +37,54 @@ const LoginPage = () => {
   // handleSubmit for form
   const handleSubmit = (event) => {
     event.preventDefault();
-    // signinCheck({ID:ID, password: password})
 
-    axios.post(process.env.REACT_APP_API_KEY+"/users/login", //
-      { "nickname": ID, "password": password })
+    if(ID === "" && password === ""){
+      alert("아아디와 비밀번호를 입력해주세요")
+    }
+    else if( ID === ""){
+      alert("아아디를 입력해주세요")      
+    }
+
+    else if(password === ""){
+      alert("비밀번호를 입력주세요")
+    }
+    else{
+      axios.post(process.env.REACT_APP_API_KEY + 'users/login', // 
+      {"nickname": ID,"password": password})
       .then(function (response) {
-        let token = response.headers.authorization;
-        localStorage.setItem("SavedToken", token);
-        console.log("this is local storage" + window.localStorage.getItem('SavedToken'))//추가 하면 된다고 함
-        navigate('/')
+        console.log(response)
+        // let token = response.headers.authorization;
+        // localStorage.setItem("SavedToken", token);
+        // console.log("this is local storage" + window.localStorage.getItem('SavedToken'))
+        // alert("로그인이 완료되었습니다")
+        // navigate('/')
+
       })
       .catch(function (error) {
         console.log(error);
       });
+    }
+      
   };
 
   // letting user sign-in
   // const signinCheck = (userCred) => {
-  // // console.log("checking user from hook "+ JSON.stringify(userCred))
-  // // console.log("checking user in function " + JSON.stringify(users.users.user))
-  // // console.log("check user length " + users.length)
-  // // if(users.users.user.length !== 0){
-  // // let flag = false
-  // // for(let i = 0; i < users.users.user.length; i++){
-  // // if(users.users.user[i].nickname === userCred.ID && users.users.user[i].password === userCred.password){
-  // // alert("로그인에 성공했습니다")
-  // // navigate("/")
-  // // flag = true
-  // // break
-  // // }
-  // // }
-  // // if(!flag) {
-  // // alert("로그인이 실패 했습니다")
-  // // }
+  //   // console.log("checking user from hook "+ JSON.stringify(userCred))
+  //   // console.log("checking user in function " + JSON.stringify(users.users.user))
+  //   // console.log("check user length " + users.length)
+  // //   if(users.users.user.length !== 0){
+  // //   let flag = false
+  // //   for(let i = 0; i < users.users.user.length; i++){
+  // //     if(users.users.user[i].nickname === userCred.ID && users.users.user[i].password === userCred.password){
+  // //       alert("로그인에 성공했습니다")
+  // //       navigate("/")
+  // //       flag = true
+  // //       break
+  // //     }
+  // //   }
+  // //   if(!flag) {
+  // //     alert("로그인이 실패 했습니다")
+  // //   }
   // // }
 
   return (
@@ -75,39 +93,39 @@ const LoginPage = () => {
       </LeftCon>
       <MiddleCon>
         <FormCon>
-          <form onSubmit={handleSubmit}>
-            <LoginTitle>로그인</LoginTitle>
-            <SignInInputCon>
-              <LoginLabel>아이디</LoginLabel>
-              <SigninTxtbox
-                type="text"
-                value={ID}
-                placeholder="아이디를 입력해주세요"
-                onChange={(e) => {
-                  setID(e.target.value);
-                }}
-              />
-            </SignInInputCon>
-            <LoginLabel>비밀번호</LoginLabel>
-            <SignInInputCon>
-              <SigninTxtbox
-                type="text"
-                value={password}
-                placeholder="비밀번호를 입력해주세요"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </SignInInputCon>
-            <SignInBtnCon>
-              <LoginBtn
+        <form onSubmit={handleSubmit}>
+          <LoginTitle>로그인</LoginTitle>
+          <SignInInputCon>
+            <LoginLabel>아이디</LoginLabel>
+            <SigninTxtbox
+              type="text"
+              value={ID}
+              placeholder="아이디를 입력해주세요"
+              onChange={(e) => {
+                setID(e.target.value);
+              }}
+            />
+          </SignInInputCon>
+          <LoginLabel>비밀번호</LoginLabel>
+          <SignInInputCon>
+            <SigninTxtbox
+               type="text"
+               value={password}
+               placeholder="비밀번호를 입력해주세요"
+               onChange={(e) => {
+                 setPassword(e.target.value);
+               }}
+            />
+          </SignInInputCon>
+          <SignInBtnCon>
+            <LoginBtn
               // onClick={()=>{signinCheck({ID:ID, password: password})}}
-              >
-                로그인
-              </LoginBtn>
-            </SignInBtnCon>
-          </form>
-          <Ptag>아직 회원이 아니신가요?&nbsp;<Atag href="/signup">회원가입</Atag></Ptag>
+            >
+            로그인
+            </LoginBtn>
+          </SignInBtnCon>
+        </form>
+        <Ptag>아직 회원이 아니신가요?&nbsp;<Atag href="/signup">회원가입</Atag></Ptag>
         </FormCon>
       </MiddleCon>
       {/* <RightCon>
@@ -136,10 +154,11 @@ border-radius: 10px;
 border-style: solid;
 border-color: #C0C0C0;
 
-&:focus {
-outline: none;
-border-color:#004e66;
-}
+  &:focus {
+    outline: none;
+    border-color:#004e66;
+  }
+
 `;
 
 const FormCon = styled.div`
@@ -154,7 +173,7 @@ margin-top: 8%;
 color: grey;
 `
 const Atag = styled.a`
-color: #ff5f2e;
+  color: #ff5f2e; 
 `
 
 const SignInInputCon = styled.div`
@@ -177,13 +196,14 @@ display: inline-block;
 font-size: 0.9em;
 font-weight: bold;
 
-background-color: #ff5f2e;
-color: #004e66;
-text-align: center;
+  background-color: #ff5f2e;
+  color: #004e66;
+  text-align: center;
 
-border-radius: 10px;
-border-style: solid;
-border-color: #ff5f2e;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #ff5f2e;
+
 `;
 
 const LeftCon = styled.div`

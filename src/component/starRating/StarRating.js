@@ -11,6 +11,7 @@ const StarRating = ({ onChangeHandler }) => {
     <div>
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
+        // console.log("Checking Array "+JSON.stringify([...Array(5)]))
         return (
           <label>
             <input
@@ -21,6 +22,7 @@ const StarRating = ({ onChangeHandler }) => {
               onChange={(e)=> onChangeHandler(e)}
               onClick={() => setRating(ratingValue)}
             />
+            {/* {console.log("this is rating" + ratingValue)} */}
             <FaStar
               className="star"
               color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
