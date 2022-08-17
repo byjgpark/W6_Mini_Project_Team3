@@ -1,16 +1,24 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
+import instance from "./instans";
 
+const ageParams = ['10', '20', '30']
 export const _getPost = createAsyncThunk(
   "post/getPost",
-  async payload => {
-    // console.log(payload)
-    const response = await axios.get(
-      "http://13.124.123.173/api/cards"
-      );
-    console.log(response.data.data)
-    return(response.data.data)
+  async () => {
+    try{
+    // console.log(param)
+
+    // const pram = await useParams()
+    const response = await instance.get('/api/cards')
+    const data = response.data.data
+    console.log(data)
+    // console.log(params)
+
+     return data
+   }catch(error){
+    console.log(error)
    }
+  }
 )
 
 const initialState = {
@@ -42,6 +50,7 @@ const postList = createSlice({
   extraReducers: {
     [_getPost.fulfilled]: (state, action) => {
       state.postList = action.payload
+      console.log(action)
     }
   }
 })

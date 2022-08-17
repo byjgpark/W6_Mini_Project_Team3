@@ -16,6 +16,7 @@ function App() {
 
 
       <Route path="/cards" element={<ListPage />} />
+      <Route path="/cards/:id" element={<ListPage />} />
       <Route path="/login" element={<LoginPage />} />
 
       <Route path="/" element={<MainPage />} />
