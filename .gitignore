@@ -11,7 +11,6 @@
 # production
 /build
 /password
-
 /db.json
 
 # misc

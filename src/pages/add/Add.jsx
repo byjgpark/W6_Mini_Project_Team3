@@ -26,7 +26,7 @@ const Add = () => {
     console.log(e.target)
     setPosting({ ...posting, [name]: value });
   };
-  
+
   const onSumbitHandler = (event) => {
     event.preventDefault();
     if (
@@ -41,7 +41,7 @@ const Add = () => {
       dispatch(addDetailThunk(posting));
       setPosting(initialState);
       alert("정상적으로 등록 되었습니다");
-      navigate("/");
+      navigate('/cards');
     }
   };
 
@@ -69,7 +69,7 @@ const Add = () => {
               onChange={onChangeHandler}
             />
             <StarBox>
-              <StarRating/>
+              <StarRating onChangeHandler={onChangeHandler} />
             </StarBox>
             <textarea
               type="text"
