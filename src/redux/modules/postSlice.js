@@ -1,10 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-<<<<<<< HEAD
 import instance from "./instance";
-=======
-import axios from "axios";
-import instance from "./instans";
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
 
 const initialState = {
   posts: [],
@@ -22,31 +17,12 @@ export const addDetailThunk = createAsyncThunk(
     const token = window.localStorage.getItem('SavedToken')
     console.log(token)
     try {
-<<<<<<< HEAD
       const data = await instance.post("/api/auth/cards", payload, {
         headers: headers,
         // "Content-Type": "multipart/form-data",
-      });
-      console.log(data);
-      return api.fulfillWithValue(data.data);
-=======
-      // const data = await axios.post("http://13.124.123.173/api/auth/cards", payload);
-      // console.log(data);
-      // return api.fulfillWithValue(data.data);
-
-      //----------------------테스트--------------------//
-      // axios.defaults.headers.common['Authorization'] = {token}
-      instance.post('/api/auth/cards', payload)
-      .then(res => {
-        console.log(res);	
-      })
-
-      // axios.post(process.env.REACT_APP_API_KEY+'/api/auth/cards', payload, {headers:{Authorization: localStorage.getItem('SavedToken')}})
-      // .then(res => {
-      //   console.log(res);	
-      // })
-      //---------------------------테스트 끝-----------------//
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
+        });
+        console.log(data);
+        return api.fulfillWithValue(data.data);
     } catch (error) {
       return api.rejectWithValue(error);
     }
@@ -75,7 +51,6 @@ export const postSlice = createSlice({
       state.posts = action.payload;
     },
     [addDetailThunk.rejected]: (state, action) => {
-<<<<<<< HEAD
       console.log(state);
       state.posts = action.payload;
     },
@@ -85,10 +60,6 @@ export const postSlice = createSlice({
     [deleteDetailThunk.rejected]: (state, action) => {
       console.log(state);
       state.posts = action.payload;
-=======
-      console.log(action.payload);
-      state.postings = action.payload;
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
     },
   },
 });

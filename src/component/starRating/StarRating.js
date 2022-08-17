@@ -19,11 +19,7 @@ const StarRating = ({ onChangeHandler }) => {
               type="radio"
               name="star"
               value={ratingValue}
-<<<<<<< HEAD
-              onChange={(e) => onChangeHandler(e)}
-=======
               onChange={(e)=> onChangeHandler(e)}
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
               onClick={() => setRating(ratingValue)}
             />
             {/* {console.log("this is rating" + ratingValue)} */}

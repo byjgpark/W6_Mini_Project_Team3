@@ -32,7 +32,7 @@ const Detail = () => {
         <DetailContainer>
           <ImgDetailBox>
             <img
-              src={`${list[id]?.imgUrl}`}
+              src={`${list[0]?.imgUrl}`}
               alt="이미지를 표시할 수 없습니다."
               style={{ width: "100%", margin: "30px 0", objectFit: "contain" }}
             />
