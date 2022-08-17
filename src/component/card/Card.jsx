@@ -7,34 +7,28 @@ import { useSelector } from 'react-redux';
 const Card = (post) => {
   const navigate = useNavigate()
   const star = useSelector(state => state.list.postList)
-  console.log(star)
-  console.log(post.star)
-  // const numStar = parseInt(post.star)
-  // console.log(numStar)
   
   return (
-    <Stcard>
+    <Stcard  onClick={() => navigate(`/Detail/${post.id}`)}>
       <StCardBox>
         <StImg src={`${post.image}`} alt="등록된 이미지가 없습니다." />
         <StLine />
         <StTextContainer>
           <Sttext fontSize='20px' fontWeight='700'>{post.title}</Sttext>
           <Sttext fontSize='14px'>{`#${post.place}`}</Sttext>
-          <Sttext fontSize='14px'>{post.body}</Sttext>
+          <Sttext fontSize='14px' color='#666'>{post.body}</Sttext>
           <Sttext fontSize='20px'>
             <div>
-              {[...Array(parseInt(post.star))].map(star => {
+              {[...Array(parseInt(post.star))].map((star,i) => {
                 return (
-                  <FaStar style={{ color:'#fcbe32' }}/>
+                  <FaStar key={i} style={{ color:'#fcbe32' }}/>
                 );
               })}
             </div>
           </Sttext>
         </StTextContainer>
       </StCardBox>
-      <>
-        <StButton onClick={() => navigate(`/Detail/${post.id}`)}>상세보기</StButton>
-      </>
+        {/* <StButton onClick={() => navigate(`/Detail/${post.id}`)}>상세보기</StButton> */}
     </Stcard>
   );
 };
@@ -52,7 +46,16 @@ const Stcard = styled.div`
   width: 320px;
   height: 400px;
 
+  background-color:#fff;
   box-shadow: 5px 5px 10px gray;
+
+  cursor: pointer;
+
+  transition: all 200ms;
+  :hover{
+    z-index:1;
+    transform:scale(1.15);
+  }
 `;
 const StImg = styled.img`
   width:95%;
@@ -101,13 +104,18 @@ const StButton = styled.button`
   width:100px;
   height:30px;
 
-  color:#e1eef6;
-  background-color:#ff5f2e;
+  color:#ff5f2e;
+  background-color:initial;
 
-  font-weight:700;
+  font-size:15px;
 
   border:none;
   border-radius:7px;
 
   margin-left:55%;
+
+  cursor:pointer;
+  :hover{
+    font-weight:700;
+  }
   `

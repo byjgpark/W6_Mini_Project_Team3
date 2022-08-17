@@ -73,8 +73,8 @@ const Add = () => {
             <textarea
               type="text"
               placeholder="내용을 입력해주세요"
-              name="body"
-              value={posting.body}
+              name="content"
+              value={posting.content}
               onChange={onChangeHandler}
             />
             <button onClick={onSumbitHandler}>게시물 등록하기</button>
