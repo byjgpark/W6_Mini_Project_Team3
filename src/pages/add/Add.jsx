@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ const Add = () => {
     place: "",
     star: 0,
     content: "",
-    imgUrl: "url",
+    imgUrl: "",
   };
 
   const [posting, setPosting] = useState(initialState);
@@ -27,63 +27,71 @@ const Add = () => {
     setPosting({ ...posting, [name]: value });
   };
 
-  const onSumbitHandler = async (event) => {
-    event.preventDefault();
-    if (posting.title === "" || posting.place === "" || posting.body === "") {
-      event.preventDefault();
-      alert("내용을 모두 채워주세요");
-    } else {
-      event.preventDefault();
-      let frm = new FormData();
-      let postimg = document.getElementById("img_file");
-
-      frm.append(
-        "data",
-        new Blob([JSON.stringify(posting)], { type: "application.json" })
-      );
-      frm.append("image", postimg.files[0]);
-      try {
-        const response = await dispatch(addDetailThunk(frm)).unwrap();
-        if (response) {
-          navigate(`/detail/${response.id}`);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-
-      dispatch(addDetailThunk(posting));
-      setPosting(initialState);
-      alert("정상적으로 등록 되었습니다");
-      navigate("/");
-    }
-  };
   // 선택된 파일 읽기
   const onLoadFile = (e) => {
     setFiles(URL.createObjectURL(e.target.files[0]));
   };
 
+  //저장 함수
+  const onPostingHandler = async (event) => {
+    event.preventDefault();
+    if (
+      posting.title === "" ||
+      posting.place === "" ||
+      posting.content === ""
+    ) {
+      event.preventDefault();
+      alert("내용을 모두 채워주세요");
+    } else {
+      event.preventDefault();
+      let frm = new FormData();
+      let postimage = document.getElementById("img_file");
+
+      frm.append(
+        "data",
+        new Blob([JSON.stringify(posting)], { type: "application/json" })
+      );
+      frm.append("image", postimage.files[0]);
+      dispatch(addDetailThunk(frm));
+      try {
+        const response = await dispatch(addDetailThunk(frm));
+        if (response) {
+          // setPosting(initialState);
+          alert("정상적으로 등록 되었습니다");
+          // navigate("/");
+
+          // navigate(`/detail/${response.id}`);
+          // alert("정상적으로 등록 되었습니다");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      // dispatch(addDetailThunk(posting));
+      // setPosting(initialState);
+      // alert("정상적으로 등록 되었습니다");
+      // navigate("/");
+    }
+  };
+
   return (
     <AddWrap>
       <AddContainer>
-        <InputBox>
-          <ImgContainer>
-            {files === "" ? (
-              <Postingimg></Postingimg>
-            ) : (
-              <Postingimg src={files}></Postingimg>
-            )}
-            {/* <ImgBtn> */}
-            <label htmlFor="img_file"></label>
-            {/* <form>{" "} */}
-            <input
+        <InputBox encType="multipart/form-data" onSubmit={onPostingHandler}>
+          <ImageBox>
+            <ImgForm>
+              <strong></strong>
+              <PrevImg src={files ? files : ""} alt="이미지 미리보기" />
+            </ImgForm>
+
+            {/* <FileCustom placeholder="업로드 버튼을 클릭해주세요" /> */}
+            <FileLabel htmlFor="img_file">이미지 가져오기</FileLabel>
+            <FileInput
               type="file"
               id="img_file"
-              accept="image/*"
+              accept="img/*"
               onChange={onLoadFile}
             />
-            {/* </form> */}
-            {/* </ImgBtn> */}
-          </ImgContainer>
+          </ImageBox>
 
           <FormBox>
             <input
@@ -110,9 +118,7 @@ const Add = () => {
               value={posting.content}
               onChange={onChangeHandler}
             />
-            <button onClick={onSumbitHandler} encType="multipart/form-data">
-              게시물 등록
-            </button>
+            <button type="submit">게시물 등록</button>
           </FormBox>
         </InputBox>
       </AddContainer>
@@ -141,63 +147,48 @@ const AddContainer = styled.div`
   padding: 40px;
 `;
 
-const InputBox = styled.div`
+const InputBox = styled.form`
   display: flex;
   justify-content: space-around;
   height: 100%;
-  /* border: 1px solid red; */
 `;
-const ImgContainer = styled.div`
-  width: 60%;
-  height: 90%;
-  /* input[type="file"] {
-    border: 1px #004e66 solid;
-    width: 200px;
-    height: 100px;
-  } */
-`;
-const Postingimg = styled.div`
-  width: 95%;
-  height: 77.5%;
-  border-radius: 10px;
-  border: 1px solid #004e66;
+const ImageBox = styled.div`
+  width: 40%;
+  height: 70%;
 `;
 
-const ImgBtn = styled.div`
-  border: none;
+const ImgForm = styled.div`
+  border: 1px #004e66 solid;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
-  width: 200px;
-  height: 50px;
-  background-color: #ff5f2e;
+  border: 1px dotted #004e66;
+`;
+const PrevImg = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+const FileLabel = styled.label`
+  display: inline-block;
+  padding: 0 30px;
+  padding-top: 5px;
+  padding-bottom: 7px;
   color: #e1eef6;
-  font-size: medium;
+  vertical-align: middle;
+  background-color: #ff5f2e;
+  cursor: pointer;
+  width: 140px;
+  height: 39px;
+  line-height: 40px;
+  margin-left: 10px;
+  border-radius: 10px;
   margin-top: 20px;
-  margin-left: 180px;
-
-  label {
-    display: inline-block;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    cursor: pointer;
-    width: 200px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-  }
-  input[type="file"] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
+  margin-left: 100px;
+  text-align: center;
 `;
+
 const FormBox = styled.div`
-  width: 60%;
+  width: 50%;
   height: 100%;
 
   input[type="text"] {
@@ -239,4 +230,12 @@ const StarBox = styled.div`
   margin-top: 0px;
   align-items: center;
   float: left;
+`;
+const FileInput = styled.input`
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
 `;

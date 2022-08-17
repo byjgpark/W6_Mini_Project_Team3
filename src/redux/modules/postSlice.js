@@ -2,18 +2,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import instance from "./instance";
 
 const initialState = {
-  postings: [],
+  posts: [],
 };
 
-//게시물 추가
+const headers = {
+  "Content-Type": "multipart/form-data",
+};
+
+//게시물 추가 /api/auth/cards
 export const addDetailThunk = createAsyncThunk(
   "postDetail",
   async (payload, api) => {
-    // console.log(payload);
+    console.log(payload);
     try {
-      const { data } = await instance.post("/api/auth/cards", payload, {
-        "Content-Type": "multipart/form-data",
+      const data = await instance.post("/api/auth/cards", payload, {
+        headers: headers,
+        // "Content-Type": "multipart/form-data",
       });
+      console.log(data);
       return api.fulfillWithValue(data.data);
     } catch (error) {
       return api.rejectWithValue(error);
@@ -40,20 +46,18 @@ export const postSlice = createSlice({
   reducers: {},
   extraReducers: {
     [addDetailThunk.fulfilled]: (state, action) => {
-      state.postings = action.payload;
+      state.posts = action.payload;
     },
     [addDetailThunk.rejected]: (state, action) => {
       console.log(state);
-      state.postings = action.payload;
+      state.posts = action.payload;
     },
     [deleteDetailThunk.fulfilled]: (state, action) => {
-      state.postings = state.filter(
-        (posting) => posting.id !== action.payload.id
-      );
+      state.posts = state.filter((posts) => posts.id !== action.payload.id);
     },
     [deleteDetailThunk.rejected]: (state, action) => {
       console.log(state);
-      state.postings = action.payload;
+      state.posts = action.payload;
     },
   },
 });

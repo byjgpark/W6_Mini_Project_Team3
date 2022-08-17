@@ -3,7 +3,7 @@ import axios from "axios";
 import instance from "./instance";
 
 const initialState = {
-  posting: {
+  post: {
     id: "",
     title: "",
     place: "",
@@ -25,20 +25,21 @@ export const getDetailThunk = createAsyncThunk(
     }
   }
 );
-//게시물 수정 /api/auth/cards/{id}
+//게시물 수정 /api/auth/cards/{id} // /api/auth/cards/{id}
 export const editDetailThunk = createAsyncThunk(
   "editDetail",
   async (payload, api) => {
     console.log(payload);
     try {
-      const { data } = await instance.put(
-        `api/auth/cards/${payload.id}`,
-        payload
-      );
+      const { data } = await instance.put(`api/auth/cards/${payload.id}`, {
+        content: payload.content,
+      });
       console.log(data);
-      return api.fulfillWithValue(payload);
+      // return api.fulfillWithValue(payload);
+      return console.log(data);
     } catch (error) {
-      return api.rejectWithValue(error);
+      // return api.rejectWithValue(error);
+      return console.log(error);
     }
   }
 );
@@ -49,14 +50,14 @@ export const targetPostSlice = createSlice({
   reducers: {},
   extraReducers: {
     [getDetailThunk.fulfilled]: (state, action) => {
-      state.posting = action.payload;
+      state.post = action.payload;
     },
     [getDetailThunk.rejected]: (state, action) => {
       console.log(state);
       state.error = action.payload;
     },
     [editDetailThunk.fulfilled]: (state, action) => {
-      state.posting = action.payload;
+      state.post = action.payload;
     },
     [editDetailThunk.rejected]: (state, action) => {
       state.error = action.payload;

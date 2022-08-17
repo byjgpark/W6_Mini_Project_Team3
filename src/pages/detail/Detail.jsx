@@ -24,7 +24,7 @@ const Detail = () => {
   //   dispatch(_getPost());
   // }, []);
 
-  const list = useSelector((state) => state.post.posting);
+  const list = useSelector((state) => state.post.post);
   console.log(list);
   return (
     <div>
@@ -32,7 +32,7 @@ const Detail = () => {
         <DetailContainer>
           <ImgDetailBox>
             <img
-              src={`${list[id].image}`}
+              src={`${list[id]?.imgUrl}`}
               alt="이미지를 표시할 수 없습니다."
               style={{ width: "100%", margin: "30px 0", objectFit: "contain" }}
             />
