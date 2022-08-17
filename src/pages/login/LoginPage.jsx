@@ -1,32 +1,30 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {__getUsers} from "../../redux/modules/user"
 import img from "../../img/LoginIn.jpg"
+import axios from "axios";
 
 // redux
 import { useSelector, useDispatch } from 'react-redux';
+import { getAllByPlaceholderText } from "@testing-library/react";
 
 const LoginPage = () => {
+
+  console.log("checking env file" + process.env.REACT_APP_API_KEY)
   
   //Redux
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user)
-  if(users.users.user.length !== 0) {
-    console.log("checking user " + JSON.stringify(users.users.user))
-  }
-  useEffect(() => {
-    dispatch(__getUsers());
-  }, [dispatch]);
+  // if(users.users.user.length !== 0) {
+  //   console.log("checking user " + JSON.stringify(users.users.user))
+  // }
+  // useEffect(() => {
+  //   dispatch(__getUsers());
+  // }, [dispatch]);
 
   //Router
-  const navigate = useNavigate();
-
-  //Navigate signup page
-  // const naviSignUp = () => {
-  //   navigate("signup");
-  // };
+  // const navigate = useNavigate();
 
   //Hook
   const [ID, setID] = useState("");
@@ -35,29 +33,54 @@ const LoginPage = () => {
   // handleSubmit for form
   const handleSubmit = (event) => {
     event.preventDefault();
-    signinCheck({ID:ID, password: password})
+
+    if(ID === "" && password === ""){
+      alert("아아디와 비밀번호를 입력해주세요")
+    }
+    else if( ID === ""){
+      alert("아아디를 입력해주세요")      
+    }
+
+    else if(password === ""){
+      alert("비밀번호를 입력주세요")
+    }
+    else{
+      axios.post(process.env.REACT_APP_API_KEY + 'users/login', // 
+      {"nickname": ID,"password": password})
+      .then(function (response) {
+        console.log(response)
+        // let token = response.headers.authorization;
+        // localStorage.setItem("SavedToken", token);
+        // console.log("this is local storage" + window.localStorage.getItem('SavedToken'))
+        // alert("로그인이 완료되었습니다")
+        // navigate('/')
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+      
   };
 
   // letting user sign-in
-  const signinCheck = (userCred) => {
-    // console.log("checking user from hook "+ JSON.stringify(userCred))
-    // console.log("checking user in function " + JSON.stringify(users.users.user))
-    // console.log("check user length " + users.length)
-    if(users.users.user.length !== 0){
-    let flag = false
-    for(let i = 0; i < users.users.user.length; i++){
-      if(users.users.user[i].nickname === userCred.ID && users.users.user[i].password === userCred.password){
-        alert("로그인에 성공했습니다")
-        navigate("/")
-        flag = true
-        break
-      }
-    }
-    if(!flag) {
-      alert("로그인이 실패 했습니다")
-    }
-  }
-  }
+  // const signinCheck = (userCred) => {
+  //   // console.log("checking user from hook "+ JSON.stringify(userCred))
+  //   // console.log("checking user in function " + JSON.stringify(users.users.user))
+  //   // console.log("check user length " + users.length)
+  // //   if(users.users.user.length !== 0){
+  // //   let flag = false
+  // //   for(let i = 0; i < users.users.user.length; i++){
+  // //     if(users.users.user[i].nickname === userCred.ID && users.users.user[i].password === userCred.password){
+  // //       alert("로그인에 성공했습니다")
+  // //       navigate("/")
+  // //       flag = true
+  // //       break
+  // //     }
+  // //   }
+  // //   if(!flag) {
+  // //     alert("로그인이 실패 했습니다")
+  // //   }
+  // // }
 
   return (
     <>
@@ -91,7 +114,7 @@ const LoginPage = () => {
           </SignInInputCon>
           <SignInBtnCon>
             <LoginBtn
-              onClick={()=>{signinCheck({ID:ID, password: password})}}
+              // onClick={()=>{signinCheck({ID:ID, password: password})}}
             >
             로그인
             </LoginBtn>
@@ -128,7 +151,7 @@ const SigninTxtbox = styled.input`
 
   &:focus {
     outline: none;
-    border-color: green;
+    border-color:#004e66;
   }
 `;
 
@@ -144,7 +167,7 @@ const Ptag = styled.p`
   color: grey;
 `
 const Atag = styled.a`
-  color: #4caf50; 
+  color: #ff5f2e; 
 `
 
 const SignInInputCon = styled.div`
@@ -167,13 +190,13 @@ const LoginBtn = styled.button`
   font-size: 0.9em;
   font-weight: bold;
 
-  background-color: #4caf50;
-  color: white;
+  background-color: #ff5f2e;
+  color: #004e66;
   text-align: center;
 
   border-radius: 10px;
   border-style: solid;
-  border-color: #4caf50;
+  border-color: #ff5f2e;
 `;
 
 const LeftCon = styled.div`

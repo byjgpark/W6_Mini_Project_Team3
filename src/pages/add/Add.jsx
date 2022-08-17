@@ -23,9 +23,10 @@ const Add = () => {
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
+    console.log(e.target)
     setPosting({ ...posting, [name]: value });
   };
-
+  
   const onSumbitHandler = (event) => {
     event.preventDefault();
     if (
@@ -68,7 +69,7 @@ const Add = () => {
               onChange={onChangeHandler}
             />
             <StarBox>
-              <StarRating />
+              <StarRating/>
             </StarBox>
             <textarea
               type="text"

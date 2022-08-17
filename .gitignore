@@ -10,9 +10,9 @@
 
 # production
 /build
+/password
 
 /db.json
-/server
 
 # misc
 .DS_Store

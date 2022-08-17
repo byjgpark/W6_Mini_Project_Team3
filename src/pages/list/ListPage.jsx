@@ -11,12 +11,14 @@ import { _getPost } from '../../redux/modules/list';
 const ListPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const postList = useSelector(state => state.list.postList)
-  console.log(postList)
+  const postList = useSelector(state => state.post.postList)
+  // console.log(postList)
 
   useEffect(()=>{
     dispatch(_getPost());
   },[]);
+
+  console.log("this is local storage" + window.localStorage.getItem('SavedToken'))
 
   return (
     <StListContainer>

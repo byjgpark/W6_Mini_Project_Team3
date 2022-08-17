@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "nickname": "test123asd",
+      "password": "test1234",
+      "passwordConfirm": "test1234",
+      "gender": "male",
+      "age": "10",
+      "id": 1
+    },
+    {
+      "nickname": "test1234",
+      "password": "test12345",
+      "passwordConfirm": "test12345",
+      "gender": "female",
+      "age": "29",
+      "id": 2
+    }
+  ]
+}
