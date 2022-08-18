@@ -19,12 +19,12 @@
 * **백엔드**
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=SpringBoot&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring Security&logoColor=white"/> <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=java&logoColor=white"/>  <img src="https://img.shields.io/badge/JWT-000000?style=flat&logo=JWT&logoColor=white"/> <img src="https://img.shields.io/badge/Gradle-02303A?style=flat&logo=Gradle&logoColor=white"/> <img src="https://img.shields.io/badge/amazon s3-569A31?flat&logo=Gradle&logo=amazons3&logoColor=green">
 
+[프론트엔드 깃허브로 이동하기](https://github.com/mini-backend-8-B-3/trip-sorted-by-age.git
+http://13.124.123.173/api/auth/cards)
+
 * **프론트엔드**
 <img src="https://img.shields.io/badge/html5-E34F26?style=flat&logo=Gradle&logo=html5&logoColor=white"/> <img src="https://img.shields.io/badge/css-1572B6?style=flat&logo=css3&logo=Gradle&logoColor=white"/> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat&logo=Gradle&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logo=Gradle&logoColor=black"/> <img src="https://img.shields.io/badge/styled components-DB7093?style=flat&logo=Gradle&logo=styledcomponents&logoColor=pink"/> <img src="https://img.shields.io/badge/react query-61DAFB?style=flat&logo=Gradle&logo=reactquery&logoColor=FF4154"/> <img src="https://img.shields.io/badge/amazon s3-569A31?style=flat&logo=amazons3&logoColor=green">
 
-  [프론트엔드 깃허브로 이동하기]( https://github.com/byjgpark/W6_Mini_Project_Team3)
-
-  
 
 ## 🌟핵심기능🌟
 
