@@ -15,7 +15,7 @@ const DetailPageComment = (props) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const initialState = {
-    cardid: parseInt(id),
+    cardId: parseInt(id),
     nickname: "",
     content: "",
     isEditMode: false,
@@ -23,7 +23,9 @@ const DetailPageComment = (props) => {
   console.log(id);
 
   useEffect(() => {
-    dispatch(checkCommentThunk(props.CardID));
+
+    dispatch(checkCommentThunk(id));
+
   }, [dispatch]);
 
   const [addComment, setAddComment] = useState(initialState);
@@ -66,7 +68,7 @@ const DetailPageComment = (props) => {
         <InputId>
           <input
             type="text"
-            placeholder="Nickname"
+            placeholder="ID"
             name="nickname"
             value={addComment.nickname}
             onChange={inputHandler}
@@ -93,7 +95,9 @@ const DetailPageComment = (props) => {
                   <div>
                     <CommentBox key={index}>
                       <TextBox>
-                        <IdBox>{item.id}</IdBox>
+
+                        <IdBox>{item.nickname}</IdBox>
+
                         <BodyBox>{item.content}</BodyBox>
                       </TextBox>
                       {item.isEditMode ? (
@@ -116,16 +120,6 @@ const DetailPageComment = (props) => {
                         <p>{put_comment?.content}</p>
                       )}
                       <div>
-                        {item.isEditMode ? (
-                          <button onClick={onClickSaveButton}>저장</button>
-                        ) : (
-                          <button
-                            onClick={() => dispatch(checkCommentThunk(item.id))}
-                          >
-                            수정
-                          </button>
-                        )}
-
                         <button
                           onClick={() => {
                             dispatch(delCommentThunk(item));
@@ -147,7 +141,6 @@ const DetailPageComment = (props) => {
 export default DetailPageComment;
 
 const InputContainer = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   height: 60px;
   margin-top: 30px;
@@ -207,6 +200,7 @@ const TextBox = styled.div`
   height: 200px;
   margin-left: 10px;
   margin-top: 10px;
+
   input[type="text"] {
     border: blue 1px solid;
     border-radius: 5px;

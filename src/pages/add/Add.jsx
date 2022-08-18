@@ -24,7 +24,7 @@ const Add = () => {
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
-    console.log(e.target)
+    console.log(e.target);
     setPosting({ ...posting, [name]: value });
   };
 
@@ -53,24 +53,16 @@ const Add = () => {
         new Blob([JSON.stringify(posting)], { type: "application/json" })
       );
       frm.append("image", postimage.files[0]);
-      // dispatch(addDetailThunk(frm));
       try {
         const response = await dispatch(addDetailThunk(frm));
         if (response) {
-          // setPosting(initialState);
+          setPosting(initialState);
           alert("정상적으로 등록 되었습니다");
-          // navigate("/");
-
-          // navigate(`/detail/${response.id}`);
-          // alert("정상적으로 등록 되었습니다");
+          navigate("/");
         }
       } catch (error) {
         console.log(error);
       }
-      // dispatch(addDetailThunk(posting));
-      // setPosting(initialState);
-      // alert("정상적으로 등록 되었습니다");
-      // navigate("/");
     }
   };
 
@@ -83,7 +75,6 @@ const Add = () => {
               <strong></strong>
               <PrevImg src={files ? files : ""} alt="이미지 미리보기" />
             </ImgForm>
-
             {/* <FileCustom placeholder="업로드 버튼을 클릭해주세요" /> */}
             <FileLabel htmlFor="img_file">이미지 가져오기</FileLabel>
             <FileInput

@@ -27,7 +27,7 @@ const SignUp = () => {
   let [valCheck, setValCheck] = useState({
     userCheck: false,
     password: false,
-    passwordConfirm: false
+    passwordConfirm: false,
   });
 
   const num = password.search(/[0-9]/g);
@@ -82,8 +82,8 @@ const SignUp = () => {
     });
     
     console.log("로그인이 완료되었습니다.")
-    }
 
+    }
   };
 
   const userValidation = () => {
@@ -116,7 +116,7 @@ const SignUp = () => {
 
   const checkNick = (value) => {
     var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
-    if(value === "" || !regExp.test(value)){
+    if (value === "" || !regExp.test(value)) {
       // setCheck(true)
       console.log("hello testing 123")
       console.log(booVal)
@@ -127,8 +127,9 @@ const SignUp = () => {
       booVal = true
       console.log(booVal)
       return false
+
     }
-  }
+  };
 
   const onChangleGender = (e) => {
     setGender(e.target.value)
@@ -143,6 +144,7 @@ const SignUp = () => {
     <>
       <LeftCon>
       </LeftCon>
+
       <MiddleCon>
         <FormCon>
           <form onSubmit={onSubmitHandler}>
@@ -240,20 +242,19 @@ const InputCon = styled.div`
   flex-direction: column;
   gap: 8px;
   margin: 2% 0 3% 0;
-`
+`;
 const NicInputBox = styled.input`
-width: 70%;
-padding: 5% 0 3% 0;
-border-radius: 10px;
-border-style: solid;
-border-color: #C0C0C0;
-display:inline-block;
+  width: 70%;
+  padding: 5% 0 3% 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #c0c0c0;
+  display: inline-block;
 
-&:focus {
-  outline: none;
-  border-color: #004e66
-;
-}
+  &:focus {
+    outline: none;
+    border-color: #004e66;
+  }
 `;
 
 const NotCheck = styled.p`
@@ -273,9 +274,9 @@ const WrongCheck = styled.p`
 
 const CheckBtn = styled.button`
   width: 27%;
-  display:inline-block;
+  display: inline-block;
   padding: 5% 0 3% 0;
-  float:right;
+  float: right;
   font-weight: bold;
 
   border-radius: 10px;
@@ -284,47 +285,46 @@ const CheckBtn = styled.button`
 
   background-color: #ff5f2e;
   color: white;
-`
+`;
 
 const InputBox = styled.input`
-width: 100%;
-padding: 5% 0 3% 0;
-border-radius: 10px;
-border-style: solid;
-border-color: #C0C0C0;
+  width: 100%;
+  padding: 5% 0 3% 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #c0c0c0;
 
-&:focus {
-  outline: none;
-  border-color: #004e66
-;
-}
+  &:focus {
+    outline: none;
+    border-color: #004e66;
+  }
 `;
 
 const Label = styled.div`
   font-size: 0.9em;
   font-weight: bold;
-`
+`;
 
 const BtnCon = styled.div`
-margin-top: 8%;
-display: flex;
-justify-content: center;
+  margin-top: 8%;
+  display: flex;
+  justify-content: center;
 `;
 
 const Button = styled.button`
-width: 100%;
-padding: 5% 0 3% 0;
-display: inline-block;
-font-size: 0.9em;
-font-weight: bold;
+  width: 100%;
+  padding: 5% 0 3% 0;
+  display: inline-block;
+  font-size: 0.9em;
+  font-weight: bold;
 
-background-color: #ff5f2e;
-color: white;
-text-align: center;
+  background-color: #ff5f2e;
+  color: white;
+  text-align: center;
 
-border-radius: 10px;
-border-style: solid;
-border-color: #ff5f2e;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #ff5f2e;
 `;
 
 const LeftCon = styled.div`
@@ -338,7 +338,7 @@ const LeftCon = styled.div`
 
   background-image: url(${img});
   background-size: 100% 100%;
-  
+
   left: 0;
 `;
 
@@ -357,5 +357,3 @@ const MiddleCon = styled.div`
 const FormCon = styled.div`
   margin: 10% 25%;
 `;
-
-

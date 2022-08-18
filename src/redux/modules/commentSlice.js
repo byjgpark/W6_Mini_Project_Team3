@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import instance from "./instance";
 
 const initialState = {
@@ -12,9 +11,8 @@ export const addCommentThunk = createAsyncThunk(
   async (payload, api) => {
     // console.log(payload); cardId
     try {
-      console.log("This is addcomment " + JSON.stringify(payload))
-      const { data } = await instance.post(
-        `api/auth/cards/${payload}/comments`,
+      const data = await instance.post(
+        `api/auth/cards/${payload.cardId}/comments`,
         payload
       );
       return api.fulfillWithValue(data.data.data);
@@ -29,7 +27,7 @@ export const editCommentThunk = createAsyncThunk(
   async (payload, api) => {
     console.log(payload + "안녕");
     try {
-      await instance.patch(`api/auth/cards/comments/${payload.id}`, {
+      await instance.put(`api/auth/cards/comments/${payload.id}`, {
         content: payload.content,
       });
       return api.fulfillWithValue(payload);
@@ -43,9 +41,8 @@ export const checkCommentThunk = createAsyncThunk(
   "checkComment",
   async (payload, api) => {
     try {
-      console.log("This is checkComment" + payload)
       const data = await instance.get(`api/cards/${payload}/comments`);
-      return console.log("checkCommentThunk data" + JSON.stringify(data.data.data));
+      // return console.log(data);
       return api.fulfillWithValue(data.data.data);
     } catch (e) {
       return api.rejectWithValue(e);
@@ -57,7 +54,7 @@ export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
     try {
-      console.log("This is payload" + JSON.stringify(payload))
+
       await instance.delete(`api/auth/cards/comments/${payload.id}`);
       return api.fulfillWithValue(payload);
     } catch (e) {
@@ -95,11 +92,8 @@ export const CommentSlice = createSlice({
       state.error = action.payload;
     },
     [delCommentThunk.fulfilled]: (state, action) => {
-      const target = state.comments.findIndex(
-        (comments) => comments.id === action.payload
-      );
-
-      state.comments.splice(target, 1);
+      const target = state.comments.filter((v) => v.id !== action.payload.id);
+      state.comments = target;
     },
     [delCommentThunk.rejected]: () => {},
   },

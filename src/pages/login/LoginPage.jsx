@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../img/LoginIn.jpg";
 import axios from "axios";
-
 // redux
 import {userStatus} from "../../redux/modules/user"
 import { useSelector, useDispatch } from "react-redux";
@@ -61,6 +61,7 @@ const LoginPage = () => {
       
   };
 
+
   return (
     <>
       <LeftCon></LeftCon>
@@ -99,6 +100,7 @@ const LoginPage = () => {
           </SignInBtnCon>
         </form>
         <Ptag>아직 회원이 아니신가요?&nbsp;<Atag href="/signup">회원가입</Atag></Ptag>
+
         </FormCon>
       </MiddleCon>
       {/* <RightCon>
@@ -110,9 +112,9 @@ const LoginPage = () => {
 export default LoginPage;
 
 const LoginTitle = styled.div`
-font-size: 1.7em;
-padding-bottom: 5%;
-font-weight: normal;
+  font-size: 1.7em;
+  padding-bottom: 5%;
+  font-weight: normal;
 `;
 
 const LoginLabel = styled.label`
@@ -130,12 +132,12 @@ border-color: #C0C0C0;
   &:focus {
     outline: none;
     border-color:#004e66;
-  }
 
+  }
 `;
 
 const FormCon = styled.div`
-margin: 10% 25%;
+  margin: 10% 25%;
 `;
 
 const Ptag = styled.p`
@@ -150,19 +152,20 @@ const Atag = styled.a`
 `
 
 const SignInInputCon = styled.div`
-display: flex;
-flex-direction: column;
-gap: 8px;
-margin: 2% 0 4% 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 2% 0 4% 0;
 `;
 
 const SignInBtnCon = styled.div`
-margin-top: 10%;
-display: flex;
-justify-content: center;
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
 `;
 
 const LoginBtn = styled.button`
+
 width: 100%;
 padding: 5% 0 3% 0;
 display: inline-block;
@@ -195,15 +198,15 @@ left: 0;
 `;
 
 const MiddleCon = styled.div`
-height: 100%;
-width: 45%;
-position: absolute;
-z-index: 1;
-top: 0;
-overflow-x: hidden;
-padding-top: 20px;
+  height: 100%;
+  width: 45%;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
 
-right: 0;
+  right: 0;
 `;
 
 // // const RightCon = styled.div`
@@ -212,5 +215,4 @@ right: 0;
 // // position: absolute;
 // // z-index: 1;
 // // top: 0;
-
 // // overflow-x:

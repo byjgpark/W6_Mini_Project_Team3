@@ -25,7 +25,7 @@ export const getDetailThunk = createAsyncThunk(
     }
   }
 );
-//게시물 수정 /api/auth/cards/{id} // /api/auth/cards/{id}
+//게시물 수정 /api/auth/cards/{id}
 export const editDetailThunk = createAsyncThunk(
   "editDetail",
   async (payload, api) => {

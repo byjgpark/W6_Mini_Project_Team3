@@ -12,8 +12,7 @@ const store = configureStore({
     post,
     comments,
     user,
-    list
-
+    list,
   },
 });
 
