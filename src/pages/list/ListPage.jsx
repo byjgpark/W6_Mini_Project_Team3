@@ -14,14 +14,11 @@ const ListPage = () => {
   const navigate = useNavigate()
   const postList = useSelector(state => state.list.postList)
   const param = useParams()
-  console.log(param)
-  console.log(postList)
 
   useEffect(() => {
     dispatch(_getPost());
   }, []);
 
-  console.log("this is local storage" + window.localStorage.getItem('SavedToken'))
 
   return (
     <>
@@ -31,7 +28,6 @@ const ListPage = () => {
       </StButtonContainer>
         <StList>
           {postList?.map((post) => {
-            // console.log(post)
             if(post.ages === param.id){
               return (
                 <Card

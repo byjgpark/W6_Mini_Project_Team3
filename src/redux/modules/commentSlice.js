@@ -13,7 +13,6 @@ const headers = {
 export const addCommentThunk = createAsyncThunk(
   "postComment",
   async (payload, api) => {
-    console.log(JSON.stringify(payload)); //cardId
     try {
       const { data } = await instance.post(
         `/api/auth/cards/${payload.cardId}/comments`,
@@ -31,9 +30,8 @@ export const addCommentThunk = createAsyncThunk(
 export const checkCommentThunk = createAsyncThunk(
   "checkComment",
   async (payload, api) => {
-    console.log(payload)
     try {
-      const data = await instance.get(`api/cards/${payload}/comments`);
+      const data = await instance.get(`/api/cards/${payload}/comments`);
       return api.fulfillWithValue(data.data.data);
     } catch (e) {
       return api.rejectWithValue(e);
@@ -44,9 +42,8 @@ export const checkCommentThunk = createAsyncThunk(
 export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
-    console.log(payload.id)
     try {
-      await instance.delete(`api/auth/cards/comments/${payload.id}`);
+      await instance.delete(`/api/auth/cards/comments/${payload.id}`);
       return api.fulfillWithValue(payload);
     } catch (e) {
       return api.rejectWithValue(e);
@@ -69,17 +66,6 @@ export const CommentSlice = createSlice({
       state.comments = [...state.comments, action.payload];
     },
     [addCommentThunk.rejected]: (state, action) => {
-      state.error = action.payload;
-    },
-    [editCommentThunk.fulfilled]: (state, action) => {
-      state.comments.map((comments) => {
-        if (comments.id == action.payload.id) {
-          comments.content = action.payload.content;
-        }
-        return comments;
-      });
-    },
-    [editCommentThunk.rejected]: (state, action) => {
       state.error = action.payload;
     },
     [delCommentThunk.fulfilled]: (state, action) => {

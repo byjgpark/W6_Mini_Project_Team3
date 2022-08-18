@@ -6,14 +6,13 @@ import styled from "styled-components";
 const StarRating = ({ onChangeHandler }) => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-  console.log(rating);
 
   return (
     <div>
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
         return (
-          <StLabel>
+          <StLabel key={i}>
             <input
               className="rating"
               type="radio"

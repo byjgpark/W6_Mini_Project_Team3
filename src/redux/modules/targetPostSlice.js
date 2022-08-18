@@ -7,7 +7,7 @@ const initialState = {
     id: "",
     title: "",
     place: "",
-    star: "",
+    star: "1",
     content: "",
   },
 };
@@ -16,9 +16,7 @@ export const getDetailThunk = createAsyncThunk(
   "getPost",
   async (payload, api) => {
     try {
-      console.log("This is getDetail " + payload);
-      const { data } = await instance.get(`api/cards/${payload}`);
-      console.log(data);
+      const { data } = await instance.get(`/api/cards/${payload}`);
       return api.fulfillWithValue(data.data);
     } catch (e) {
       return api.rejectWithValue(e);
@@ -29,17 +27,13 @@ export const getDetailThunk = createAsyncThunk(
 export const editDetailThunk = createAsyncThunk(
   "editDetail",
   async (payload, api) => {
-    console.log(payload);
     try {
-      const { data } = await instance.put(`api/auth/cards/${payload.id}`, {
+      const { data } = await instance.put(`/api/auth/cards/${payload.id}`, {
         content: payload.content,
       });
-      // console.log(data);
       return api.fulfillWithValue(payload);
-      return console.log(data);
     } catch (error) {
       // return api.rejectWithValue(error);
-      return console.log(error);
     }
   }
 );
@@ -53,7 +47,6 @@ export const targetPostSlice = createSlice({
       state.post = action.payload;
     },
     [getDetailThunk.rejected]: (state, action) => {
-      console.log(state);
       state.error = action.payload;
     },
     [editDetailThunk.fulfilled]: (state, action) => {
