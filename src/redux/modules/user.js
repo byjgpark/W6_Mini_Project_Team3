@@ -22,7 +22,7 @@ export const __addUser = createAsyncThunk(
     }
 
   }
-});
+);
 
 export const __getCommnetsByTodoId = createAsyncThunk(
   "GET_COMMENT_BY_TODO_ID",
