@@ -2,9 +2,19 @@ import React from 'react';
 import { useNavigate }from 'react-router-dom'
 import styled from 'styled-components';
 import TitleButton from '../../component/titleButton/TitleButton';
+import img from "../../img/MainImg.jpeg"
+
+// redux
+import {userStatus} from "../../redux/modules/user"
+import { useSelector, useDispatch } from "react-redux";
 
 const MainPage = () => {
   const navigate = useNavigate()
+
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user);
+
+  console.log("This is user check in main page "+ JSON.stringify(users.users.userStatus))
 
   return (
     <div style={{ width: '1200px', minHeight:'100vh',display: 'flex', flexDirection: 'column', margin: '0 auto', padding:'10px 30px',
@@ -19,13 +29,14 @@ const MainPage = () => {
           // , backgroundColor:'#ff5f2e20'
         }}>
             <div>
-              <img src="https://cdn.pixabay.com/photo/2019/11/08/11/56/kitten-4611189_1280.jpg" alt='이미지를 찾을 수 없습니다.' style={{ width: '600px', height: '550px', objectFit: 'cover', borderRadius:'5%' }} />
+              <img src={img} alt='이미지를 찾을 수 없습니다.' style={{ width: '600px', height: '550px', objectFit: 'cover', borderRadius:'5%' }} />
             </div>
             <StDescBox style={{ width:'400px' }}>
               <StDesc>여행하GO</StDesc>
               <StDesc>추천하GO</StDesc>
               <StDesc>가보자GO</StDesc>
             </StDescBox>
+            {!users.users.userStatus ?
             <StBtnBox>
               <StBtn onClick={() => navigate('/login')}>로그인</StBtn>
               <StBtn onClick={() => navigate('/cards')}>전체보기</StBtn>
@@ -33,6 +44,15 @@ const MainPage = () => {
               <StBtn onClick={() => navigate('/cards/20')}>20대</StBtn>
               <StBtn onClick={() => navigate('/cards/30')}>30대</StBtn>
             </StBtnBox>
+            :
+            <StBtnBox>
+              <StBtn onClick={() => navigate('/login')}>로그아웃</StBtn>
+              <StBtn onClick={() => navigate('/cards')}>전체보기</StBtn>
+              <StBtn onClick={() => navigate('/cards/10')}>10대</StBtn>
+              <StBtn onClick={() => navigate('/cards/20')}>20대</StBtn>
+              <StBtn onClick={() => navigate('/cards/30')}>30대</StBtn>
+            </StBtnBox>
+            }       
           </div>
         </div>
     </div>

@@ -1,26 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { __addUser } from "../../redux/modules/user";
 import axios from "axios";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-// Redux getUsers
-import { __getUsers } from "../../redux/modules/user";
-
-// import components
-import img from "../../img/SignUp.jpg";
+// import img
+import img from "../../img/SignUp.jpg"
 
 const SignUp = () => {
-  // Redux
-  // const dispatch = useDispatch();
-  // const users = useSelector((state) => state.user)
-
-  // useEffect(() => {
-  //   dispatch(__getUsers());
-  // }, [dispatch]);
 
   // Router
   const navigate = useNavigate();
@@ -32,7 +20,9 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
-  const [check, setCheck] = useState(false);
+  const [ checkPw, setCheckPw ] = useState('');
+
+  var booVal = false;
 
   let [valCheck, setValCheck] = useState({
     userCheck: false,
@@ -40,251 +30,197 @@ const SignUp = () => {
     passwordConfirm: false,
   });
 
-  // console.log("checking state "+ valCheck.userCheck)
-  // const [nickCheck, setNickCHeck]
+  const num = password.search(/[0-9]/g);
+  const eng = password.search(/[a-z]/ig);
 
-  // setCheckVal({userCheck: true})
-  // console.log("this is login " + valCheck.userCheck)
+  useEffect(() => {
 
+    if ( password.length < 6 || password.length > 20) {
+      setCheckPw(false);
+    }
+    else if ( password.search(/\s/) != -1 ) {
+      setCheckPw(false);
+    } else if ( num < 0 || eng < 0) {
+      setCheckPw(false);
+    } else if ( password === null ) {
+      setCheckPw(false)
+    }else {
+      setCheckPw(true);
+    }
+  }, [password])
+
+ 
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (
-      password !== "" &&
-      passwordConfirm !== "" &&
-      gender !== "" &&
-      age !== ""
-    ) {
-      axios
-        .post(
-          process.env.REACT_APP_API_KEY + "users/signup", //
-          {
-            nickname: nickname,
-            password: password,
-            passwordConfirm: passwordConfirm,
-            gender: gender,
-            age: age,
-          }
-        )
-        .then(function (response) {
-          // let token = response.headers.authorization;
-          // localStorage.setItem("SavedToken", token);
-          console.log(response);
-          alert("회원가입이 완료 되셨습니다.");
-          navigate("/login");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    if (valCheck.userCheck === false){
+      alert("중복확인을 해주세요!")
+    }
+    
+    else if(password === "" && passwordConfirm === "" && gender === "" && age === "" ){
+      alert("회원정보를 모두 입력해주세요")
+    }
+    
+    else if(password !== "" && passwordConfirm !== "" && gender !== "" && age !== "" )
+    {
+      axios.post(process.env.REACT_APP_API_KEY +'/users/signup', // 
+    {
+     "nickname": nickname,
+     "password": password, 
+     "passwordConfirm": passwordConfirm,
+     "gender": gender,
+     "age": age
+    })
+    .then(function (response) {
+  
+      console.log(response)
+      alert("회원가입이 완료 되셨습니다.")
+      navigate('/login')
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+    console.log("로그인이 완료되었습니다.")
 
-      // console.log("회원가입이 완료 되셨습니다.")
-
-      //   if(nickname !== "" || password !== "" || passwordConfirm !== "" || gender !== "" || age !== ""){
-      //   dispatch(__addUser({
-      //     "nickname": nickname,
-      //     "password": password,
-      //     "passwordConfirm": passwordConfirm,
-      //     "gender": gender,
-      //     "age": age
-      //   }))
-      //   navigate('/')
-      // }
-      console.log("로그인이 완료되었습니다.");
     }
   };
 
   const userValidation = () => {
     //user validation
-    axios
-      .post(
-        process.env.REACT_APP_API_KEY + "users/nickcheck", //
-        {
-          nickname: nickname,
-        }
-      )
-      .then(function (response) {
-        console.log("API check " + response.data.success);
+    axios.post(process.env.REACT_APP_API_KEY + '/users/nickcheck',// 
+    {
+     "nickname": nickname
+    })
+    .then(function (response) {
 
-        if (response.data.success === false) {
-          setValCheck((prev) => ({ ...prev, userCheck: false }));
-          console.log("checking state false " + valCheck.userCheck);
-        } else {
-          // data 있음
-          // userCheck: false
-          setValCheck((prev) => ({ ...prev, userCheck: true }));
-          // userCehck: true
-          console.log("사용가능");
-          console.log(valCheck);
-        }
-      })
-      .catch(function (error) {});
-  };
+      console.log("API check " + response.data.success)
 
-  var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
+      if(response.data.success === false){
+        
+        // DB O
+       setValCheck((prev) => ({...prev, userCheck: false}));
 
-  // setCheck(true)
+      }
+      else{
 
-  // console.log("hello " + regExp.test("hello"))
+        // DB X
+        setValCheck((prev) => ({...prev, userCheck: true}));
+      }
+
+    })
+    .catch(function (error) {
+    });
+
+  }
 
   const checkNick = (value) => {
     var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
     if (value === "" || !regExp.test(value)) {
       // setCheck(true)
+      console.log("hello testing 123")
+      console.log(booVal)
       return true;
-    } else {
-      // console.log("checking here " + check)
+    }
+    else{
+      console.log("hi state will change to true")
+      booVal = true
+      console.log(booVal)
+      return false
 
-      return false;
     }
   };
 
-  // console.log("chekcing" + checkNick("asd"))
+  const onChangleGender = (e) => {
+    setGender(e.target.value)
+    console.log("Hello Checking " + e.target.value);
+  }
 
-  return (
+  const onChangleAge = (e) => {
+    setAge(e.target.value)
+    console.log("Hello Checking " + e.target.value);
+  }
+  return(
     <>
-      {/* {console.log("checking state "+ valCheck.userCheck)} */}
-      <LeftCon></LeftCon>
+      <LeftCon>
+      </LeftCon>
+
       <MiddleCon>
         <FormCon>
           <form onSubmit={onSubmitHandler}>
             <Title>회원가입</Title>
             <InputCon>
-              <Label>닉네임</Label>
-              {console.log("checking checkNick fun " + checkNick(nickname))}
-              {checkNick(nickname) ? (
-                <div>
-                  <NotNicInputBox
-                    type="text"
-                    placeholder="닉네임"
-                    value={nickname}
-                    onChange={(e) => {
-                      // Getting User title input
-                      setNickname(e.target.value);
-                    }}
-                  ></NotNicInputBox>
-                  {valCheck.userCheck ? (
-                    <p>중복확인을 해주세요!</p>
-                  ) : (
-                    <p>
-                      아아디는 영문자로 시작하는 6~20자 영문자 또는 숫자이여야
-                      합니다
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <div>
-                  <NicInputBox
-                    type="text"
-                    placeholder="닉네임"
-                    value={nickname}
-                    onChange={(e) => {
-                      // Getting User title input
-                      setNickname(e.target.value);
-                    }}
-                  ></NicInputBox>
-                  <CheckBtn
-                    type="button"
-                    onClick={() => {
-                      userValidation();
-                    }}
-                  >
-                    중복확인
-                  </CheckBtn>
-                  {console.log("inside render check " + valCheck.userCheck)}
-                  {check ? (
-                    <p>사용가능한 아아디 입니다.</p>
-                  ) : (
-                    <p>이미 사용된 아아디 입니다.</p>
-                  )}
-                </div>
-              )}
+                <Label>닉네임</Label>
+                {console.log("checking checkNick fun " + checkNick(nickname))}
 
-              {/* <PasswordAndConfirmPasswordValidation></PasswordAndConfirmPasswordValidation> */}
-            </InputCon>
-            <InputCon>
-              <Label>비밀번호</Label>
-              <InputBox
-                type="password"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => {
-                  // Getting User title input
-                  setPassword(e.target.value);
-                }}
-              ></InputBox>
-            </InputCon>
-            <InputCon>
-              {/* <label className="form__label">Confirm Password </label> */}
-              <Label>비밀번호 확인</Label>
-              <InputBox
-                type="password"
-                placeholder="비밀번호 확인"
-                value={passwordConfirm}
-                onChange={(e) => {
-                  // Getting User title input
-                  setPasswordCon(e.target.value);
-                }}
-              ></InputBox>
-              {password === passwordConfirm ? (
-                password === "" && passwordConfirm === "" ? (
-                  <></>
-                ) : (
-                  <p className="correctPw"> 비밀번호가 일치합니다! </p>
-                )
-              ) : (
-                <p className="incorrectPw"> 비밀번호가 일치하지 않습니다! </p>
-              )}
-            </InputCon>
-            <InputCon>
-              {/* <label className="form__label">Gender </label> */}
-              <Label>성별</Label>
-              <InputBox
-                type="text"
-                placeholder="성별"
-                value={gender}
-                onChange={(e) => {
-                  // Getting User title input
-                  setGender(e.target.value);
-                }}
-              ></InputBox>
-              {/* <div>
-                <label>
-                  <input
-                    type="radio"
-                    name="react-tips"
-                    value="option1"
-                    checked={true}
-                    className="form-check-input"
-                  />
-                  남
-                 </label>
-                 <label>
-                   <input
-                     type="radio"
-                     name="react-tips"
-                     value="option1"
-                     checked={true}
-                     className="form-check-input"
-                   />
-                   여
-                  </label>
-                </div> */}
-            </InputCon>
-            <InputCon>
-              <Label>나이대</Label>
-              {/* <label className="form__label">Age </label> */}
-              <InputBox
-                type="text"
-                placeholder="나이대"
-                value={age}
-                onChange={(e) => {
-                  // Getting User title input
-                  setAge(e.target.value);
-                }}
-              ></InputBox>
-            </InputCon>
-            <BtnCon>
-              <Button type="submit">회웝가입</Button>
+                <div>
+                <NicInputBox
+                  type="text"
+                  placeholder="닉네임"
+                  value={nickname}
+                  onChange={(e) => {
+                    // Getting User title input
+                    setNickname(e.target.value);
+                  }}
+                >
+                </NicInputBox>
+                 <CheckBtn type="button" onClick={() =>{userValidation() }}>중복확인</CheckBtn>
+                 {!valCheck.userCheck?<NotCheck>ID 중복검사를 해주세요!</NotCheck>:<RightCheck>사용가능한 아아디 입니다.</RightCheck>}
+                 </div>
+              
+              </InputCon>
+              <InputCon>
+                <Label>비밀번호</Label>
+                <InputBox
+                  type="password"
+                  placeholder="비밀번호"
+                  value={password}
+                  onChange={(e) => {
+                    // Getting User title input
+                    setPassword(e.target.value);
+                  }}
+                >
+                </InputBox>
+                { (!checkPw) ? (password === "") ? <NotCheck>영문 대소문자/숫자 조합, 6자~20자를 입력해주세요!</NotCheck> : <WrongCheck>비밀번호를 형식에 맞게 작성해주세요!</WrongCheck> : <RightCheck> 올바른 비밀번호입니다! </RightCheck>}
+              </InputCon>
+              <InputCon>
+
+                <Label>비밀번호 확인</Label>
+                <InputBox
+                  type="password"
+                  placeholder="비밀번호 확인"
+                  value={passwordConfirm}
+                  onChange={(e) => {
+                    // Getting User title input
+                    setPasswordCon(e.target.value);
+                  }}
+                >
+                </InputBox>
+                { (password === passwordConfirm) ? (password === "" && passwordConfirm === "") ? <></> : <RightCheck> 비밀번호가 일치합니다! </RightCheck> : <WrongCheck> 비밀번호가 일치하지 않습니다! </WrongCheck> }
+              </InputCon>
+              <InputCon>
+                <Label>성별</Label>
+                <label onChange={onChangleGender}>
+                <input type="radio" value="남" name="gender" checked={gender === "남"} /> 남
+                <input type="radio" value="여" name="gender" checked={gender === "여"}/> 여
+                </label>
+
+              </InputCon>
+              <InputCon>
+                <Label>나이대</Label>
+                  
+                <label onChange={onChangleAge}>
+                <input type="radio" value="10" name="age" checked={age === "10"} /> 10대
+                <input type="radio" value="20" name="age" checked={age === "20"} /> 20대
+                <input type="radio" value="30" name="age" checked={age === "30"}/> 30대
+                </label>
+              
+              </InputCon>
+              <BtnCon>
+                <Button type="submit">
+                  
+                회웝가입
+              </Button>
             </BtnCon>
           </form>
         </FormCon>
@@ -321,19 +257,20 @@ const NicInputBox = styled.input`
   }
 `;
 
-const NotNicInputBox = styled.input`
-  width: 100%;
-  padding: 5% 0 3% 0;
-  border-radius: 10px;
-  border-style: solid;
-  border-color: #c0c0c0;
-  display: inline-block;
-
-  &:focus {
-    outline: none;
-    border-color: #004e66;
-  }
-`;
+const NotCheck = styled.p`
+  margin: 2% 0 0 0;
+  font-size: 0.9em;
+`
+const RightCheck = styled.p`
+  margin: 2% 0 0 0;
+  font-size: 0.9em;
+  color: green;
+`
+const WrongCheck = styled.p`
+  margin: 2% 0 0 0;
+  font-size: 0.9em;
+  color: red;
+`
 
 const CheckBtn = styled.button`
   width: 27%;

@@ -21,7 +21,7 @@ export const addCommentThunk = createAsyncThunk(
     }
   }
 );
-//댓글 수정 /api/auth/comments/{id}
+//댓글 수정 /api/auth/comments/{id} /api/auth/cards/comments/{id} => comment ID
 export const editCommentThunk = createAsyncThunk(
   "editComment",
   async (payload, api) => {
@@ -49,11 +49,12 @@ export const checkCommentThunk = createAsyncThunk(
     }
   }
 );
-// 댓글 삭제 api/auth/comments/{id}
+// 댓글 삭제 api/auth/comments/{id}  /api/auth/cards/comments/{id} comment
 export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
     try {
+
       await instance.delete(`api/auth/cards/comments/${payload.id}`);
       return api.fulfillWithValue(payload);
     } catch (e) {

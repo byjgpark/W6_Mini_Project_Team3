@@ -29,6 +29,8 @@ const ListPage = () => {
         <BackButton onClick={() => navigate(-1)}>뒤로가기</BackButton>
         <TitleButton onClick={() => navigate("/")}>타이틀</TitleButton>
       </StButtonContainer>
+
+
         <StList>
           {postList?.map((post) => {
             // console.log(post)
@@ -111,5 +113,5 @@ const TopBtn = styled.button`
   :hover{
     transform:scale(1.2)
   };
-
 `;
+

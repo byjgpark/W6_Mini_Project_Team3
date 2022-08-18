@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import BackButton from "../../component/backButton/BackButton";
 import TitleButton from "../../component/titleButton/TitleButton";
@@ -22,7 +21,7 @@ const Detail = () => {
   }, [dispatch, id]);
 
   const list = useSelector((state) => state.post.post);
-  console.log(list);
+  console.log("checking detail" + list);
   return (
     <div>
       <StButtonContainer>
@@ -57,7 +56,7 @@ const Detail = () => {
           </DetaiListlBox>
         </DetailContainer>
         <CommentContainer>
-          <DetailPageComment />
+          <DetailPageComment CardID={id}/>
         </CommentContainer>
       </DetailWrap>
       <DetailPageModal
@@ -66,7 +65,6 @@ const Detail = () => {
         setShow={setModalOn}
         onHide={() => setModalOn(false)}
       >
-        {" "}
       </DetailPageModal>
     </div>
   );

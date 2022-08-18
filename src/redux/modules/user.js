@@ -83,6 +83,7 @@ export const __loginUser = createAsyncThunk(
 const initialState = {
   users: {
     user: [],
+    userStatus: false,
     isLoading: false,
     error: null,
   }
@@ -97,8 +98,10 @@ export const user = createSlice({
   name: "users",
   initialState,
   reducers: {
-    clearTodo: (state) => {
-      state.comments = null;
+    userStatus: (state, action) => {
+      // console.log("Hello" + JSON.stringify(state))
+      state.users.userStatus = action.payload
+      // console.log("This is logout " + action.payload)
     },
   },
   extraReducers: {
@@ -180,9 +183,11 @@ export const user = createSlice({
       );
       state.commentsByTodoId.data.splice(target, 1, action.payload);
     },
-    [__loginUser.rejected]: () => {},
+    [__loginUser.rejected]: () => {}
     
   },
 });
+
+export const {userStatus} = user.actions
 
 export default user.reducer;
