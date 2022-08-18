@@ -50,93 +50,92 @@ const SignUp = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (valCheck.userCheck === false) {
-      alert("중복확인을 해주세요!");
-    } else if (
-      password === "" &&
-      passwordConfirm === "" &&
-      gender === "" &&
-      age === ""
-    ) {
-      alert("회원정보를 모두 입력해주세요");
-    } else if (
-      password !== "" &&
-      passwordConfirm !== "" &&
-      gender !== "" &&
-      age !== ""
-    ) {
-      axios
-        .post(
-          process.env.REACT_APP_API_KEY + "users/signup", //
-          {
-            nickname: nickname,
-            password: password,
-            passwordConfirm: passwordConfirm,
-            gender: gender,
-            age: age,
-          }
-        )
-        .then(function (response) {
-          console.log(response);
-          alert("회원가입이 완료 되셨습니다.");
-          navigate("/login");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
 
-      console.log("로그인이 완료되었습니다.");
+    if (valCheck.userCheck === false){
+      alert("중복확인을 해주세요!")
+    }
+    
+    else if(password === "" && passwordConfirm === "" && gender === "" && age === "" ){
+      alert("회원정보를 모두 입력해주세요")
+    }
+    
+    else if(password !== "" && passwordConfirm !== "" && gender !== "" && age !== "" )
+    {
+      axios.post(process.env.REACT_APP_API_KEY +'/users/signup', // 
+    {
+     "nickname": nickname,
+     "password": password, 
+     "passwordConfirm": passwordConfirm,
+     "gender": gender,
+     "age": age
+    })
+    .then(function (response) {
+  
+      alert("회원가입이 완료 되셨습니다.")
+      navigate('/login')
+    })
+    .catch(function (error) {
+    });
+    
+
+
     }
   };
 
   const userValidation = () => {
     //user validation
-    axios
-      .post(
-        process.env.REACT_APP_API_KEY + "users/nickcheck", //
-        {
-          nickname: nickname,
-        }
-      )
-      .then(function (response) {
-        console.log("API check " + response.data.success);
 
-        if (response.data.success === false) {
-          // DB O
-          setValCheck((prev) => ({ ...prev, userCheck: false }));
-        } else {
-          // DB X
-          setValCheck((prev) => ({ ...prev, userCheck: true }));
-        }
-      })
-      .catch(function (error) {});
-  };
+    axios.post(process.env.REACT_APP_API_KEY + '/users/nickcheck',// 
+    {
+     "nickname": nickname
+    })
+    .then(function (response) {
+
+
+      if(response.data.success === false){
+        
+        // DB O
+       setValCheck((prev) => ({...prev, userCheck: false}));
+
+      }
+      else{
+
+        // DB X
+        setValCheck((prev) => ({...prev, userCheck: true}));
+      }
+
+    })
+    .catch(function (error) {
+    });
+
+  }
+
 
   const checkNick = (value) => {
     var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
     if (value === "" || !regExp.test(value)) {
       // setCheck(true)
-      console.log("hello testing 123");
-      console.log(booVal);
+
       return true;
-    } else {
-      console.log("hi state will change to true");
-      booVal = true;
-      console.log(booVal);
-      return false;
+    }
+    else{
+      booVal = true
+      return false
+
+
     }
   };
 
   const onChangleGender = (e) => {
-    setGender(e.target.value);
-    console.log("Hello Checking " + e.target.value);
-  };
+
+    setGender(e.target.value)
+  }
 
   const onChangleAge = (e) => {
-    setAge(e.target.value);
-    console.log("Hello Checking " + e.target.value);
-  };
-  return (
+    setAge(e.target.value)
+  }
+  return(
+
     <>
       <StHeader>
         <BackButton />
@@ -148,10 +147,10 @@ const SignUp = () => {
           <form onSubmit={onSubmitHandler}>
             <Title>회원가입</Title>
             <InputCon>
-              <Label>닉네임</Label>
-              {console.log("checking checkNick fun " + checkNick(nickname))}
 
-              <div>
+                <Label>닉네임</Label>
+                <div>
+
                 <NicInputBox
                   type="text"
                   placeholder="닉네임"

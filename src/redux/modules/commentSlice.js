@@ -13,7 +13,6 @@ const headers = {
 export const addCommentThunk = createAsyncThunk(
   "postComment",
   async (payload, api) => {
-    console.log(JSON.stringify(payload)); //cardId
     try {
       const { data } = await instance.post(
         `/api/auth/cards/${payload.cardId}/comments`,
@@ -34,7 +33,7 @@ export const checkCommentThunk = createAsyncThunk(
   "checkComment",
   async (payload, api) => {
     try {
-      const data = await instance.get(`api/cards/${payload}/comments`);
+      const data = await instance.get(`/api/cards/${payload}/comments`);
       return api.fulfillWithValue(data.data.data);
     } catch (e) {
       return api.rejectWithValue(e);
@@ -46,7 +45,7 @@ export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
     try {
-      await instance.delete(`api/auth/cards/comments/${payload.id}`);
+      await instance.delete(`/api/auth/cards/comments/${payload.id}`);
       return api.fulfillWithValue(payload);
     } catch (e) {
       return api.rejectWithValue(e);

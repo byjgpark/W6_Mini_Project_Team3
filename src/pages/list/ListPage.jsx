@@ -9,21 +9,18 @@ import Header from "../../component/header/Header";
 import TitleButton from "../../component/titleButton/TitleButton";
 import { _getPost } from "../../redux/modules/list";
 
-const ListPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const postList = useSelector((state) => state.list.postList);
-  const param = useParams();
-  console.log(param);
-  console.log(postList);
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const postList = useSelector(state => state.list.postList)
+  const param = useParams()
+
 
   useEffect(() => {
     dispatch(_getPost());
   }, []);
 
-  console.log(
-    "this is local storage" + window.localStorage.getItem("SavedToken")
-  );
+
 
   return (
     <>
@@ -33,20 +30,9 @@ const ListPage = () => {
         </StButtonContainer>
         <StList>
           {postList?.map((post) => {
-            // console.log(post)
-            if (post.ages === param.id) {
-              return (
-                <Card
-                  key={post.id}
-                  id={post.id}
-                  image={post.imgUrl}
-                  title={post.title}
-                  place={post.place}
-                  body={post.content}
-                  star={post.star}
-                />
-              );
-            } else if (param.id === undefined) {
+
+            if(post.ages === param.id){
+
               return (
                 <Card
                   key={post.id}

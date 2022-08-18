@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { addDetailThunk } from "../../redux/modules/postSlice";
 import StarRating from "../../component/starRating/StarRating";
+import BackButton from "../../component/backButton/BackButton";
+import logo from "../../logo.png"
+
 new Blob([JSON.stringify()], { type: "application/json" });
 
 const Add = () => {
@@ -24,7 +27,6 @@ const Add = () => {
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
-    console.log(e.target);
     setPosting({ ...posting, [name]: value });
   };
 
@@ -61,60 +63,64 @@ const Add = () => {
           navigate("/cards");
         }
       } catch (error) {
-        console.log(error);
       }
     }
   };
 
   return (
-    <AddWrap>
-      <AddContainer>
-        <InputBox encType="multipart/form-data" onSubmit={onPostingHandler}>
-          <ImageBox>
-            <ImgForm>
-              <strong></strong>
-              <PrevImg src={files ? files : ""} alt="이미지 미리보기" />
-            </ImgForm>
-            {/* <FileCustom placeholder="업로드 버튼을 클릭해주세요" /> */}
-            <FileLabel htmlFor="img_file">이미지 가져오기</FileLabel>
-            <FileInput
-              type="file"
-              id="img_file"
-              accept="img/*"
-              onChange={onLoadFile}
-            />
-          </ImageBox>
+    <>
+      <StBackDiv>
+        <BackButton onClick={() => navigate(-1)}>뒤로가기</BackButton>
+      </StBackDiv>
+      <AddWrap>
+        <AddContainer>
+          <InputBox encType="multipart/form-data" onSubmit={onPostingHandler}>
+            <ImageBox>
+              <ImgForm>
+                <strong></strong>
+                <PrevImg src={files ? files : ""} alt='이미지 미리보기'/>
+              </ImgForm>
+              {/* <FileCustom placeholder="업로드 버튼을 클릭해주세요" /> */}
+              <FileLabel htmlFor="img_file">이미지 가져오기</FileLabel>
+              <FileInput
+                type="file"
+                id="img_file"
+                accept="img/*"
+                onChange={onLoadFile}
+              />
+            </ImageBox>
 
-          <FormBox>
-            <input
-              type="text"
-              placeholder="제목을 입력해주세요"
-              name="title"
-              value={posting.title}
-              onChange={onChangeHandler}
-            />
-            <input
-              type="text"
-              placeholder="추천 장소를 입력해주세요"
-              name="place"
-              value={posting.place}
-              onChange={onChangeHandler}
-            />
-            <StarBox>
-              <StarRating onChangeHandler={onChangeHandler} />
-            </StarBox>
-            <textarea
-              type="text"
-              placeholder="내용을 입력해주세요"
-              name="content"
-              value={posting.content}
-              onChange={onChangeHandler}
-            />
-            <button type="submit">게시물 등록</button>
-          </FormBox>
-        </InputBox>
-      </AddContainer>
-    </AddWrap>
+            <FormBox>
+              <input
+                type="text"
+                placeholder="제목을 입력해주세요"
+                name="title"
+                value={posting.title}
+                onChange={onChangeHandler}
+              />
+              <input
+                type="text"
+                placeholder="추천 장소를 입력해주세요"
+                name="place"
+                value={posting.place}
+                onChange={onChangeHandler}
+              />
+              <StarBox>
+                <StarRating onChangeHandler={onChangeHandler} />
+              </StarBox>
+              <textarea
+                type="text"
+                placeholder="내용을 입력해주세요"
+                name="content"
+                value={posting.content}
+                onChange={onChangeHandler}
+              />
+              <button type="submit">게시물 등록</button>
+            </FormBox>
+          </InputBox>
+        </AddContainer>
+      </AddWrap>
+    </>
   );
 };
 
@@ -125,6 +131,7 @@ const AddWrap = styled.div`
   width: 1200px;
   height: 800px;
   display: flex;
+  flex-direction:column;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -159,6 +166,8 @@ const ImgForm = styled.div`
 const PrevImg = styled.img`
   width: 100%;
   height: 100%;
+
+  object-fit:cover;
 `;
 const FileLabel = styled.label`
   display: inline-block;
@@ -230,4 +239,8 @@ const FileInput = styled.input`
   padding: 0;
   overflow: hidden;
   border: 0;
+`;
+const StBackDiv = styled.div`
+  width:70%;
+  padding-left:254px;
 `;

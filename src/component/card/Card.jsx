@@ -3,15 +3,19 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom'
 import { FaStar } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import logo from "../../logo.png"
 
 const Card = (post) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const star = useSelector(state => state.list.postList)
+  const handleImgError = (e) => {
+    e.target.src = logo;
+  }
   
   return (
     <Stcard  onClick={() => navigate(`/Detail/${post.id}`)}>
       <StCardBox>
-        <StImg src={`${post.image}`} alt="등록된 이미지가 없습니다." />
+        <StImg src={`${post.image}`} alt="등록된 이미지가 없습니다." onError={handleImgError}/>
         <StLine />
         <StTextContainer>
           <Sttext fontSize='20px' fontWeight='700'>{post.title}</Sttext>

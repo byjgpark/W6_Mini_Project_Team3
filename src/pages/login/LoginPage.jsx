@@ -12,7 +12,6 @@ import { userStatus } from "../../redux/modules/user";
 import { useSelector, useDispatch } from "react-redux";
 
 const LoginPage = () => {
-  console.log("checking env file" + process.env.REACT_APP_API_KEY);
 
   //Redux
   const dispatch = useDispatch();
@@ -61,6 +60,7 @@ const LoginPage = () => {
           console.log(error);
         });
     }
+
   };
 
   return (

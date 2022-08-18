@@ -10,7 +10,7 @@ import {
 } from "../../redux/modules/commentSlice";
 
 const DetailPageComment = (props) => {
-  console.log("Hello Card ID " + props.CardID);
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const initialState = {
@@ -19,7 +19,6 @@ const DetailPageComment = (props) => {
     content: "",
     isEditMode: false,
   };
-  console.log(id);
 
   useEffect(() => {
     dispatch(checkCommentThunk(id));
@@ -27,7 +26,6 @@ const DetailPageComment = (props) => {
 
   const [addComment, setAddComment] = useState(initialState);
   const put_comment = useSelector((state) => state.comments.comments);
-  console.log("Hello Selector Comment " + JSON.stringify(put_comment));
   const [newComment, setNewComment] = useState(initialState);
 
   let inputHandler = (e) => {
@@ -40,13 +38,14 @@ const DetailPageComment = (props) => {
       alert("댓글을 작성해주세요!!");
     } else {
       event.preventDefault();
-      console.log("Hello Checking addComment " + addComment);
+
       dispatch(addCommentThunk(addComment));
       setAddComment(initialState);
       alert("정상적으로 댓글이 등록 되었습니다.");
       // window.location.reload()
     }
   };
+
   return (
     <div>
       <InputContainer>
