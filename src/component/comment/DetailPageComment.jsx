@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   addCommentThunk,
-  // editCommentThunk,
   checkCommentThunk,
   delCommentThunk,
 } from "../../redux/modules/commentSlice";
@@ -44,18 +43,6 @@ const DetailPageComment = (props) => {
       // window.location.reload()
     }
   };
-  // const onClickSaveButton = (event) => {
-  //   if (newComment.content == "") {
-  //     event.preventDefault();
-  //     alert("댓글을 작성해 주세요");
-  //   } else {
-  //     event.preventDefault();
-  //     // dispatch(editCommentThunk(newComment));
-  //     setNewComment(initialState);
-  //     alert("정상적으로 등록 되었습니다");
-  //     dispatch(checkCommentThunk(newComment));
-  //   }
-  // };
 
   return (
     <div>
@@ -93,25 +80,6 @@ const DetailPageComment = (props) => {
                         <IdBox>{item.nickname}</IdBox>
                         <BodyBox>{item.content}</BodyBox>
                       </TextBox>
-                      {/* {item.isEditMode ? (
-                        <TextBox>
-                          <input
-                            type="text"
-                            name="content"
-                            value={newComment.content}
-                            onChange={(e) => {
-                              const { name, value } = e.target;
-                              setNewComment({
-                                ...newComment,
-                                [name]: value,
-                                id: item.id,
-                              });
-                            }}
-                          />
-                        </TextBox>
-                      ) : (
-                        <p>{item.content}</p>
-                      )} */}
                       <div>
                         <button
                           onClick={() => {
