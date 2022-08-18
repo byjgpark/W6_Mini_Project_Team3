@@ -159,114 +159,64 @@ const SignUp = () => {
                     // Getting User title input
                     setNickname(e.target.value);
                   }}
-                ></NicInputBox>
-                <CheckBtn
-                  type="button"
-                  onClick={() => {
-                    userValidation();
+                >
+                </NicInputBox>
+                 <CheckBtn type="button" onClick={() =>{userValidation() }}>중복확인</CheckBtn>
+                 {!valCheck.userCheck?<NotCheck>ID 중복검사를 해주세요!</NotCheck>:<RightCheck>사용가능한 아이디 입니다.</RightCheck>}
+                 </div>
+              
+              </InputCon>
+              <InputCon>
+                <Label>비밀번호</Label>
+                <InputBox
+                  type="password"
+                  placeholder="비밀번호"
+                  value={password}
+                  onChange={(e) => {
+                    // Getting User title input
+                    setPassword(e.target.value);
                   }}
                 >
-                  중복확인
-                </CheckBtn>
-                {!valCheck.userCheck ? (
-                  <NotCheck>ID 중복검사를 해주세요!</NotCheck>
-                ) : (
-                  <RightCheck>사용가능한 아아디 입니다.</RightCheck>
-                )}
-              </div>
-            </InputCon>
-            <InputCon>
-              <Label>비밀번호</Label>
-              <InputBox
-                type="password"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => {
-                  // Getting User title input
-                  setPassword(e.target.value);
-                }}
-              ></InputBox>
-              {!checkPw ? (
-                password === "" ? (
-                  <NotCheck>
-                    영문 대소문자/숫자 조합, 6자~20자를 입력해주세요!
-                  </NotCheck>
-                ) : (
-                  <WrongCheck>비밀번호를 형식에 맞게 작성해주세요!</WrongCheck>
-                )
-              ) : (
-                <RightCheck> 올바른 비밀번호입니다! </RightCheck>
-              )}
-            </InputCon>
-            <InputCon>
-              <Label>비밀번호 확인</Label>
-              <InputBox
-                type="password"
-                placeholder="비밀번호 확인"
-                value={passwordConfirm}
-                onChange={(e) => {
-                  // Getting User title input
-                  setPasswordCon(e.target.value);
-                }}
-              ></InputBox>
-              {password === passwordConfirm ? (
-                password === "" && passwordConfirm === "" ? (
-                  <></>
-                ) : (
-                  <RightCheck> 비밀번호가 일치합니다! </RightCheck>
-                )
-              ) : (
-                <WrongCheck> 비밀번호가 일치하지 않습니다! </WrongCheck>
-              )}
-            </InputCon>
-            <InputCon>
-              <Label>성별</Label>
-              <label onChange={onChangleGender}>
-                <input
-                  type="radio"
-                  value="남"
-                  name="gender"
-                  checked={gender === "남"}
-                />{" "}
-                남
-                <input
-                  type="radio"
-                  value="여"
-                  name="gender"
-                  checked={gender === "여"}
-                />{" "}
-                여
-              </label>
-            </InputCon>
-            <InputCon>
-              <Label>나이대</Label>
+                </InputBox>
+                { (!checkPw) ? (password === "") ? <NotCheck>영문 대소문자/숫자 조합, 6자~20자를 입력해주세요!</NotCheck> : <WrongCheck>비밀번호를 형식에 맞게 작성해주세요!</WrongCheck> : <RightCheck> 올바른 비밀번호입니다! </RightCheck>}
+              </InputCon>
+              <InputCon>
 
-              <label onChange={onChangleAge}>
-                <input
-                  type="radio"
-                  value="10"
-                  name="age"
-                  checked={age === "10"}
-                />{" "}
-                10대
-                <input
-                  type="radio"
-                  value="20"
-                  name="age"
-                  checked={age === "20"}
-                />{" "}
-                20대
-                <input
-                  type="radio"
-                  value="30"
-                  name="age"
-                  checked={age === "30"}
-                />{" "}
-                30대
-              </label>
-            </InputCon>
-            <BtnCon>
-              <Button type="submit">회가입</Button>
+                <Label>비밀번호 확인</Label>
+                <InputBox
+                  type="password"
+                  placeholder="비밀번호 확인"
+                  value={passwordConfirm}
+                  onChange={(e) => {
+                    // Getting User title input
+                    setPasswordCon(e.target.value);
+                  }}
+                >
+                </InputBox>
+                { (password === passwordConfirm) ? (password === "" && passwordConfirm === "") ? <></> : <RightCheck> 비밀번호가 일치합니다! </RightCheck> : <WrongCheck> 비밀번호가 일치하지 않습니다! </WrongCheck> }
+              </InputCon>
+              <InputCon>
+                <Label>성별</Label>
+                <label onChange={onChangleGender}>
+                <input type="radio" value="남" name="gender" checked={gender === "남"} /> 남
+                <input type="radio" value="여" name="gender" checked={gender === "여"}/> 여
+                </label>
+
+              </InputCon>
+              <InputCon>
+                <Label>나이대</Label>
+                  
+                <label onChange={onChangleAge}>
+                <input type="radio" value="10" name="age" checked={age === "10"} /> 10대
+                <input type="radio" value="20" name="age" checked={age === "20"} /> 20대
+                <input type="radio" value="30" name="age" checked={age === "30"}/> 30대
+                </label>
+              
+              </InputCon>
+              <BtnCon>
+                <Button type="submit">
+                회원가입
+              </Button>
             </BtnCon>
           </form>
         </FormCon>

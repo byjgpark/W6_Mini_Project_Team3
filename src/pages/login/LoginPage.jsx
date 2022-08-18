@@ -27,40 +27,34 @@ const LoginPage = () => {
   // handleSubmit for form
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (ID === "" && password === "") {
-      alert("아아디와 비밀번호를 입력해주세요");
-    } else if (ID === "") {
-      alert("아아디를 입력해주세요");
-    } else if (password === "") {
-      alert("비밀번호를 입력주세요");
-    } else {
-      axios
-        .post(
-          process.env.REACT_APP_API_KEY + "users/login", //
-          { nickname: ID, password: password }
-        )
-        .then(function (response) {
-          console.log(response.data.success);
-          if (response.data.success === true) {
-            dispatch(userStatus(true));
-            let token = response.headers.authorization;
-            localStorage.setItem("SavedToken", token);
-            console.log(
-              "this is local storage" +
-                window.localStorage.getItem("SavedToken")
-            );
-            alert("로그인이 완료되었습니다");
-            console.log();
-            navigate("/");
-          } else {
-            alert("로그인이 실패했습니다.");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+    if(ID === "" && password === ""){
+      alert("아이디와 비밀번호를 입력해주세요")
+    }
+    else if( ID === ""){
+      alert("아이디를 입력해주세요")      
     }
 
+    else if(password === ""){
+      alert("비밀번호를 입력주세요")
+    }
+    else{
+      axios.post(process.env.REACT_APP_API_KEY + '/users/login', // 
+      {"nickname": ID,"password": password})
+      .then(function (response) {
+        if(response.data.success === true){ 
+        dispatch(userStatus(true))
+        let token = response.headers.authorization;
+        localStorage.setItem("SavedToken", token);
+        alert("로그인이 완료되었습니다")
+        navigate('/')}
+        else{
+          alert("로그인이 실패했습니다.")
+        }
+      })
+      .catch(function (error) {
+      });
+    }
+      
   };
 
   return (
