@@ -16,11 +16,14 @@ export const addDetailThunk = createAsyncThunk(
     const token = window.localStorage.getItem("SavedToken");
     try {
       const data = await instance.post("/api/auth/cards", payload);
+
         return api.fulfillWithValue(data.data);
       }catch(error){
+
       return api.rejectWithValue(error);
     }
-  });
+  }
+);
 //게시물 삭제 /api/auth/cards/{id} /api/auth/cards/{id}
 export const deleteDetailThunk = createAsyncThunk(
   "deleteDetail",
@@ -46,9 +49,7 @@ export const postSlice = createSlice({
       state.posts = action.payload;
     },
     [deleteDetailThunk.fulfilled]: (state, action) => {
-
       state.posts = state.filter((b) => b.id !== action.payload.id);
-
     },
     [deleteDetailThunk.rejected]: (state, action) => {
       state.posts = action.payload;

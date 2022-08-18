@@ -17,7 +17,7 @@ export const addCommentThunk = createAsyncThunk(
       const { data } = await instance.post(
         `/api/auth/cards/${payload.cardId}/comments`,
 
-        payload,
+        payload
 
         // {headers: headers,}
       );

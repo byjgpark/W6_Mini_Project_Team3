@@ -10,6 +10,7 @@ import {
 } from "../../redux/modules/commentSlice";
 
 const DetailPageComment = (props) => {
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const initialState = {
@@ -37,6 +38,7 @@ const DetailPageComment = (props) => {
       alert("댓글을 작성해주세요!!");
     } else {
       event.preventDefault();
+
       dispatch(addCommentThunk(addComment));
       setAddComment(initialState);
       alert("정상적으로 댓글이 등록 되었습니다.");

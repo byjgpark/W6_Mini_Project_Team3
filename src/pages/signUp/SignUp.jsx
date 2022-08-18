@@ -6,11 +6,10 @@ import axios from "axios";
 import styled from "styled-components";
 
 // import img
-import img from "../../img/SignUp.jpg"
+import img from "../../img/SignUp.jpg";
 import BackButton from "../../component/backButton/BackButton";
 
 const SignUp = () => {
-
   // Router
   const navigate = useNavigate();
 
@@ -21,7 +20,7 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
-  const [ checkPw, setCheckPw ] = useState('');
+  const [checkPw, setCheckPw] = useState("");
 
   var booVal = false;
 
@@ -32,27 +31,25 @@ const SignUp = () => {
   });
 
   const num = password.search(/[0-9]/g);
-  const eng = password.search(/[a-z]/ig);
+  const eng = password.search(/[a-z]/gi);
 
   useEffect(() => {
-
-    if ( password.length < 6 || password.length > 20) {
+    if (password.length < 6 || password.length > 20) {
       setCheckPw(false);
-    }
-    else if ( password.search(/\s/) != -1 ) {
+    } else if (password.search(/\s/) != -1) {
       setCheckPw(false);
-    } else if ( num < 0 || eng < 0) {
+    } else if (num < 0 || eng < 0) {
       setCheckPw(false);
-    } else if ( password === null ) {
-      setCheckPw(false)
-    }else {
+    } else if (password === null) {
+      setCheckPw(false);
+    } else {
       setCheckPw(true);
     }
-  }, [password])
+  }, [password]);
 
- 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+
 
     if (valCheck.userCheck === false){
       alert("중복확인을 해주세요!")
@@ -81,11 +78,13 @@ const SignUp = () => {
     });
     
 
+
     }
   };
 
   const userValidation = () => {
     //user validation
+
     axios.post(process.env.REACT_APP_API_KEY + '/users/nickcheck',// 
     {
      "nickname": nickname
@@ -111,20 +110,24 @@ const SignUp = () => {
 
   }
 
+
   const checkNick = (value) => {
     var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
     if (value === "" || !regExp.test(value)) {
       // setCheck(true)
+
       return true;
     }
     else{
       booVal = true
       return false
 
+
     }
   };
 
   const onChangleGender = (e) => {
+
     setGender(e.target.value)
   }
 
@@ -132,20 +135,22 @@ const SignUp = () => {
     setAge(e.target.value)
   }
   return(
+
     <>
       <StHeader>
         <BackButton />
       </StHeader>
-      <LeftCon>
-      </LeftCon>
+      <LeftCon></LeftCon>
 
       <MiddleCon>
         <FormCon>
           <form onSubmit={onSubmitHandler}>
             <Title>회원가입</Title>
             <InputCon>
+
                 <Label>닉네임</Label>
                 <div>
+
                 <NicInputBox
                   type="text"
                   placeholder="닉네임"
@@ -251,17 +256,17 @@ const NicInputBox = styled.input`
 const NotCheck = styled.p`
   margin: 2% 0 0 0;
   font-size: 0.9em;
-`
+`;
 const RightCheck = styled.p`
   margin: 2% 0 0 0;
   font-size: 0.9em;
   color: green;
-`
+`;
 const WrongCheck = styled.p`
   margin: 2% 0 0 0;
   font-size: 0.9em;
   color: red;
-`
+`;
 
 const CheckBtn = styled.button`
   width: 27%;
@@ -349,8 +354,8 @@ const FormCon = styled.div`
   margin: 10% 25%;
 `;
 const StHeader = styled.div`
-margin:15px 0 0 58%;
-position:absolute;
-z-index:10;
-transform:scale(0.7)
+  margin: 15px 0 0 58%;
+  position: absolute;
+  z-index: 10;
+  transform: scale(0.7);
 `;

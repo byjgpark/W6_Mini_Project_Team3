@@ -24,6 +24,7 @@ const Detail = () => {
   }, [dispatch, id]);
 
   const list = useSelector((state) => state.post.post);
+
   return (
     <StContainer >
       <StBackDiv>
@@ -43,25 +44,26 @@ const Detail = () => {
             <h3># {list[0]?.place}</h3>
             <p style={{maxHeight:'25px'}}>{"⭐".repeat(list[0]?.star)}</p>
             <p>{list[0]?.content}</p>
-            {list.nickname === list.nickname ?
+            {list.nickname === list.nickname ? (
               <DetailButton>
                 <button onClick={() => setModalOn(true)}>수정</button>
                 <button
                   onClick={() => {
                     dispatch(deleteDetailThunk(id));
                     navigate(-1);
-                    alert('삭제가 완료 되었습니다.')
+                    alert("삭제가 완료 되었습니다.");
                   }}
                 >
                   삭제
                 </button>
-              </DetailButton> :
-              <></>}
-              
+              </DetailButton>
+            ) : (
+              <></>
+            )}
           </DetaiListlBox>
         </DetailContainer>
         <CommentContainer>
-          <DetailPageComment CardID={id}/>
+          <DetailPageComment CardID={id} />
         </CommentContainer>
       </DetailWrap>
       <DetailPageModal
@@ -72,6 +74,7 @@ const Detail = () => {
       >
       </DetailPageModal>
     </StContainer>
+
   );
 };
 
