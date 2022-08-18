@@ -1,18 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-<<<<<<< HEAD
+
 import instance from "./instance";
-=======
-import axios from "axios";
-import instance from "./instans";
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
+
 
 const initialState = {
   posts: [],
 };
 
-const headers = {
-  "Content-Type": "multipart/form-data",
-};
+// const headers = {
+//   "Content-Type": "multipart/form-data",
+// };
 
 //게시물 추가 /api/auth/cards
 export const addDetailThunk = createAsyncThunk(
@@ -22,31 +19,13 @@ export const addDetailThunk = createAsyncThunk(
     const token = window.localStorage.getItem('SavedToken')
     console.log(token)
     try {
-<<<<<<< HEAD
       const data = await instance.post("/api/auth/cards", payload, {
-        headers: headers,
-        // "Content-Type": "multipart/form-data",
+        // headers: headers,
+        "Content-Type": "multipart/form-data",
       });
       console.log(data);
       return api.fulfillWithValue(data.data);
-=======
-      // const data = await axios.post("http://13.124.123.173/api/auth/cards", payload);
-      // console.log(data);
-      // return api.fulfillWithValue(data.data);
 
-      //----------------------테스트--------------------//
-      // axios.defaults.headers.common['Authorization'] = {token}
-      instance.post('/api/auth/cards', payload)
-      .then(res => {
-        console.log(res);	
-      })
-
-      // axios.post(process.env.REACT_APP_API_KEY+'/api/auth/cards', payload, {headers:{Authorization: localStorage.getItem('SavedToken')}})
-      // .then(res => {
-      //   console.log(res);	
-      // })
-      //---------------------------테스트 끝-----------------//
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
     } catch (error) {
       return api.rejectWithValue(error);
     }
@@ -58,10 +37,12 @@ export const deleteDetailThunk = createAsyncThunk(
   async (payload, api) => {
     console.log(payload);
     try {
-      await instance.delete(`api/auth/cards/${payload.id}`);
+      console.log("this is delete")
+      console.log("ID " + payload)
+      await instance.delete(`api/auth/cards/${payload}`);
       return api.fulfillWithValue(payload);
     } catch (e) {
-      return api.rejectWithValue(e);
+      return api.rejectWithValue(e.message);
     }
   }
 );
@@ -75,20 +56,17 @@ export const postSlice = createSlice({
       state.posts = action.payload;
     },
     [addDetailThunk.rejected]: (state, action) => {
-<<<<<<< HEAD
       console.log(state);
       state.posts = action.payload;
     },
     [deleteDetailThunk.fulfilled]: (state, action) => {
+      console.log("Checking delete post")
       state.posts = state.filter((posts) => posts.id !== action.payload.id);
     },
     [deleteDetailThunk.rejected]: (state, action) => {
       console.log(state);
       state.posts = action.payload;
-=======
-      console.log(action.payload);
-      state.postings = action.payload;
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
+
     },
   },
 });

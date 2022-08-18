@@ -53,7 +53,7 @@ const Add = () => {
         new Blob([JSON.stringify(posting)], { type: "application/json" })
       );
       frm.append("image", postimage.files[0]);
-      dispatch(addDetailThunk(frm));
+      // dispatch(addDetailThunk(frm));
       try {
         const response = await dispatch(addDetailThunk(frm));
         if (response) {

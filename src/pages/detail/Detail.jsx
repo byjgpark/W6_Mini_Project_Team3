@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,14 +24,14 @@ const Detail = () => {
   // }, []);
 
   const list = useSelector((state) => state.post.post);
-  console.log(list);
+  console.log("checking detail" + list);
   return (
     <div>
       <DetailWrap>
         <DetailContainer>
           <ImgDetailBox>
             <img
-              src={`${list[id]?.imgUrl}`}
+              src={`${list[0]?.imgUrl}`}
               alt="이미지를 표시할 수 없습니다."
               style={{ width: "100%", margin: "30px 0", objectFit: "contain" }}
             />
@@ -56,7 +55,7 @@ const Detail = () => {
           </DetaiListlBox>
         </DetailContainer>
         <CommentContainer>
-          <DetailPageComment />
+          <DetailPageComment CardID={id}/>
         </CommentContainer>
       </DetailWrap>
       <DetailPageModal
@@ -65,7 +64,6 @@ const Detail = () => {
         setShow={setModalOn}
         onHide={() => setModalOn(false)}
       >
-        {" "}
       </DetailPageModal>
     </div>
   );

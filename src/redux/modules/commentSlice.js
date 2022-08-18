@@ -6,24 +6,30 @@ const initialState = {
   comments: [],
 };
 
-//코멘트 작성 /api/auth/comments
+//코멘트 작성 /api/auth/cards/{id}/comments
 export const addCommentThunk = createAsyncThunk(
   "postComment",
   async (payload, api) => {
+    // console.log(payload); cardId
     try {
-      const { data } = await instance.post("/api/auth/comments");
-      return api.fulfillWithValue(data.data);
+      console.log("This is addcomment " + JSON.stringify(payload))
+      const { data } = await instance.post(
+        `api/auth/cards/${payload}/comments`,
+        payload
+      );
+      return api.fulfillWithValue(data.data.data);
     } catch (e) {
       return api.rejectWithValue(e);
     }
   }
 );
-//댓글 수정 /api/auth/comments/{id}
+//댓글 수정 /api/auth/comments/{id} /api/auth/cards/comments/{id} => comment ID
 export const editCommentThunk = createAsyncThunk(
   "editComment",
   async (payload, api) => {
+    console.log(payload + "안녕");
     try {
-      await instance.patch(`/api/auth/comments/${payload.id}`, {
+      await instance.patch(`api/auth/cards/comments/${payload.id}`, {
         content: payload.content,
       });
       return api.fulfillWithValue(payload);
@@ -32,24 +38,27 @@ export const editCommentThunk = createAsyncThunk(
     }
   }
 );
-
+//댓글 조회 //api/cards/{id}/comments
 export const checkCommentThunk = createAsyncThunk(
   "checkComment",
   async (payload, api) => {
     try {
-      axios.patch(`/api/auth/comments/${payload.id}`, payload);
-      return api.fulfillWithValue(payload);
+      console.log("This is checkComment" + payload)
+      const data = await instance.get(`api/cards/${payload}/comments`);
+      return console.log("checkCommentThunk data" + JSON.stringify(data.data.data));
+      return api.fulfillWithValue(data.data.data);
     } catch (e) {
       return api.rejectWithValue(e);
     }
   }
 );
-// 댓글 삭제 api/auth/comments/{id}
+// 댓글 삭제 api/auth/comments/{id}  /api/auth/cards/comments/{id} comment
 export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
     try {
-      await instance.delete(`/api/auth/comments/${payload}`);
+      console.log("This is payload" + JSON.stringify(payload))
+      await instance.delete(`api/auth/cards/comments/${payload.id}`);
       return api.fulfillWithValue(payload);
     } catch (e) {
       return api.rejectWithValue(e);
@@ -62,6 +71,12 @@ export const CommentSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [checkCommentThunk.fulfilled]: (state, action) => {
+      state.comments = action.payload;
+    },
+    [checkCommentThunk.rejected]: (state, action) => {
+      state.error = action.payload;
+    },
     [addCommentThunk.fulfilled]: (state, action) => {
       state.comments = [...state.comments, action.payload];
     },
@@ -77,17 +92,6 @@ export const CommentSlice = createSlice({
       });
     },
     [editCommentThunk.rejected]: (state, action) => {
-      state.error = action.payload;
-    },
-    [checkCommentThunk.fulfilled]: (state, action) => {
-      state.comments.map((comments) => {
-        if (comments.id == action.payload.id) {
-          comments.isEditMode = !comments.isEditMode;
-        }
-        return comments;
-      });
-    },
-    [checkCommentThunk.rejected]: (state, action) => {
       state.error = action.payload;
     },
     [delCommentThunk.fulfilled]: (state, action) => {

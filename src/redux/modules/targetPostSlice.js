@@ -16,7 +16,7 @@ export const getDetailThunk = createAsyncThunk(
   "getPost",
   async (payload, api) => {
     try {
-      console.log(payload);
+      console.log("This is getDetail " + payload);
       const { data } = await instance.get(`api/cards/${payload}`);
       console.log(data);
       return api.fulfillWithValue(data.data);
