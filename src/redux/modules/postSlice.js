@@ -17,22 +17,13 @@ export const addDetailThunk = createAsyncThunk(
     const token = window.localStorage.getItem("SavedToken");
     console.log(token);
     try {
-      const data = await instance.post("/api/auth/cards", payload, {
-        headers: headers,
-        // "Content-Type": "multipart/form-data",
-        });
+      const data = await instance.post("/api/auth/cards", payload);
         console.log(data);
         return api.fulfillWithValue(data.data);
-        // headers: headers,
-        "Content-Type": "multipart/form-data",
-      });
-      console.log(data);
-      return api.fulfillWithValue(data.data);
-    } catch (error) {
+      }catch(error){
       return api.rejectWithValue(error);
     }
-  }
-);
+  });
 //게시물 삭제 /api/auth/cards/{id} /api/auth/cards/{id}
 export const deleteDetailThunk = createAsyncThunk(
   "deleteDetail",

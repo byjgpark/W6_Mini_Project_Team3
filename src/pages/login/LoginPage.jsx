@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../img/LoginIn.jpg";
 import axios from "axios";
-import styled from "styled-components";
 import BackButton from "../../component/backButton/BackButton";
 
 // redux
