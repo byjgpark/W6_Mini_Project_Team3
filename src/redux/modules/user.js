@@ -17,9 +17,7 @@ export const __addUser = createAsyncThunk(
   "ADD_USER",
   async (arg, thunkAPI) => {
     try {
-      console.log("Hello this is arg " + JSON.stringify(arg))
-      const { data } = await axios.post(process.env.REACT_APP_API_KEY + "users", arg);
-      console.log("Hello data " + JSON.stringify(data)) ;
+      const { data } = await axios.post(process.env.REACT_APP_API_KEY + "/users", arg);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -31,7 +29,7 @@ export const __getCommnetsByTodoId = createAsyncThunk(
   "GET_COMMENT_BY_TODO_ID",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.get(process.env.REACT_APP_API_KEY+`comments?todoId=${arg}`
+      const { data } = await axios.get(process.env.REACT_APP_API_KEY+`/comments?todoId=${arg}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -44,7 +42,7 @@ export const __deleteComment = createAsyncThunk(
   "DELETE_COMMENT",
   async (arg, thunkAPI) => {
     try {
-      await axios.delete(process.env.REACT_APP_API_KEY + `comments/${arg}`);
+      await axios.delete(process.env.REACT_APP_API_KEY + `/comments/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -56,9 +54,8 @@ export const __deleteComment = createAsyncThunk(
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
   async (arg, thunkAPI) => {
-    console.log(JSON.stringify(arg));
     try {
-      axios.patch(process.env.REACT_APP_API_KEY + `comments/${arg.id}`, arg);
+      axios.patch(process.env.REACT_APP_API_KEY + `/comments/${arg.id}`, arg);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -69,7 +66,6 @@ export const __updateComment = createAsyncThunk(
 export const __loginUser = createAsyncThunk(
   "LOGIN_USER",
   async (arg, thunkAPI) => {
-    console.log(JSON.stringify(arg));
     try {
       axios.update('http://13.124.123.173/users/login', arg);
       return thunkAPI.fulfillWithValue(arg);
@@ -99,9 +95,7 @@ export const user = createSlice({
   initialState,
   reducers: {
     userStatus: (state, action) => {
-      // console.log("Hello" + JSON.stringify(state))
       state.users.userStatus = action.payload
-      // console.log("This is logout " + action.payload)
     },
   },
   extraReducers: {
@@ -121,8 +115,6 @@ export const user = createSlice({
     // Add User
     [__addUser.fulfilled]: (state, action) => {
       state.users.isLoading = false;
-      console.log("hello " + JSON.stringify(action.payload))
-      // console.log(state.users.user.push(action.payload))
     },
     [__addUser.rejected]: (state, action) => {
       state.users.isLoading = false;
@@ -134,16 +126,13 @@ export const user = createSlice({
 
     // 댓글 조회 (todoId)
     [__getCommnetsByTodoId.pending]: (state) => {
-       console.log("This is pendning part")
       state.commentsByTodoId.isLoading = true;
     },
     [__getCommnetsByTodoId.fulfilled]: (state, action) => {
-      console.log("This is fulfilled part")
       state.commentsByTodoId.isLoading = false;
       state.commentsByTodoId.data = action.payload;
     },
     [__getCommnetsByTodoId.rejected]: (state, action) => {
-      console.log("This is reject part")
       state.commentsByTodoId.isLoading = false;
       state.commentsByTodoId.error = action.payload;
     },

@@ -12,12 +12,10 @@ import { useSelector, useDispatch } from "react-redux";
 const MainPage = () => {
   const navigate = useNavigate()
   const getToken = localStorage.getItem("SavedToken");
-  console.log(getToken)
 
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user);
 
-  console.log("This is user check in main page "+ JSON.stringify(users.users.userStatus))
 
   return (
     <Container>

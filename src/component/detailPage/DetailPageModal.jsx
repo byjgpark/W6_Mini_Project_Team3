@@ -15,7 +15,6 @@ const DetailPageModal = ({ show, onHide, setShow, id }) => {
   };
 
   const [editDetail, setEditDetail] = useState(initialState);
-  console.log(editDetail);
 
   const inputBody = (e) => {
     const { name, value } = e.target;
@@ -29,7 +28,6 @@ const DetailPageModal = ({ show, onHide, setShow, id }) => {
     } else {
       event.preventDefault();
       dispatch(editDetailThunk(editDetail));
-      console.log(editDetail);
       setEditDetail(initialState);
       alert("정상적으로 등록 되었습니다");
       setShow(true);

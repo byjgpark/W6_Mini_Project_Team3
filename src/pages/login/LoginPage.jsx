@@ -12,7 +12,6 @@ import {userStatus} from "../../redux/modules/user"
 import { useSelector, useDispatch } from "react-redux";
 
 const LoginPage = () => {
-  console.log("checking env file" + process.env.REACT_APP_API_KEY);
 
   //Redux
   const dispatch = useDispatch();
@@ -42,21 +41,17 @@ const LoginPage = () => {
       axios.post(process.env.REACT_APP_API_KEY + '/users/login', // 
       {"nickname": ID,"password": password})
       .then(function (response) {
-        console.log((response.data.success))
         if(response.data.success === true){ 
         dispatch(userStatus(true))
         let token = response.headers.authorization;
         localStorage.setItem("SavedToken", token);
-        console.log("this is local storage" + window.localStorage.getItem('SavedToken'))
         alert("로그인이 완료되었습니다")
-        console.log()
         navigate('/')}
         else{
           alert("로그인이 실패했습니다.")
         }
       })
       .catch(function (error) {
-        console.log(error);
       });
     }
       

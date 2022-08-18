@@ -8,39 +8,40 @@ import DetailPageModal from "../../component/detailPage/DetailPageModal";
 import { getDetailThunk } from "../../redux/modules/targetPostSlice";
 import { deleteDetailThunk } from "../../redux/modules/postSlice";
 import DetailPageComment from "../../component/comment/DetailPageComment";
+import logo from "../../logo.png"
 
 const Detail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const [modalOn, setModalOn] = useState(false);
-  console.log(id);
+  const handleImgError = (e) => {
+    e.target.src = logo;
+  }
 
   useEffect(() => {
     dispatch(getDetailThunk(id));
   }, [dispatch, id]);
 
   const list = useSelector((state) => state.post.post);
-  console.log("checking detail" + list);
   return (
-    <div>
-      <StButtonContainer>
+    <StContainer >
+      <StBackDiv>
         <BackButton onClick={() => navigate(-1)}>뒤로가기</BackButton>
-        <TitleButton onClick={() => navigate("/")}>타이틀</TitleButton>
-      </StButtonContainer>
+      </StBackDiv>
       <DetailWrap>
         <DetailContainer>
           <ImgDetailBox>
-            <img
+            <StImg
               src={`${list[0]?.imgUrl}`}
+              onError={handleImgError}
               alt="이미지를 표시할 수 없습니다."
-              style={{ width: "100%", margin: "30px 0", objectFit: "contain" }}
             />
           </ImgDetailBox>
           <DetaiListlBox>
             <h2>{list[0]?.title}</h2>
             <h3># {list[0]?.place}</h3>
-            <h3>{list[0]?.star}</h3>
+            <p style={{maxHeight:'25px'}}>{"⭐".repeat(list[0]?.star)}</p>
             <p>{list[0]?.content}</p>
             {list.nickname === list.nickname ?
               <DetailButton>
@@ -70,7 +71,7 @@ const Detail = () => {
         onHide={() => setModalOn(false)}
       >
       </DetailPageModal>
-    </div>
+    </StContainer>
   );
 };
 
@@ -82,10 +83,10 @@ const DetailWrap = styled.div`
   height: 800px;
   display: flex;
   flex-direction: row;
-  position: absolute;
+  /* position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 `;
 const DetailContainer = styled.div`
   margin: 10px auto;
@@ -103,8 +104,14 @@ const CommentContainer = styled.div`
 `;
 const ImgDetailBox = styled.div`
   width: 100%;
+  /* max-height:390px;  */
   height: 390px;
 `;
+const StImg = styled.img`
+  height:100%;
+  width: 100%;
+  object-fit:cover;
+`
 const DetaiListlBox = styled.div`
   width: 100%;
   height: 50px;
@@ -141,12 +148,12 @@ const DetailButton = styled.div`
     font-size: medium;
   }
 `;
-const StButtonContainer = styled.div`
+const StContainer = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 450px;
-  margin-left: 475px;
-  position: absolute;
-  margin-top: 50px;
-  position: fixed;
+  flex-direction:column;
+  align-items:center;
+  justify-content: flex-start;
+`;
+const StBackDiv = styled.div`
+  width:70%;
 `;

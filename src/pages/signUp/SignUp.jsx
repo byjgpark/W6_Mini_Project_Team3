@@ -74,15 +74,12 @@ const SignUp = () => {
     })
     .then(function (response) {
   
-      console.log(response)
       alert("회원가입이 완료 되셨습니다.")
       navigate('/login')
     })
     .catch(function (error) {
-      console.log(error);
     });
     
-    console.log("로그인이 완료되었습니다.")
 
     }
   };
@@ -95,7 +92,6 @@ const SignUp = () => {
     })
     .then(function (response) {
 
-      console.log("API check " + response.data.success)
 
       if(response.data.success === false){
         
@@ -119,14 +115,10 @@ const SignUp = () => {
     var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
     if (value === "" || !regExp.test(value)) {
       // setCheck(true)
-      console.log("hello testing 123")
-      console.log(booVal)
       return true;
     }
     else{
-      console.log("hi state will change to true")
       booVal = true
-      console.log(booVal)
       return false
 
     }
@@ -134,12 +126,10 @@ const SignUp = () => {
 
   const onChangleGender = (e) => {
     setGender(e.target.value)
-    console.log("Hello Checking " + e.target.value);
   }
 
   const onChangleAge = (e) => {
     setAge(e.target.value)
-    console.log("Hello Checking " + e.target.value);
   }
   return(
     <>
@@ -155,8 +145,6 @@ const SignUp = () => {
             <Title>회원가입</Title>
             <InputCon>
                 <Label>닉네임</Label>
-                {console.log("checking checkNick fun " + checkNick(nickname))}
-
                 <div>
                 <NicInputBox
                   type="text"

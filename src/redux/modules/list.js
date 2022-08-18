@@ -3,17 +3,12 @@ import instance from "./instance";
 
 export const _getPost = createAsyncThunk("post/getPost", async () => {
   try {
-    // console.log(param)
-
     // const pram = await useParams()
     const response = await instance.get("/api/cards");
     const data = response.data.data;
-    console.log(data);
-    // console.log(params)
 
     return data;
   } catch (error) {
-    console.log(error);
   }
 });
 
@@ -47,7 +42,6 @@ const postList = createSlice({
   extraReducers: {
     [_getPost.fulfilled]: (state, action) => {
       state.postList = action.payload;
-      console.log(action);
     },
   },
 });
