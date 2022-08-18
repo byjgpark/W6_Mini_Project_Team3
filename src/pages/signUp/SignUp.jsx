@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 // import img
 import img from "../../img/SignUp.jpg"
+import BackButton from "../../component/backButton/BackButton";
 
 const SignUp = () => {
 
@@ -142,6 +143,9 @@ const SignUp = () => {
   }
   return(
     <>
+      <StHeader>
+        <BackButton />
+      </StHeader>
       <LeftCon>
       </LeftCon>
 
@@ -218,8 +222,7 @@ const SignUp = () => {
               </InputCon>
               <BtnCon>
                 <Button type="submit">
-                  
-                회웝가입
+                회가입
               </Button>
             </BtnCon>
           </form>
@@ -356,4 +359,10 @@ const MiddleCon = styled.div`
 
 const FormCon = styled.div`
   margin: 10% 25%;
+`;
+const StHeader = styled.div`
+margin:15px 0 0 58%;
+position:absolute;
+z-index:10;
+transform:scale(0.7)
 `;

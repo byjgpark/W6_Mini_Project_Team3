@@ -4,9 +4,11 @@ import { FaTimesCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { editDetailThunk } from "../../redux/modules/targetPostSlice";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const DetailPageModal = ({ show, onHide, setShow, id }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const initialState = {
     id: 0,
     content: "",
@@ -30,7 +32,8 @@ const DetailPageModal = ({ show, onHide, setShow, id }) => {
       console.log(editDetail);
       setEditDetail(initialState);
       alert("정상적으로 등록 되었습니다");
-      setShow(false);
+      setShow(true);
+      window.location.reload()
     }
   };
 

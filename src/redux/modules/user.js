@@ -5,7 +5,7 @@ export const __getUsers = createAsyncThunk(
   "GET_USERS",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get(process.env.REACT_APP_API_KEY+"users");
+      const { data } = await axios.get(process.env.REACT_APP_API_KEY+"/users");
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);

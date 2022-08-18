@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import img from "../../img/LoginIn.jpg";
 import axios from "axios";
+import styled from "styled-components";
+import BackButton from "../../component/backButton/BackButton";
+
 // redux
 import {userStatus} from "../../redux/modules/user"
 import { useSelector, useDispatch } from "react-redux";
@@ -26,7 +29,6 @@ const LoginPage = () => {
   // handleSubmit for form
   const handleSubmit = (event) => {
     event.preventDefault();
-
     if(ID === "" && password === ""){
       alert("아아디와 비밀번호를 입력해주세요")
     }
@@ -60,13 +62,16 @@ const LoginPage = () => {
     }
       
   };
-
-
+  
   return (
     <>
+      <StHeader>
+        <BackButton />
+      </StHeader>
       <LeftCon></LeftCon>
       <MiddleCon>
         <FormCon>
+
         <form onSubmit={handleSubmit}>
           <LoginTitle>로그인</LoginTitle>
           <SignInInputCon>
@@ -100,7 +105,6 @@ const LoginPage = () => {
           </SignInBtnCon>
         </form>
         <Ptag>아직 회원이 아니신가요?&nbsp;<Atag href="/signup">회원가입</Atag></Ptag>
-
         </FormCon>
       </MiddleCon>
       {/* <RightCon>
@@ -123,16 +127,15 @@ font-weight: bold;
 `
 
 const SigninTxtbox = styled.input`
-width: 100%;
-padding: 5% 0 3% 0;
-border-radius: 10px;
-border-style: solid;
-border-color: #C0C0C0;
+  width: 100%;
+  padding: 5% 0 3% 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #C0C0C0;
 
   &:focus {
     outline: none;
     border-color:#004e66;
-
   }
 `;
 
@@ -141,11 +144,11 @@ const FormCon = styled.div`
 `;
 
 const Ptag = styled.p`
-display: flex;
-justify-content: center;
-font-size: 0.9em;
-margin-top: 8%;
-color: grey;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9em;
+  margin-top: 8%;
+  color: grey;
 `
 const Atag = styled.a`
   color: #ff5f2e; 
@@ -165,12 +168,11 @@ const SignInBtnCon = styled.div`
 `;
 
 const LoginBtn = styled.button`
-
-width: 100%;
-padding: 5% 0 3% 0;
-display: inline-block;
-font-size: 0.9em;
-font-weight: bold;
+  width: 100%;
+  padding: 5% 0 3% 0;
+  display: inline-block;
+  font-size: 0.9em;
+  font-weight: bold;
 
   background-color: #ff5f2e;
   color: white;
@@ -208,7 +210,12 @@ const MiddleCon = styled.div`
 
   right: 0;
 `;
-
+const StHeader = styled.div`
+  margin:15px 0 0 58%;
+  position:absolute;
+  z-index:10;
+  transform:scale(0.7)
+`;
 // // const RightCon = styled.div`
 // // height: 100%;
 // // width: 20%;

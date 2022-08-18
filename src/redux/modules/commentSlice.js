@@ -5,56 +5,47 @@ const initialState = {
   comments: [],
 };
 
+const headers = {
+  "Content-Type": "multipart/form-data",
+};
+
 //코멘트 작성 /api/auth/cards/{id}/comments
 export const addCommentThunk = createAsyncThunk(
   "postComment",
   async (payload, api) => {
-    // console.log(payload); cardId
+    console.log(JSON.stringify(payload)); //cardId
     try {
-      const data = await instance.post(
-        `api/auth/cards/${payload.cardId}/comments`,
-        payload
+      const { data } = await instance.post(
+        `/api/auth/cards/${payload.cardId}/comments`,
+        payload,
+        // {headers: headers,}
       );
-      return api.fulfillWithValue(data.data.data);
+      return api.fulfillWithValue(data.data);
     } catch (e) {
       return api.rejectWithValue(e);
     }
   }
 );
-//댓글 수정 /api/auth/comments/{id} /api/auth/cards/comments/{id} => comment ID
-export const editCommentThunk = createAsyncThunk(
-  "editComment",
-  async (payload, api) => {
-    console.log(payload + "안녕");
-    try {
-      await instance.put(`api/auth/cards/comments/${payload.id}`, {
-        content: payload.content,
-      });
-      return api.fulfillWithValue(payload);
-    } catch (e) {
-      return api.rejectWithValue(e);
-    }
-  }
-);
+
 //댓글 조회 //api/cards/{id}/comments
 export const checkCommentThunk = createAsyncThunk(
   "checkComment",
   async (payload, api) => {
+    console.log(payload)
     try {
       const data = await instance.get(`api/cards/${payload}/comments`);
-      // return console.log(data);
       return api.fulfillWithValue(data.data.data);
     } catch (e) {
       return api.rejectWithValue(e);
     }
   }
 );
-// 댓글 삭제 api/auth/comments/{id}  /api/auth/cards/comments/{id} comment
+// 댓글 삭제 api/auth/comments/{id}  /api/auth/cards/comments/{id}
 export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
+    console.log(payload.id)
     try {
-
       await instance.delete(`api/auth/cards/comments/${payload.id}`);
       return api.fulfillWithValue(payload);
     } catch (e) {

@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 import instance from "./instance";
 
 const initialState = {
@@ -19,6 +18,11 @@ export const addDetailThunk = createAsyncThunk(
     console.log(token);
     try {
       const data = await instance.post("/api/auth/cards", payload, {
+        headers: headers,
+        // "Content-Type": "multipart/form-data",
+        });
+        console.log(data);
+        return api.fulfillWithValue(data.data);
         // headers: headers,
         "Content-Type": "multipart/form-data",
       });
@@ -35,8 +39,6 @@ export const deleteDetailThunk = createAsyncThunk(
   async (payload, api) => {
     console.log(payload);
     try {
-      console.log("this is delete")
-      console.log("ID " + payload)
       await instance.delete(`api/auth/cards/${payload}`);
       return api.fulfillWithValue(payload);
     } catch (e) {
@@ -65,7 +67,6 @@ export const postSlice = createSlice({
     [deleteDetailThunk.rejected]: (state, action) => {
       console.log(state);
       state.posts = action.payload;
-
     },
   },
 });

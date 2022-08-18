@@ -11,7 +11,7 @@ import DetailPageComment from "../../component/comment/DetailPageComment";
 
 const Detail = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const { id } = useParams();
   const [modalOn, setModalOn] = useState(false);
   console.log(id);
@@ -42,17 +42,21 @@ const Detail = () => {
             <h3># {list[0]?.place}</h3>
             <h3>{list[0]?.star}</h3>
             <p>{list[0]?.content}</p>
-            <DetailButton>
-              <button onClick={() => setModalOn(true)}>수정</button>
-              <button
-                onClick={() => {
-                  dispatch(deleteDetailThunk(id));
-                  navigate("/");
-                }}
-              >
-                삭제
-              </button>
-            </DetailButton>
+            {list.nickname === list.nickname ?
+              <DetailButton>
+                <button onClick={() => setModalOn(true)}>수정</button>
+                <button
+                  onClick={() => {
+                    dispatch(deleteDetailThunk(id));
+                    navigate(-1);
+                    alert('삭제가 완료 되었습니다.')
+                  }}
+                >
+                  삭제
+                </button>
+              </DetailButton> :
+              <></>}
+              
           </DetaiListlBox>
         </DetailContainer>
         <CommentContainer>

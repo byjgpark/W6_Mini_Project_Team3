@@ -1,8 +1,6 @@
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "./instance";
 
-const ageParams = ["10", "20", "30"];
 export const _getPost = createAsyncThunk("post/getPost", async () => {
   try {
     // console.log(param)
@@ -17,7 +15,6 @@ export const _getPost = createAsyncThunk("post/getPost", async () => {
   } catch (error) {
     console.log(error);
   }
-
 });
 
 const initialState = {
@@ -49,7 +46,6 @@ const postList = createSlice({
   },
   extraReducers: {
     [_getPost.fulfilled]: (state, action) => {
-
       state.postList = action.payload;
       console.log(action);
     },

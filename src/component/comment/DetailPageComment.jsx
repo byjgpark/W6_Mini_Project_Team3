@@ -23,9 +23,7 @@ const DetailPageComment = (props) => {
   console.log(id);
 
   useEffect(() => {
-
     dispatch(checkCommentThunk(id));
-
   }, [dispatch]);
 
   const [addComment, setAddComment] = useState(initialState);
@@ -47,6 +45,7 @@ const DetailPageComment = (props) => {
       dispatch(addCommentThunk(addComment));
       setAddComment(initialState);
       alert("정상적으로 댓글이 등록 되었습니다.");
+      // window.location.reload()
     }
   };
   const onClickSaveButton = (event) => {
@@ -95,9 +94,7 @@ const DetailPageComment = (props) => {
                   <div>
                     <CommentBox key={index}>
                       <TextBox>
-
                         <IdBox>{item.nickname}</IdBox>
-
                         <BodyBox>{item.content}</BodyBox>
                       </TextBox>
                       {item.isEditMode ? (
@@ -117,7 +114,7 @@ const DetailPageComment = (props) => {
                           />
                         </TextBox>
                       ) : (
-                        <p>{put_comment?.content}</p>
+                        <p>{item.content}</p>
                       )}
                       <div>
                         <button
