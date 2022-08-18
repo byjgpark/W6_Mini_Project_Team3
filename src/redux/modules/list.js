@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "./instance";
 
-const ageParams = ["10", "20", "30"];
 export const _getPost = createAsyncThunk("post/getPost", async () => {
   try {
     // console.log(param)

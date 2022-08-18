@@ -2,45 +2,98 @@ import React from 'react';
 import { useNavigate }from 'react-router-dom'
 import styled from 'styled-components';
 import TitleButton from '../../component/titleButton/TitleButton';
+import { FaPencilAlt } from "react-icons/fa";
+import mainimage from '../../mainimage.jpg'
+
+// redux
+import {userStatus} from "../../redux/modules/user"
+import { useSelector, useDispatch } from "react-redux";
 
 const MainPage = () => {
   const navigate = useNavigate()
+  const getToken = localStorage.getItem("SavedToken");
+  console.log(getToken)
+
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user);
+
+  console.log("This is user check in main page "+ JSON.stringify(users.users.userStatus))
 
   return (
-    <div style={{ width: '1200px', minHeight:'100vh',display: 'flex', flexDirection: 'column', margin: '0 auto', padding:'10px 30px',
-    //  backgroundColor:'#ff5f2e30',
-     }}>
-      <div style={{ display:'flex', flexDirection:'row', justifyContent:'space-between' }}>
+    <Container>
+      <HederContainer>
       <TitleButton />
-      <StAddBtn onClick={() => navigate('/add')}>✏️</StAddBtn>
-      </div>
-        <div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', padding:'30px 30px',gap:'30px', height:'100vh'
-          // , backgroundColor:'#ff5f2e20'
-        }}>
-            <div>
-              <img src="https://cdn.pixabay.com/photo/2019/11/08/11/56/kitten-4611189_1280.jpg" alt='이미지를 찾을 수 없습니다.' style={{ width: '600px', height: '550px', objectFit: 'cover', borderRadius:'5%' }} />
-            </div>
-            <StDescBox style={{ width:'400px' }}>
-              <StDesc>여행하GO</StDesc>
-              <StDesc>추천하GO</StDesc>
-              <StDesc>가보자GO</StDesc>
-            </StDescBox>
-            <StBtnBox>
-              <StBtn onClick={() => navigate('/login')}>로그인</StBtn>
-              <StBtn onClick={() => navigate('/cards')}>전체보기</StBtn>
-              <StBtn onClick={() => navigate('/cards/10')}>10대</StBtn>
-              <StBtn onClick={() => navigate('/cards/20')}>20대</StBtn>
-              <StBtn onClick={() => navigate('/cards/30')}>30대</StBtn>
-            </StBtnBox>
+        { getToken ? 
+        <FaPencilAlt className='addBtn' onClick={() => navigate('/add')}></FaPencilAlt> :
+        <FaPencilAlt className='addBtn' onClick={() => alert('먼저 로그인 해주세요!')}>✏️</FaPencilAlt> }
+      </HederContainer>
+      <div>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', padding:'10px 30px',gap:'20px', height:'100vh'
+        // , backgroundColor:'#ff5f2e20'
+      }}>
+          <div>
+            <img src={mainimage} alt='메인 이미지' style={{ width: '600px', height: '550px', objectFit: 'cover', borderRadius:'5%' }} />
           </div>
+          <StDescBox>
+            <StDesc>여행하GO</StDesc>
+            <StDesc>추천하GO</StDesc>
+            <StDesc>가보자GO</StDesc>
+          </StDescBox>
+          <StBtnBox>
+            {
+            getToken ? 
+            <StBtn onClick={() => {window.location.reload(); localStorage.removeItem("SavedToken");}}>로그아웃</StBtn> :
+            <StBtn onClick={() => navigate('/login')}>로그인</StBtn>
+            }
+            <StBtn onClick={() => navigate('/signup')}>회원가입</StBtn>
+            <StBtn onClick={() => navigate('/cards')}>전체보기</StBtn>
+            <StBtn onClick={() => navigate('/cards/10')}>10대</StBtn>
+            <StBtn onClick={() => navigate('/cards/20')}>20대</StBtn>
+            <StBtn onClick={() => navigate('/cards/30')}>30대</StBtn>
+          </StBtnBox>
         </div>
-    </div>
+      </div>
+    </Container>
   );
 };
 
 export default MainPage;
 
+const Container = styled.div`
+  width: 1200px;
+  min-height:100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding:10px 30px;
+`;
+const HederContainer = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between ;
+  padding:10px 30px;
+
+  .addBtn {
+  width:50;
+  height:50px;
+
+  font-size: 50px;
+  font-weight: 700;
+
+  color:#ff5f2e;
+  background-color:initial;
+  border:none;
+
+  margin: 20px 40px 0 0;
+  
+  cursor: pointer;
+  transition: all 200ms;
+}
+.addBtn:hover{
+  transform:scale(1.2);
+  background-color:initial;
+};
+`;
 const StDescBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -69,7 +122,7 @@ const StBtnBox = styled.div`
   align-items:center;
   gap:50px;
   
-  width:140px;
+  width:150px;
   height:550px;
 
   /* margin-top:50px; */
@@ -98,7 +151,7 @@ const StBtn = styled.button`
     /* border-radius: 5px; */
   }
 `;
-const StAddBtn = styled.button`
+/* const StAddBtn = styled.div`
   width:100px;
   height:80px;
 
@@ -109,7 +162,7 @@ const StAddBtn = styled.button`
   background-color:initial;
   border:none;
 
-  margin-right:30px;
+  margin:10px 40px 0 0;
   
   cursor: pointer;
   transition: all 200ms;
@@ -117,4 +170,4 @@ const StAddBtn = styled.button`
     transform:scale(1.2);
     background-color:initial;
   }
-`;
+`; */

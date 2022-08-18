@@ -1,10 +1,12 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_KEY, // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
+baseURL: process.env.REACT_APP_API_KEY, // 요청을 www.aa.com/user로 보낸다면, www.aa.com까지 기록
 });
 const token = localStorage.getItem("SavedToken");
-instance.defaults.headers.common["Authorization"] = token ? `${token}` : null;
+instance.defaults.headers.common["Authorization"] = token
+? `${token}`
+: null;
 
 // 가지고 있는 토큰 넣어주기!
 // 로그인 전이면 토큰이 없으니 못 넣어요.

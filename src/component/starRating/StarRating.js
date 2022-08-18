@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
-import "./StarRating.css";
+import styled from "styled-components";
+// import "./StarRating.css";
 
 const StarRating = ({ onChangeHandler }) => {
   const [rating, setRating] = useState(null);
@@ -12,7 +13,7 @@ const StarRating = ({ onChangeHandler }) => {
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
         return (
-          <label>
+          <StLabel>
             <input
               className="rating"
               type="radio"
@@ -28,7 +29,7 @@ const StarRating = ({ onChangeHandler }) => {
               onMouseEnter={() => setHover(ratingValue)}
               onMouseLeave={() => setHover(null)}
             />
-          </label>
+          </StLabel>
         );
       })}
     </div>
@@ -36,3 +37,12 @@ const StarRating = ({ onChangeHandler }) => {
 };
 
 export default StarRating;
+
+const StLabel = styled.label`
+.rating {
+  display: none;
+}
+.star {
+  cursor: pointer;
+}
+`;

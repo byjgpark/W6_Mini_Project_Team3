@@ -9,7 +9,8 @@ import {
   delCommentThunk,
 } from "../../redux/modules/commentSlice";
 
-const DetailPageComment = () => {
+const DetailPageComment = (props) => {
+  console.log("Hello Card ID " + (props.CardID))
   const dispatch = useDispatch();
   const { id } = useParams();
   const initialState = {
@@ -26,7 +27,7 @@ const DetailPageComment = () => {
 
   const [addComment, setAddComment] = useState(initialState);
   const put_comment = useSelector((state) => state.comments.comments);
-  console.log(put_comment);
+  console.log("Hello Selector Comment " + JSON.stringify(put_comment));
   const [newComment, setNewComment] = useState(initialState);
 
   let inputHandler = (e) => {
@@ -39,9 +40,11 @@ const DetailPageComment = () => {
       alert("댓글을 작성해주세요!!");
     } else {
       event.preventDefault();
+      console.log("Hello Checking addComment " + addComment)
       dispatch(addCommentThunk(addComment));
       setAddComment(initialState);
       alert("정상적으로 댓글이 등록 되었습니다.");
+      // window.location.reload()
     }
   };
   // const onClickSaveButton = (event) => {
@@ -56,6 +59,7 @@ const DetailPageComment = () => {
   //     dispatch(checkCommentThunk(newComment));
   //   }
   // };
+
 
   return (
     <div>
@@ -82,7 +86,7 @@ const DetailPageComment = () => {
       </InputContainer>
       <hr color="#fcbe32" />
       <>
-        {put_comment.length == 0
+        {put_comment.length === 0
           ? ""
           : put_comment.map((item, index) => {
               {
@@ -110,7 +114,7 @@ const DetailPageComment = () => {
                           />
                         </TextBox>
                       ) : (
-                        <p>{put_comment?.content}</p>
+                        <p>{item.content}</p>
                       )}
                       <div>
                         <button

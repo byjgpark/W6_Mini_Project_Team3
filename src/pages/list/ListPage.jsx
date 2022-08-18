@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BackButton from '../../component/backButton/BackButton';
 import Card from '../../component/card/Card'
+import Header from '../../component/header/Header';
 import TitleButton from '../../component/titleButton/TitleButton';
 import { _getPost } from '../../redux/modules/list';
 
@@ -26,8 +27,7 @@ const ListPage = () => {
     <>
     <StListContainer>
       <StButtonContainer>
-        <BackButton onClick={() => navigate(-1)}>뒤로가기</BackButton>
-        <TitleButton onClick={() => navigate("/")}>타이틀</TitleButton>
+        <Header />
       </StButtonContainer>
         <StList>
           {postList?.map((post) => {
@@ -54,6 +54,10 @@ const ListPage = () => {
                     body={post.content}
                     star={post.star}
                   />
+                )
+              }else{
+                return(
+                  null
                 )
               }
           })}
@@ -111,5 +115,4 @@ const TopBtn = styled.button`
   :hover{
     transform:scale(1.2)
   };
-
 `;

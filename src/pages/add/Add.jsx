@@ -58,7 +58,7 @@ const Add = () => {
         if (response) {
           setPosting(initialState);
           alert("정상적으로 등록 되었습니다");
-          navigate("/");
+          navigate("/cards");
         }
       } catch (error) {
         console.log(error);
