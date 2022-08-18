@@ -20,7 +20,7 @@ import { _getPost } from "../../redux/modules/list";
     dispatch(_getPost());
   }, []);
 
-
+//
 
   return (
     <>
