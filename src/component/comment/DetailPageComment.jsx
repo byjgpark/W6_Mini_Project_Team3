@@ -93,7 +93,7 @@ const DetailPageComment = (props) => {
                         <IdBox>{item.nickname}</IdBox>
                         <BodyBox>{item.content}</BodyBox>
                       </TextBox>
-                      {item.isEditMode ? (
+                      {/* {item.isEditMode ? (
                         <TextBox>
                           <input
                             type="text"
@@ -111,7 +111,7 @@ const DetailPageComment = (props) => {
                         </TextBox>
                       ) : (
                         <p>{item.content}</p>
-                      )}
+                      )} */}
                       <div>
                         <button
                           onClick={() => {
