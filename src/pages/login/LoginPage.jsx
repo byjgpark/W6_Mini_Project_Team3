@@ -28,10 +28,10 @@ const LoginPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if(ID === "" && password === ""){
-      alert("아아디와 비밀번호를 입력해주세요")
+      alert("아이디와 비밀번호를 입력해주세요")
     }
     else if( ID === ""){
-      alert("아아디를 입력해주세요")      
+      alert("아이디를 입력해주세요")      
     }
 
     else if(password === ""){

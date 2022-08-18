@@ -157,7 +157,7 @@ const SignUp = () => {
                 >
                 </NicInputBox>
                  <CheckBtn type="button" onClick={() =>{userValidation() }}>중복확인</CheckBtn>
-                 {!valCheck.userCheck?<NotCheck>ID 중복검사를 해주세요!</NotCheck>:<RightCheck>사용가능한 아아디 입니다.</RightCheck>}
+                 {!valCheck.userCheck?<NotCheck>ID 중복검사를 해주세요!</NotCheck>:<RightCheck>사용가능한 아이디 입니다.</RightCheck>}
                  </div>
               
               </InputCon>
@@ -210,7 +210,7 @@ const SignUp = () => {
               </InputCon>
               <BtnCon>
                 <Button type="submit">
-                회가입
+                회원가입
               </Button>
             </BtnCon>
           </form>

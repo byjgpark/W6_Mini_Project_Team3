@@ -3,10 +3,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import BackButton from '../../component/backButton/BackButton';
 import Card from '../../component/card/Card'
 import Header from '../../component/header/Header';
-import TitleButton from '../../component/titleButton/TitleButton';
 import { _getPost } from '../../redux/modules/list';
 
 const ListPage = () => {
@@ -72,7 +70,6 @@ const StListContainer = styled.div`
   flex-direction: column;
   align-items:flex-start;
   margin: 30px auto;
-  /* border: 1px solid blue; */
 `;
 const StButtonContainer = styled.div`
   display: flex;
