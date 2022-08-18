@@ -46,8 +46,9 @@ const LoginPage = () => {
         let token = response.headers.authorization;
         localStorage.setItem("SavedToken", token);
         alert("로그인이 완료되었습니다")
-        navigate('/')}
-        else{
+        navigate('/')
+        window.location.reload()
+      }else{
           alert("로그인이 실패했습니다.")
         }
       })

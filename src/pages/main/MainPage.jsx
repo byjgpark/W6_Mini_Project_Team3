@@ -23,7 +23,7 @@ const MainPage = () => {
       <TitleButton />
         { getToken ? 
         <FaPencilAlt className='addBtn' onClick={() => navigate('/add')}></FaPencilAlt> :
-        <FaPencilAlt className='addBtn' onClick={() => alert('먼저 로그인 해주세요!')}>✏️</FaPencilAlt> }
+        <FaPencilAlt className='addBtn' onClick={() => {alert('먼저 로그인 해주세요!'); navigate('/login')} }></FaPencilAlt> }
       </HederContainer>
       <div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between', padding:'10px 30px',gap:'20px', height:'100vh'
