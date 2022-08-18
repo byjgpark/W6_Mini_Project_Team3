@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   addCommentThunk,
-  editCommentThunk,
+  // editCommentThunk,
   checkCommentThunk,
   delCommentThunk,
 } from "../../redux/modules/commentSlice";
@@ -54,7 +54,7 @@ const DetailPageComment = (props) => {
       alert("댓글을 작성해 주세요");
     } else {
       event.preventDefault();
-      dispatch(editCommentThunk(newComment));
+      // dispatch(editCommentThunk(newComment));
       setNewComment(initialState);
       alert("정상적으로 등록 되었습니다");
       dispatch(checkCommentThunk(newComment));
