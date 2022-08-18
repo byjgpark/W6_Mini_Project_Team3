@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import BackButton from "../../component/backButton/BackButton";
+import TitleButton from "../../component/titleButton/TitleButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -7,7 +9,6 @@ import DetailPageModal from "../../component/detailPage/DetailPageModal";
 import { getDetailThunk } from "../../redux/modules/targetPostSlice";
 import { deleteDetailThunk } from "../../redux/modules/postSlice";
 import DetailPageComment from "../../component/comment/DetailPageComment";
-// import { _getPost } from "../../redux/modules/list";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -20,14 +21,14 @@ const Detail = () => {
     dispatch(getDetailThunk(id));
   }, [dispatch, id]);
 
-  // useEffect(() => {
-  //   dispatch(_getPost());
-  // }, []);
-
   const list = useSelector((state) => state.post.post);
   console.log(list);
   return (
     <div>
+      <StButtonContainer>
+        <BackButton onClick={() => navigate(-1)}>뒤로가기</BackButton>
+        <TitleButton onClick={() => navigate("/")}>타이틀</TitleButton>
+      </StButtonContainer>
       <DetailWrap>
         <DetailContainer>
           <ImgDetailBox>
@@ -99,12 +100,10 @@ const CommentContainer = styled.div`
   padding: 40px;
 `;
 const ImgDetailBox = styled.div`
-  /* border: 1px red solid; */
   width: 100%;
   height: 390px;
 `;
 const DetaiListlBox = styled.div`
-  /* border: 1px red solid; */
   width: 100%;
   height: 50px;
 
@@ -118,7 +117,6 @@ const DetaiListlBox = styled.div`
     padding-left: 10px;
   }
   p {
-    /* border: 1px red solid; */
     width: 100%;
     height: 90px;
     padding-left: 10px;
@@ -129,7 +127,6 @@ const DetailButton = styled.div`
   display: flex;
   gap: 20px;
   padding-bottom: 20px;
-  /* margin-top: 5px; */
   margin-left: 150px;
   button {
     background-color: #ff5f2e;
@@ -141,4 +138,13 @@ const DetailButton = styled.div`
     color: #e1eef6;
     font-size: medium;
   }
+`;
+const StButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 450px;
+  margin-left: 475px;
+  position: absolute;
+  margin-top: 50px;
+  position: fixed;
 `;

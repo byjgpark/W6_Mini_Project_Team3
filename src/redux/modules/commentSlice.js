@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import instance from "./instance";
 
 const initialState = {
@@ -13,7 +12,7 @@ export const addCommentThunk = createAsyncThunk(
     // console.log(payload); cardId
     try {
       const data = await instance.post(
-        `api/auth/cards/${payload.id}/comments`,
+        `api/auth/cards/${payload.cardId}/comments`,
         payload
       );
       return api.fulfillWithValue(data.data.data);
@@ -22,7 +21,7 @@ export const addCommentThunk = createAsyncThunk(
     }
   }
 );
-//댓글 수정 /api/auth/comments/{id} /api/auth/cards/comments/{id}
+//댓글 수정 /api/auth/comments/{id}
 export const editCommentThunk = createAsyncThunk(
   "editComment",
   async (payload, api) => {
@@ -50,7 +49,7 @@ export const checkCommentThunk = createAsyncThunk(
     }
   }
 );
-// 댓글 삭제 api/auth/comments/{id}  /api/auth/cards/comments/{id}
+// 댓글 삭제 api/auth/comments/{id}
 export const delCommentThunk = createAsyncThunk(
   "delComment",
   async (payload, api) => {
@@ -92,11 +91,8 @@ export const CommentSlice = createSlice({
       state.error = action.payload;
     },
     [delCommentThunk.fulfilled]: (state, action) => {
-      const target = state.comments.findIndex(
-        (comments) => comments.id === action.payload
-      );
-
-      state.comments.splice(target, 1);
+      const target = state.comments.filter((v) => v.id !== action.payload.id);
+      state.comments = target;
     },
     [delCommentThunk.rejected]: () => {},
   },
