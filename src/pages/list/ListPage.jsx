@@ -62,10 +62,7 @@ const ListPage = () => {
               }
           })}
         </StList>
-        <TopBtn
-          onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}>
-            TOP
-        </TopBtn>
+        <TopBtn onClick={() => window.scrollTo({top:0, left:0, behavior:'smooth'})}>TOP</TopBtn>
     </StListContainer>
     </>
   );
@@ -118,5 +115,4 @@ const TopBtn = styled.button`
   :hover{
     transform:scale(1.2)
   };
-
 `;

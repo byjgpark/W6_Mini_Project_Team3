@@ -5,10 +5,19 @@ import TitleButton from '../../component/titleButton/TitleButton';
 import { FaPencilAlt } from "react-icons/fa";
 import mainimage from '../../mainimage.jpg'
 
+// redux
+import {userStatus} from "../../redux/modules/user"
+import { useSelector, useDispatch } from "react-redux";
+
 const MainPage = () => {
   const navigate = useNavigate()
   const getToken = localStorage.getItem("SavedToken");
   console.log(getToken)
+
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.user);
+
+  console.log("This is user check in main page "+ JSON.stringify(users.users.userStatus))
 
   return (
     <Container>

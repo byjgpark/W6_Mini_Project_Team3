@@ -16,7 +16,7 @@ export const getDetailThunk = createAsyncThunk(
   "getPost",
   async (payload, api) => {
     try {
-      console.log(payload);
+      console.log("This is getDetail " + payload);
       const { data } = await instance.get(`api/cards/${payload}`);
       console.log(data);
       return api.fulfillWithValue(data.data);
@@ -25,7 +25,7 @@ export const getDetailThunk = createAsyncThunk(
     }
   }
 );
-//게시물 수정 /api/auth/cards/{id} // /api/auth/cards/{id}
+//게시물 수정 /api/auth/cards/{id}
 export const editDetailThunk = createAsyncThunk(
   "editDetail",
   async (payload, api) => {
