@@ -4,7 +4,7 @@ import instance from "./instance";
 export const _getPost = createAsyncThunk("post/getPost", async () => {
   try {
     // const pram = await useParams()
-    const response = await instance.get("/api/cards");
+    const response = await instance.get("api/cards");
     const data = response.data.data;
 
     return data;

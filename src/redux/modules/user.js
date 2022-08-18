@@ -1,17 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const __getUsers = createAsyncThunk(
-  "GET_USERS",
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await axios.get(process.env.REACT_APP_API_KEY+"/users");
-      return thunkAPI.fulfillWithValue(data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.code);
-    }
+export const __getUsers = createAsyncThunk("GET_USERS", async (_, thunkAPI) => {
+  try {
+    const { data } = await axios.get(process.env.REACT_APP_API_KEY + "/users");
+    return thunkAPI.fulfillWithValue(data);
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.code);
   }
-);
+});
+
 
 export const __addUser = createAsyncThunk(
   "ADD_USER",
@@ -22,14 +20,17 @@ export const __addUser = createAsyncThunk(
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
     }
+
   }
-);
+});
 
 export const __getCommnetsByTodoId = createAsyncThunk(
   "GET_COMMENT_BY_TODO_ID",
   async (arg, thunkAPI) => {
     try {
+
       const { data } = await axios.get(process.env.REACT_APP_API_KEY+`/comments?todoId=${arg}`
+
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -50,7 +51,6 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 
-
 export const __updateComment = createAsyncThunk(
   "UPDATE_COMMENT",
   async (arg, thunkAPI) => {
@@ -67,7 +67,7 @@ export const __loginUser = createAsyncThunk(
   "LOGIN_USER",
   async (arg, thunkAPI) => {
     try {
-      axios.update('http://13.124.123.173/users/login', arg);
+      axios.update("http://13.124.123.173/users/login", arg);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -75,19 +75,18 @@ export const __loginUser = createAsyncThunk(
   }
 );
 
-
 const initialState = {
   users: {
     user: [],
     userStatus: false,
     isLoading: false,
     error: null,
-  }
-//   commentsByTodoId: {
-//     data: [],
-//     isLoading: false,
-//     error: null,
-//   },
+  },
+  //   commentsByTodoId: {
+  //     data: [],
+  //     isLoading: false,
+  //     error: null,
+  //   },
 };
 
 export const user = createSlice({
@@ -95,7 +94,9 @@ export const user = createSlice({
   initialState,
   reducers: {
     userStatus: (state, action) => {
+
       state.users.userStatus = action.payload
+
     },
   },
   extraReducers: {
@@ -115,6 +116,7 @@ export const user = createSlice({
     // Add User
     [__addUser.fulfilled]: (state, action) => {
       state.users.isLoading = false;
+
     },
     [__addUser.rejected]: (state, action) => {
       state.users.isLoading = false;
@@ -126,13 +128,16 @@ export const user = createSlice({
 
     // 댓글 조회 (todoId)
     [__getCommnetsByTodoId.pending]: (state) => {
+
       state.commentsByTodoId.isLoading = true;
     },
     [__getCommnetsByTodoId.fulfilled]: (state, action) => {
+
       state.commentsByTodoId.isLoading = false;
       state.commentsByTodoId.data = action.payload;
     },
     [__getCommnetsByTodoId.rejected]: (state, action) => {
+
       state.commentsByTodoId.isLoading = false;
       state.commentsByTodoId.error = action.payload;
     },
@@ -163,7 +168,6 @@ export const user = createSlice({
     },
     [__updateComment.rejected]: () => {},
 
-
     // 댓글 수정
     [__loginUser.pending]: (state) => {},
     [__loginUser.fulfilled]: (state, action) => {
@@ -172,11 +176,10 @@ export const user = createSlice({
       );
       state.commentsByTodoId.data.splice(target, 1, action.payload);
     },
-    [__loginUser.rejected]: () => {}
-    
+    [__loginUser.rejected]: () => {},
   },
 });
 
-export const {userStatus} = user.actions
+export const { userStatus } = user.actions;
 
 export default user.reducer;
