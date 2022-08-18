@@ -34,8 +34,8 @@ export const editDetailThunk = createAsyncThunk(
       const { data } = await instance.put(`api/auth/cards/${payload.id}`, {
         content: payload.content,
       });
-      console.log(data);
-      // return api.fulfillWithValue(payload);
+      // console.log(data);
+      return api.fulfillWithValue(payload);
       return console.log(data);
     } catch (error) {
       // return api.rejectWithValue(error);

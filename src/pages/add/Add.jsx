@@ -53,13 +53,13 @@ const Add = () => {
         new Blob([JSON.stringify(posting)], { type: "application/json" })
       );
       frm.append("image", postimage.files[0]);
-      dispatch(addDetailThunk(frm));
+      // dispatch(addDetailThunk(frm));
       try {
         const response = await dispatch(addDetailThunk(frm));
         if (response) {
           // setPosting(initialState);
           alert("정상적으로 등록 되었습니다");
-          // navigate("/");
+          navigate("/cards");
 
           // navigate(`/detail/${response.id}`);
           // alert("정상적으로 등록 되었습니다");

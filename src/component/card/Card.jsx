@@ -59,8 +59,7 @@ const Stcard = styled.div`
 `;
 const StImg = styled.img`
   width:95%;
-  max-height:180px;
-  min-height:160px;
+  height:180px;
 
   object-fit:cover;
 `;
@@ -83,7 +82,7 @@ const StCardBox = styled.div`
 const StTextContainer = styled.div`
   display:flex;
   flex-direction:column;
-  gap: 10px;
+  gap: 15px;
 
   width:100%;
 
@@ -100,22 +99,3 @@ const Sttext = styled.span`
   overflow:hidden;
   text-overflow:ellipsis;
 `;
-const StButton = styled.button`
-  width:100px;
-  height:30px;
-
-  color:#ff5f2e;
-  background-color:initial;
-
-  font-size:15px;
-
-  border:none;
-  border-radius:7px;
-
-  margin-left:55%;
-
-  cursor:pointer;
-  :hover{
-    font-weight:700;
-  }
-  `

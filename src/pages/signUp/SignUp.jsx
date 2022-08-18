@@ -12,7 +12,7 @@ import {__getUsers} from "../../redux/modules/user"
 
 // import components
 import img from "../../img/SignUp.jpg"
-import PasswordAndConfirmPasswordValidation from "./password/PasswordAndConfirmPasswordValidation";
+import BackButton from "../../component/backButton/BackButton";
 
 const SignUp = () => {
 
@@ -141,7 +141,10 @@ const SignUp = () => {
 
   return(
     <>
-    {/* {console.log("checking state "+ valCheck.userCheck)} */}
+      <StHeader>
+        <BackButton />
+      </StHeader>
+      {/* {console.log("checking state "+ valCheck.userCheck)} */}
       <LeftCon>
       </LeftCon>
       <MiddleCon>
@@ -149,85 +152,85 @@ const SignUp = () => {
           <form onSubmit={onSubmitHandler}>
             <Title>회원가입</Title>
             <InputCon>
-                <Label>닉네임</Label>
-                {console.log("checking checkNick fun " + checkNick(nickname))}
-                {checkNick(nickname) 
-                ? 
-                 <div>
-                 <NotNicInputBox
-                   type="text"
-                   placeholder="닉네임"
-                   value={nickname}
-                   onChange={(e) => {
-                     // Getting User title input
-                     setNickname(e.target.value);
-                   }}
-                 >
-                 </NotNicInputBox>
-                 {valCheck.userCheck?<p>중복확인을 해주세요!</p>:<p>아아디는 영문자로 시작하는 6~20자 영문자 또는 숫자이여야 합니다</p>}
-                 </div>
+              <Label>닉네임</Label>
+              {console.log("checking checkNick fun " + checkNick(nickname))}
+              {checkNick(nickname)
+                ?
+                <div>
+                  <NotNicInputBox
+                    type="text"
+                    placeholder="닉네임"
+                    value={nickname}
+                    onChange={(e) => {
+                      // Getting User title input
+                      setNickname(e.target.value);
+                    }}
+                  >
+                  </NotNicInputBox>
+                  {valCheck.userCheck ? <p>중복확인을 해주세요!</p> : <p>아아디는 영문자로 시작하는 6~20자 영문자 또는 숫자이여야 합니다</p>}
+                </div>
                 :
                 <div>
-                <NicInputBox
-                  type="text"
-                  placeholder="닉네임"
-                  value={nickname}
-                  onChange={(e) => {
-                    // Getting User title input
-                    setNickname(e.target.value);
-                  }}
-                >
-                </NicInputBox>
-                <CheckBtn type="button" onClick={() =>{userValidation() }}>중복확인</CheckBtn>
-                {console.log("inside render check " + valCheck.userCheck)}
-                {check?<p>사용가능한 아아디 입니다.</p>:<p>이미 사용된 아아디 입니다.</p>}
+                  <NicInputBox
+                    type="text"
+                    placeholder="닉네임"
+                    value={nickname}
+                    onChange={(e) => {
+                      // Getting User title input
+                      setNickname(e.target.value);
+                    }}
+                  >
+                  </NicInputBox>
+                  <CheckBtn type="button" onClick={() => { userValidation() }}>중복확인</CheckBtn>
+                  {console.log("inside render check " + valCheck.userCheck)}
+                  {check ? <p>사용가능한 아아디 입니다.</p> : <p>이미 사용된 아아디 입니다.</p>}
                 </div>
-                }
-                
-                {/* <PasswordAndConfirmPasswordValidation></PasswordAndConfirmPasswordValidation> */}
-                
-              </InputCon>
-              <InputCon>
-                <Label>비밀번호</Label>
-                <InputBox
-                  type="password"
-                  placeholder="비밀번호"
-                  value={password}
-                  onChange={(e) => {
-                    // Getting User title input
-                    setPassword(e.target.value);
-                  }}
-                >
-                </InputBox>
-              </InputCon>
-              <InputCon>
-                {/* <label className="form__label">Confirm Password </label> */}
-                <Label>비밀번호 확인</Label>
-                <InputBox
-                  type="password"
-                  placeholder="비밀번호 확인"
-                  value={passwordConfirm}
-                  onChange={(e) => {
-                    // Getting User title input
-                    setPasswordCon(e.target.value);
-                  }}
-                >
-                </InputBox>
-                { (password === passwordConfirm) ? (password === "" && passwordConfirm === "") ? <></> : <p className = "correctPw"> 비밀번호가 일치합니다! </p> : <p className = "incorrectPw"> 비밀번호가 일치하지 않습니다! </p> }
-              </InputCon>
-              <InputCon>
-                {/* <label className="form__label">Gender </label> */}
-                <Label>성별</Label>
-                <InputBox
-                  type="text"
-                  placeholder="성별"
-                  value={gender}
-                  onChange={(e) => {
-                    // Getting User title input
-                    setGender(e.target.value);
-                  }}
-                >
-                </InputBox>
+              }
+
+              {/* <PasswordAndConfirmPasswordValidation></PasswordAndConfirmPasswordValidation> */}
+
+            </InputCon>
+            <InputCon>
+              <Label>비밀번호</Label>
+              <InputBox
+                type="password"
+                placeholder="비밀번호"
+                value={password}
+                onChange={(e) => {
+                  // Getting User title input
+                  setPassword(e.target.value);
+                }}
+              >
+              </InputBox>
+            </InputCon>
+            <InputCon>
+              {/* <label className="form__label">Confirm Password </label> */}
+              <Label>비밀번호 확인</Label>
+              <InputBox
+                type="password"
+                placeholder="비밀번호 확인"
+                value={passwordConfirm}
+                onChange={(e) => {
+                  // Getting User title input
+                  setPasswordCon(e.target.value);
+                }}
+              >
+              </InputBox>
+              {(password === passwordConfirm) ? (password === "" && passwordConfirm === "") ? <></> : <p className="correctPw"> 비밀번호가 일치합니다! </p> : <p className="incorrectPw"> 비밀번호가 일치하지 않습니다! </p>}
+            </InputCon>
+            <InputCon>
+              {/* <label className="form__label">Gender </label> */}
+              <Label>성별</Label>
+              <InputBox
+                type="text"
+                placeholder="성별"
+                value={gender}
+                onChange={(e) => {
+                  // Getting User title input
+                  setGender(e.target.value);
+                }}
+              >
+              </InputBox>
               {/* <div>
                 <label>
                   <input
@@ -251,23 +254,23 @@ const SignUp = () => {
                   </label>
                 </div> */}
 
-              </InputCon>
-              <InputCon>
-                <Label>나이대</Label>
-                {/* <label className="form__label">Age </label> */}
-                <InputBox
-                  type="text"
-                  placeholder="나이대"
-                  value={age}
-                  onChange={(e) => {
-                    // Getting User title input
-                    setAge(e.target.value);
-                  }}
-                >
-                </InputBox>
-              </InputCon>
-              <BtnCon>
-                <Button type="submit">
+            </InputCon>
+            <InputCon>
+              <Label>나이대</Label>
+              {/* <label className="form__label">Age </label> */}
+              <InputBox
+                type="text"
+                placeholder="나이대"
+                value={age}
+                onChange={(e) => {
+                  // Getting User title input
+                  setAge(e.target.value);
+                }}
+              >
+              </InputBox>
+            </InputCon>
+            <BtnCon>
+              <Button type="submit">
                 회웝가입
               </Button>
             </BtnCon>
@@ -408,5 +411,10 @@ const MiddleCon = styled.div`
 const FormCon = styled.div`
   margin: 10% 25%;
 `;
-
+const StHeader = styled.div`
+margin:15px 0 0 58%;
+position:absolute;
+z-index:10;
+transform:scale(0.7)
+`;
 

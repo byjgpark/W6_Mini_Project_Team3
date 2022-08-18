@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import BackButton from "../../component/backButton/BackButton";
-import Card from "../../component/card/Card";
-import TitleButton from "../../component/titleButton/TitleButton";
-import { _getPost } from "../../redux/modules/list";
-
-const ListPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const postList = useSelector((state) => state.list.postList);
-  console.log(postList);
-=======
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BackButton from '../../component/backButton/BackButton';
 import Card from '../../component/card/Card'
+import Header from '../../component/header/Header';
 import TitleButton from '../../component/titleButton/TitleButton';
 import { _getPost } from '../../redux/modules/list';
 
@@ -32,7 +16,6 @@ const ListPage = () => {
   const param = useParams()
   console.log(param)
   console.log(postList)
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
 
   useEffect(() => {
     dispatch(_getPost());
@@ -44,27 +27,8 @@ const ListPage = () => {
     <>
     <StListContainer>
       <StButtonContainer>
-        <BackButton onClick={() => navigate(-1)}>뒤로가기</BackButton>
-        <TitleButton onClick={() => navigate("/")}>타이틀</TitleButton>
+        <Header />
       </StButtonContainer>
-<<<<<<< HEAD
-      <StList>
-        {postList.map((post) => {
-          // if (post.star < 5)
-          return (
-            <Card
-              key={post.id}
-              id={post.id}
-              image={post.image}
-              title={post.title}
-              place={post.place}
-              body={post.body}
-              star={post.star}
-            />
-          );
-        })}
-      </StList>
-=======
         <StList>
           {postList?.map((post) => {
             // console.log(post)
@@ -91,11 +55,17 @@ const ListPage = () => {
                     star={post.star}
                   />
                 )
+              }else{
+                return(
+                  null
+                )
               }
           })}
         </StList>
-        <TopBtn onClick={() => window.scrollTo({top:0, left:0, behavior:'smooth'})}>TOP</TopBtn>
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
+        <TopBtn
+          onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}>
+            TOP
+        </TopBtn>
     </StListContainer>
     </>
   );
@@ -107,19 +77,6 @@ const StListContainer = styled.div`
   width: 1200px;
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
-  align-items: center;
-  margin: 0 auto;
-  border: 1px solid blue;
-`;
-const StButtonContainer = styled.div`
-  display: flex;
-
-  width: 90%;
-
-  gap: 340px;
-`;
-=======
   align-items:flex-start;
   margin: 30px auto;
   /* border: 1px solid blue; */
@@ -130,7 +87,6 @@ const StButtonContainer = styled.div`
   gap:375px;
   margin-left:75px;
 `
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9
 const StList = styled.div`
   display: flex;
   flex-direction: row;
@@ -139,10 +95,6 @@ const StList = styled.div`
   gap: 40px;
   flex-wrap: wrap;
 
-<<<<<<< HEAD
-  padding: 15px 0 0 75px;
-`;
-=======
   padding: 30px 0 0 75px;
 `;
 const TopBtn = styled.button`
@@ -168,4 +120,3 @@ const TopBtn = styled.button`
   };
 
 `;
->>>>>>> 388d16617d4f8ab68b43e4c7155e22b3f3470bb9

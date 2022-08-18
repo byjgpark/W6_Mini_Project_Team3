@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -12,17 +12,24 @@ import {
 
 const DetailPageComment = () => {
   const dispatch = useDispatch();
-  const { id } = useParams;
+  const { id } = useParams();
   const initialState = {
-    id: 0,
+    cardId:parseInt(id),
     nickname: "",
     content: "",
     isEditMode: false,
   };
+  console.log(id);
+
+  useEffect(() => {
+    dispatch(checkCommentThunk(id));
+  }, [dispatch]);
 
   const [addComment, setAddComment] = useState(initialState);
   const put_comment = useSelector((state) => state.comments.comments);
+  
   console.log(put_comment);
+  console.log(addComment);
   const [newComment, setNewComment] = useState(initialState);
 
   let inputHandler = (e) => {
@@ -38,6 +45,7 @@ const DetailPageComment = () => {
       dispatch(addCommentThunk(addComment));
       setAddComment(initialState);
       alert("정상적으로 댓글이 등록 되었습니다.");
+      // window.location.reload()
     }
   };
   const onClickSaveButton = (event) => {
@@ -81,12 +89,12 @@ const DetailPageComment = () => {
         {put_comment.length == 0
           ? ""
           : put_comment.map((item, index) => {
-              if (item.movieid == id) {
+              {
                 return (
                   <div>
                     <CommentBox key={index}>
                       <TextBox>
-                        <IdBox>{item.postId}</IdBox>
+                        <IdBox>{item.nickname}</IdBox>
                         <BodyBox>{item.content}</BodyBox>
                       </TextBox>
                       {item.isEditMode ? (
@@ -106,14 +114,14 @@ const DetailPageComment = () => {
                           />
                         </TextBox>
                       ) : (
-                        <p>{put_comment?.content}</p>
+                        <p>{item.content}</p>
                       )}
                       <div>
                         {item.isEditMode ? (
                           <button onClick={onClickSaveButton}>저장</button>
                         ) : (
                           <button
-                            onClick={() => dispatch(checkCommentThunk(item.id))}
+                            onClick={() => dispatch(editCommentThunk(item))}
                           >
                             수정
                           </button>
@@ -182,7 +190,6 @@ const CommentBox = styled.div`
   flex-direction: row;
   margin-left: 10px;
   margin-top: 20px;
-  border: 1px solid red;
   justify-content: space-between;
   button {
     background-color: #ff5f2e;
@@ -215,34 +222,4 @@ const IdBox = styled.div`
 `;
 const BodyBox = styled.div`
   font-size: large;
-  /* input[type="text"] {
-    border: blue 1px solid;
-    border-radius: 5px;
-    height: 50px;
-    margin-left: 10px;
-    margin-top: 10px;
-  } */
-`;
-// const BodyBox = styled.div`
-//   input[type="text"] {
-//     border: blue 1px solid;
-//     border-radius: 5px;
-//     height: 50px;
-//     margin-left: 10px;
-//     margin-top: 10px;
-//   }
-// `;
-const SmallBtn = styled.div`
-  margin-left: auto;
-  // border: 1px solid yellow;
-  margin-top: 15px;
-`;
-const Btn = styled.div`
-  border: black 1px solid;
-  border-radius: 5px;
-  cursor: pointer;
-  height: 40px;
-  width: 45px;
-  /* margin-right: 5px;
-  padding: 5px, 5px, 5px, 5px; */
 `;
