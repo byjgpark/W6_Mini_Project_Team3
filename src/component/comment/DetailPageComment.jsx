@@ -10,7 +10,7 @@ import {
 } from "../../redux/modules/commentSlice";
 
 const DetailPageComment = (props) => {
-  console.log("Hello Card ID " + (props.CardID))
+  console.log("Hello Card ID " + props.CardID);
   const dispatch = useDispatch();
   const { id } = useParams();
   const initialState = {
@@ -40,27 +40,13 @@ const DetailPageComment = (props) => {
       alert("댓글을 작성해주세요!!");
     } else {
       event.preventDefault();
-      console.log("Hello Checking addComment " + addComment)
+      console.log("Hello Checking addComment " + addComment);
       dispatch(addCommentThunk(addComment));
       setAddComment(initialState);
       alert("정상적으로 댓글이 등록 되었습니다.");
       // window.location.reload()
     }
   };
-  // const onClickSaveButton = (event) => {
-  //   if (newComment.content == "") {
-  //     event.preventDefault();
-  //     alert("댓글을 작성해 주세요");
-  //   } else {
-  //     event.preventDefault();
-  //     dispatch(editCommentThunk(newComment));
-  //     setNewComment(initialState);
-  //     alert("정상적으로 등록 되었습니다");
-  //     dispatch(checkCommentThunk(newComment));
-  //   }
-  // };
-
-
   return (
     <div>
       <InputContainer>
@@ -97,25 +83,6 @@ const DetailPageComment = (props) => {
                         <IdBox>{item.nickname}</IdBox>
                         <BodyBox>{item.content}</BodyBox>
                       </TextBox>
-                      {item.isEditMode ? (
-                        <TextBox>
-                          <input
-                            type="text"
-                            name="content"
-                            value={newComment.content}
-                            onChange={(e) => {
-                              const { name, value } = e.target;
-                              setNewComment({
-                                ...newComment,
-                                [name]: value,
-                                id: item.id,
-                              });
-                            }}
-                          />
-                        </TextBox>
-                      ) : (
-                        <p>{item.content}</p>
-                      )}
                       <div>
                         <button
                           onClick={() => {

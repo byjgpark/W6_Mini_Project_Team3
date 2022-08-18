@@ -6,7 +6,7 @@ export const _getPost = createAsyncThunk("post/getPost", async () => {
     // console.log(param)
 
     // const pram = await useParams()
-    const response = await instance.get("/api/cards");
+    const response = await instance.get("api/cards");
     const data = response.data.data;
     console.log(data);
     // console.log(params)
