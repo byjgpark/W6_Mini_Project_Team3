@@ -18,7 +18,7 @@ const ListPage = () => {
     dispatch(_getPost());
   }, []);
 
-
+//
 
   return (
     <>
